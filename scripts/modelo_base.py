@@ -240,8 +240,10 @@ def _tabela_m(nome, colunas, linhas):
     tag_tab = re.search(r"^\tlineageTag: ([0-9a-f-]+)", arq.read_text(encoding="utf-8"), re.M).group(1) if arq.exists() else str(uuid.uuid4())
     L = [f"table {nome}", f"\tlineageTag: {tag_tab}", ""]
     for c in colunas:
-        L += [f"\tcolumn {c}", "\t\tdataType: string", f"\t\tlineageTag: {tags.get(c, str(uuid.uuid4()))}", "\t\tsummarizeBy: none", f"\t\tsourceColumn: {c}", "",
-              "\t\tannotation SummarizationSetBy = Automatic", ""]
+        L += [f"\tcolumn {c}", "\t\tdataType: string", f"\t\tlineageTag: {tags.get(c, str(uuid.uuid4()))}", "\t\tsummarizeBy: none", f"\t\tsourceColumn: {c}"]
+        if c == "nome" and "ordem" in colunas:
+            L.append("\t\tsortByColumn: ordem")
+        L += ["", "\t\tannotation SummarizationSetBy = Automatic", ""]
     tipos = ", ".join(f"{c} = text" for c in colunas)
     corpo = ", ".join("{" + ", ".join('"' + str(v).replace('"', '""') + '"' for v in l) + "}" for l in linhas)
     L += [f"\tpartition {nome} = m", "\t\tmode: import", "\t\tsource =", "\t\t\t\tlet", f"\t\t\t\t    Fonte = #table(type table [{tipos}], {{{corpo}}})",

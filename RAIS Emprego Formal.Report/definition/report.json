@@ -9,6 +9,15 @@
         "page": "2.3.1"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Pain_is_AFL___Est_dio_Abrasel_43178999335479706.json",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -19,6 +28,19 @@
             "expr": {
               "Literal": {
                 "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
               }
             }
           }
@@ -37,6 +59,42 @@
           "type": "BaseTheme"
         }
       ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "empregos-afl-bg9411743255829482.png",
+          "path": "empregos-afl-bg9411743255829482.png",
+          "type": "Image"
+        },
+        {
+          "name": "empregos-todos-bg8131814454486169.png",
+          "path": "empregos-todos-bg8131814454486169.png",
+          "type": "Image"
+        },
+        {
+          "name": "limpar-filtros-hover190261450118843.svg",
+          "path": "limpar-filtros-hover190261450118843.svg",
+          "type": "Image"
+        },
+        {
+          "name": "limpar-filtros-normal04164138347692414.svg",
+          "path": "limpar-filtros-normal04164138347692414.svg",
+          "type": "Image"
+        },
+        {
+          "name": "limpar-filtros-pressionado6370449083639115.svg",
+          "path": "limpar-filtros-pressionado6370449083639115.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Pain_is_AFL___Est_dio_Abrasel_43178999335479706.json",
+          "path": "Pain_is_AFL___Est_dio_Abrasel_43178999335479706.json",
+          "type": "CustomTheme"
+        }
+      ]
     }
   ],
   "settings": {
@@ -46,5 +104,8 @@
     "allowChangeFilterTypes": true,
     "useEnhancedTooltips": true,
     "useDefaultAggregateDisplayName": true
-  }
+  },
+  "publicCustomVisuals": [
+    "htmlContent443BE3AD55E043BF878BED274D3A6865"
+  ]
 }

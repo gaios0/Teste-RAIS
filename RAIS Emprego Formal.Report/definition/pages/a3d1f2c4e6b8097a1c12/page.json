@@ -1,0 +1,163 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c12",
+  "displayName": "Empregos · AFL",
+  "displayOption": "FitToWidth",
+  "height": 1652,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'empregos-afl-bg9411743255829482.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "empregos-afl-bg9411743255829482.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "b67201afca42dd2d0755",
+      "target": "e66bda08fe4cbc06d8ac",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "6baa8ecef430a456c15a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "7c8e38811a9801ca09d5",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "ac836961ef2e0bbdc3eb",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "ba21fc88c5adf7a28637",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "8b1f323c1e2e09c4d091",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "f7601452d3885408719b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "b996a07ecb9c4db1d974",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "ac69e3d30517573713b1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "6174f5a6d42e5a597cc9",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "0574637686f90be09747",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e66bda08fe4cbc06d8ac",
+      "target": "c31568790788d632c178",
+      "type": "NoFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "4d3fc8dd31774caa88b9",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_Cnae"
+              }
+            },
+            "Property": "setor_afl"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_Cnae",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "setor_afl"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Sim'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  }
+}

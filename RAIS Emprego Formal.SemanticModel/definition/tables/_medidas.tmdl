@@ -299,13 +299,13 @@ table _medidas
 	measure KPI_Emp_AFL_HTML =
 			VAR A = [Ano_Ref]
 			VAR Valor = [Empregos_Ref]
-			VAR Var = [Empregos_Var]
+			VAR Variacao = [Empregos_Var]
 			VAR VarPct = [Empregos_Var_Pct]
-			VAR Icone = SWITCH(TRUE(), Var > 0, "▲", Var < 0, "▼", "●")
-			VAR Cor = SWITCH(TRUE(), Var > 0, "#137547", Var < 0, "#B42318", "#434446")
-			VAR Linha = IF(NOT ISBLANK(Var), Icone & " " & IF(Var > 0, "+", IF(Var < 0, "−", "")) & FORMAT(ABS(Var), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
+			VAR Icone = SWITCH(TRUE(), Variacao > 0, "▲", Variacao < 0, "▼", "●")
+			VAR Cor = SWITCH(TRUE(), Variacao > 0, "#137547", Variacao < 0, "#B42318", "#434446")
+			VAR Linha = IF(NOT ISBLANK(Variacao), Icone & " " & IF(Variacao > 0, "+", IF(Variacao < 0, "−", "")) & FORMAT(ABS(Variacao), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
 			    IF(A = 2022, "2022 não se compara com 2021 (nova fonte: eSocial)", "Primeiro ano da série"))
-			VAR CorLinha = IF(ISBLANK(Var), "#434446", Cor)
+			VAR CorLinha = IF(ISBLANK(Variacao), "#434446", Cor)
 			VAR VarComp = [Empregos_Var_Pct_Comparavel]
 			RETURN
 			    "<div role='group' aria-label='KPI de empregos formais' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
@@ -320,13 +320,13 @@ table _medidas
 	measure KPI_Emp_Total_HTML =
 			VAR A = [Ano_Ref]
 			VAR Valor = [Empregos_Ref]
-			VAR Var = [Empregos_Var]
+			VAR Variacao = [Empregos_Var]
 			VAR VarPct = [Empregos_Var_Pct]
-			VAR Icone = SWITCH(TRUE(), Var > 0, "▲", Var < 0, "▼", "●")
-			VAR Cor = SWITCH(TRUE(), Var > 0, "#137547", Var < 0, "#B42318", "#434446")
-			VAR Linha = IF(NOT ISBLANK(Var), Icone & " " & IF(Var > 0, "+", IF(Var < 0, "−", "")) & FORMAT(ABS(Var), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
+			VAR Icone = SWITCH(TRUE(), Variacao > 0, "▲", Variacao < 0, "▼", "●")
+			VAR Cor = SWITCH(TRUE(), Variacao > 0, "#137547", Variacao < 0, "#B42318", "#434446")
+			VAR Linha = IF(NOT ISBLANK(Variacao), Icone & " " & IF(Variacao > 0, "+", IF(Variacao < 0, "−", "")) & FORMAT(ABS(Variacao), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
 			    IF(A = 2022, "2022 não se compara com 2021 (nova fonte: eSocial)", "Primeiro ano da série"))
-			VAR CorLinha = IF(ISBLANK(Var), "#434446", Cor)
+			VAR CorLinha = IF(ISBLANK(Variacao), "#434446", Cor)
 			VAR VarAFL = [Empregos_Var_Pct_AFL]
 			VAR VarComp = [Empregos_Var_Pct_Comparavel]
 			RETURN
@@ -448,7 +448,7 @@ table _medidas
 			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
 			VAR Prep = IF(NOT ISFILTERED(D_UF[uf]) || NUF = COUNTROWS(ALL(D_UF[uf])), "No Brasil", IF(NUF = 1, "Em " & SELECTEDVALUE(D_UF[estado]), "Nas " & NUF & " UFs escolhidas"))
 			VAR Valor = [Empregos_Ref]
-			VAR Var = [Empregos_Var]
+			VAR Variacao = [Empregos_Var]
 			VAR VarPct = [Empregos_Var_Pct]
 			VAR Seq = [Emp_Sequencia_Altas_AFL]
 			VAR Contexto = [Contexto_Emp_Total]
@@ -472,12 +472,12 @@ table _medidas
 			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
 			VAR Prep = IF(NOT ISFILTERED(D_UF[uf]) || NUF = COUNTROWS(ALL(D_UF[uf])), "No Brasil", IF(NUF = 1, "Em " & SELECTEDVALUE(D_UF[estado]), "Nas " & NUF & " UFs escolhidas"))
 			VAR Valor = [Empregos_Ref]
-			VAR Var = [Empregos_Var]
+			VAR Variacao = [Empregos_Var]
 			VAR VarPct = [Empregos_Var_Pct]
 			VAR Seq = [Emp_Sequencia_Altas_AFL]
 			VAR Contexto = [Contexto_Emp_AFL]
-			VAR Fecho = SWITCH(TRUE(), ISBLANK(Var), IF(A = 2022, "primeiro ano da fonte eSocial", "primeiro ano da série"),
-			    Var > 0, IF(Seq >= 2, Seq & "ª alta seguida", "alta de " & IF(ISBLANK(VarPct), "—", FORMAT(VarPct, "0.0%", "pt-BR"))), Var < 0, "queda de " & IF(ISBLANK(ABS(VarPct)), "—", FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & " sobre " & (A - 1), "estável")
+			VAR Fecho = SWITCH(TRUE(), ISBLANK(Variacao), IF(A = 2022, "primeiro ano da fonte eSocial", "primeiro ano da série"),
+			    Variacao > 0, IF(Seq >= 2, Seq & "ª alta seguida", "alta de " & IF(ISBLANK(VarPct), "—", FORMAT(VarPct, "0.0%", "pt-BR"))), Variacao < 0, "queda de " & IF(ISBLANK(ABS(VarPct)), "—", FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & " sobre " & (A - 1), "estável")
 			VAR Texto = Prep & ", o AFL fechou " & A & " com " & FORMAT(Valor, "#,0", "pt-BR") & " empregos formais: " & Fecho
 			VAR Valido = NOT ISBLANK(A) && NOT ISBLANK(Valor)
 			RETURN
