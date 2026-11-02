@@ -221,6 +221,503 @@ table _medidas
 		displayFolder: Base\Comparavel
 		lineageTag: b93d77c2-c634-4024-8b11-61b53c6d2c02
 
+	/// Empregos do AFL em 31/12 do ano da variável A (para uso em tabelas de anos).
+	measure Emp_Grupo_AFL_Ano =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
+		formatString: #,0
+		isHidden
+		displayFolder: Empregos\Apoio
+		lineageTag: 84b90ca2-158b-47d5-9f0e-7cefb56cb322
+
+	/// Empregos do ano de referência ignorando setor, comparabilidade e atividade (mantém UF, sexo, escolaridade e raça).
+	measure Empregos_Ref_Todos =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), REMOVEFILTERS(D_Comparavel), REMOVEFILTERS(D_AflAtividade), REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
+		formatString: #,0
+		displayFolder: Empregos\Apoio
+		lineageTag: 98ffb536-bf59-49df-b5b2-dc3f5237fbce
+
+	/// Quantos anos seguidos o emprego do AFL subiu, terminando no ano de referência e sem atravessar a quebra de 2022.
+	measure Emp_Sequencia_Altas_AFL =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR T = ADDCOLUMNS(GENERATESERIES(I + 1, MAX(A, I + 1)), "@var", VAR y = [Value] RETURN
+			    CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = y) - CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = y - 1))
+			VAR UltimaNaoAlta = MAXX(FILTER(T, [@var] <= 0), [Value])
+			RETURN IF(A > I, A - COALESCE(UltimaNaoAlta, I), 0)
+		formatString: 0
+		isHidden
+		displayFolder: Empregos\Apoio
+		lineageTag: 02153a88-cf59-4917-b7f5-a07e2113962d
+
+	/// Índice de empregos do AFL (base 100 = primeiro ano do trecho), trecho 2009–2021; BLANK fora do trecho.
+	measure Emp_Indice_AFL_Pre =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Fim = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR Base = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			RETURN IF(NOT ISBLANK(A) && A < 2022 && Base > 0, DIVIDE(Fim, Base) * 100)
+		formatString: 0.0
+		displayFolder: Empregos\Séries
+		lineageTag: 970060e7-0da8-4e0a-93f4-614d16caa9f5
+
+	/// Índice de empregos do AFL (base 100 = primeiro ano do trecho), trecho 2022 em diante; BLANK fora do trecho.
+	measure Emp_Indice_AFL_Pos =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Fim = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR Base = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			RETURN IF(NOT ISBLANK(A) && A >= 2022 && Base > 0, DIVIDE(Fim, Base) * 100)
+		formatString: 0.0
+		displayFolder: Empregos\Séries
+		lineageTag: cc960667-8031-40b5-b047-f5c2899114dd
+
+	/// Índice de empregos do Comparável (base 100 = primeiro ano do trecho), trecho 2009–2021; BLANK fora do trecho.
+	measure Emp_Indice_Comp_Pre =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Fim = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR Base = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			RETURN IF(NOT ISBLANK(A) && A < 2022 && Base > 0, DIVIDE(Fim, Base) * 100)
+		formatString: 0.0
+		displayFolder: Empregos\Séries
+		lineageTag: 83cc10a8-6d35-4b68-b009-09f3ece4a844
+
+	/// Índice de empregos do Comparável (base 100 = primeiro ano do trecho), trecho 2022 em diante; BLANK fora do trecho.
+	measure Emp_Indice_Comp_Pos =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Fim = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR Base = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			RETURN IF(NOT ISBLANK(A) && A >= 2022 && Base > 0, DIVIDE(Fim, Base) * 100)
+		formatString: 0.0
+		displayFolder: Empregos\Séries
+		lineageTag: 000a9ab5-135d-4078-babc-693c74eb37b6
+
+	/// KPI de empregos (página AFL): estoque em 31/12 com variação e referência dos comparáveis.
+	measure KPI_Emp_AFL_HTML =
+			VAR A = [Ano_Ref]
+			VAR Valor = [Empregos_Ref]
+			VAR Var = [Empregos_Var]
+			VAR VarPct = [Empregos_Var_Pct]
+			VAR Icone = SWITCH(TRUE(), Var > 0, "▲", Var < 0, "▼", "●")
+			VAR Cor = SWITCH(TRUE(), Var > 0, "#137547", Var < 0, "#B42318", "#434446")
+			VAR Linha = IF(NOT ISBLANK(Var), Icone & " " & IF(Var > 0, "+", IF(Var < 0, "−", "")) & FORMAT(ABS(Var), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
+			    IF(A = 2022, "2022 não se compara com 2021 (nova fonte: eSocial)", "Primeiro ano da série"))
+			VAR CorLinha = IF(ISBLANK(Var), "#434446", Cor)
+			VAR VarComp = [Empregos_Var_Pct_Comparavel]
+			RETURN
+			    "<div role='group' aria-label='KPI de empregos formais' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Empregos em 31/12/" & A & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & FORMAT(Valor, "#,0", "pt-BR") & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & CorLinha & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & Linha & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>Comparáveis " & IF(ISBLANK(VarComp), "—", IF(VarComp > 0, "+", IF(VarComp < 0, "−", "")) & FORMAT(ABS(VarComp), "0.0%", "pt-BR")) & " <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: de3ebcb8-657a-4947-adda-0e5422bb8d88
+
+	/// KPI de empregos (página Todos os setores): estoque em 31/12 com variação, chip AFL e referência dos comparáveis.
+	measure KPI_Emp_Total_HTML =
+			VAR A = [Ano_Ref]
+			VAR Valor = [Empregos_Ref]
+			VAR Var = [Empregos_Var]
+			VAR VarPct = [Empregos_Var_Pct]
+			VAR Icone = SWITCH(TRUE(), Var > 0, "▲", Var < 0, "▼", "●")
+			VAR Cor = SWITCH(TRUE(), Var > 0, "#137547", Var < 0, "#B42318", "#434446")
+			VAR Linha = IF(NOT ISBLANK(Var), Icone & " " & IF(Var > 0, "+", IF(Var < 0, "−", "")) & FORMAT(ABS(Var), "#,0", "pt-BR") & " (" & IF(ISBLANK(VarPct), "—", IF(VarPct > 0, "+", IF(VarPct < 0, "−", "")) & FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & ") sobre " & (A - 1),
+			    IF(A = 2022, "2022 não se compara com 2021 (nova fonte: eSocial)", "Primeiro ano da série"))
+			VAR CorLinha = IF(ISBLANK(Var), "#434446", Cor)
+			VAR VarAFL = [Empregos_Var_Pct_AFL]
+			VAR VarComp = [Empregos_Var_Pct_Comparavel]
+			RETURN
+			    "<div role='group' aria-label='KPI de empregos formais' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Empregos em 31/12/" & A & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & FORMAT(Valor, "#,0", "pt-BR") & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & CorLinha & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & Linha & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #F58220;border-radius:6px;background:#FDF7F1;color:#B86218;font-size:20px;line-height:26px;font-weight:600;'>AFL " & IF(ISBLANK(VarAFL), "—", IF(VarAFL > 0, "+", IF(VarAFL < 0, "−", "")) & FORMAT(ABS(VarAFL), "0.0%", "pt-BR")) & "</span>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>Comparáveis " & IF(ISBLANK(VarComp), "—", IF(VarComp > 0, "+", IF(VarComp < 0, "−", "")) & FORMAT(ABS(VarComp), "0.0%", "pt-BR")) & " <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: 1cb65d12-1839-419e-9815-f9aa7bfb417f
+
+	/// KPI de peso (página AFL): AFL ÷ (AFL + comparáveis) e participação em todo o emprego formal.
+	measure KPI_Peso_AFL_HTML =
+			VAR Afl = [Empregos_Ref_AFL]
+			VAR Comp = [Empregos_Ref_Comparavel]
+			VAR Todos = [Empregos_Ref_Todos]
+			VAR Peso = DIVIDE(Afl, Afl + Comp)
+			VAR PesoTodos = DIVIDE(Afl, Todos)
+			RETURN
+			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Peso nos empregos comparáveis" & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & "#434446" & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & "dos empregos do AFL + comparáveis" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='font-size:21px;color:#434446;'>" & IF(ISBLANK(PesoTodos), "—", FORMAT(PesoTodos, "0.0%", "pt-BR")) & " de todo o emprego formal</span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: e46739b3-39ed-46cd-bfb4-22df72c9855d
+
+	/// KPI de peso (página Todos os setores): AFL ÷ todo o emprego formal e AFL ÷ (AFL + comparáveis).
+	measure KPI_Peso_Total_HTML =
+			VAR Afl = [Empregos_Ref_AFL]
+			VAR Comp = [Empregos_Ref_Comparavel]
+			VAR Todos = [Empregos_Ref_Todos]
+			VAR Peso = DIVIDE(Afl, Todos)
+			VAR PesoComp = DIVIDE(Afl, Afl + Comp)
+			RETURN
+			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Peso do AFL" & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & "#434446" & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & "de todo o emprego formal" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>" & IF(ISBLANK(PesoComp), "—", FORMAT(PesoComp, "0.0%", "pt-BR")) & " do AFL + comparáveis <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: cc972583-7e7e-4c50-a010-f955c4444564
+
+	/// KPI de crescimento médio ao ano no trecho (página AFL), com referência dos comparáveis.
+	measure KPI_Cresc_AFL_HTML =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Cresc = [Empregos_Cresc_Medio_Ano]
+			VAR CrescComp = [Empregos_Cresc_Medio_Ano_Comparavel]
+			VAR CrescAfl = [Empregos_Cresc_Medio_Ano_AFL]
+			VAR Seq = [Emp_Sequencia_Altas_AFL]
+			VAR Linha = IF(A > I, IF(Seq >= 2, Seq & " altas seguidas", IF(Seq = 1, "alta no último ano", "queda no último ano")), "Primeiro ano do trecho: ainda sem crescimento a medir")
+			RETURN
+			    "<div role='group' aria-label='KPI de crescimento médio ao ano' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Crescimento médio ao ano desde " & I & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Cresc), "—", IF(ISBLANK(Cresc), "—", IF(Cresc > 0, "+", IF(Cresc < 0, "−", "")) & FORMAT(ABS(Cresc), "0.0%", "pt-BR"))) & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & "#434446" & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & Linha & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>Comparáveis " & IF(ISBLANK(CrescComp), "—", IF(CrescComp > 0, "+", IF(CrescComp < 0, "−", "")) & FORMAT(ABS(CrescComp), "0.0%", "pt-BR")) & " <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: df5fa4b0-819e-4098-89bd-6e1cbf90b0cf
+
+	/// KPI de crescimento médio ao ano no trecho (página Todos os setores), com chips AFL e comparáveis.
+	measure KPI_Cresc_Total_HTML =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Cresc = [Empregos_Cresc_Medio_Ano]
+			VAR CrescComp = [Empregos_Cresc_Medio_Ano_Comparavel]
+			VAR CrescAfl = [Empregos_Cresc_Medio_Ano_AFL]
+			VAR Seq = [Emp_Sequencia_Altas_AFL]
+			VAR Linha = IF(A > I, "por ano, de " & I & " a " & A, "Primeiro ano do trecho: ainda sem crescimento a medir")
+			RETURN
+			    "<div role='group' aria-label='KPI de crescimento médio ao ano' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Crescimento médio ao ano desde " & I & "</div>"
+			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Cresc), "—", IF(ISBLANK(Cresc), "—", IF(Cresc > 0, "+", IF(Cresc < 0, "−", "")) & FORMAT(ABS(Cresc), "0.0%", "pt-BR"))) & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;color:" & "#434446" & ";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & Linha & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #F58220;border-radius:6px;background:#FDF7F1;color:#B86218;font-size:20px;line-height:26px;font-weight:600;'>AFL " & IF(ISBLANK(CrescAfl), "—", IF(CrescAfl > 0, "+", IF(CrescAfl < 0, "−", "")) & FORMAT(ABS(CrescAfl), "0.0%", "pt-BR")) & "</span>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>Comparáveis " & IF(ISBLANK(CrescComp), "—", IF(CrescComp > 0, "+", IF(CrescComp < 0, "−", "")) & FORMAT(ABS(CrescComp), "0.0%", "pt-BR")) & " <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "</div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: e099a653-0db4-4326-b9a3-9d9df16f0349
+
+	/// Linha de contexto da página Empregos · Todos os setores.
+	measure Contexto_Emp_Total =
+			VAR A = [Ano_Ref]
+			VAR TemUF = ISFILTERED(D_UF[uf])
+			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
+			VAR Local = IF(NOT TemUF || NUF = COUNTROWS(ALL(D_UF[uf])), "Brasil", IF(NUF = 1, SELECTEDVALUE(D_UF[estado]), NUF & " UFs"))
+			VAR Sexo = IF(ISFILTERED(D_Sexo[sexo]), CONCATENATEX(VALUES(D_Sexo[sexo]), D_Sexo[sexo], ", "), "")
+			VAR Esc = IF(ISFILTERED(D_Escolaridade[escolaridade_agrupada]), CONCATENATEX(VALUES(D_Escolaridade[escolaridade_agrupada]), D_Escolaridade[escolaridade_agrupada], ", "), "")
+			VAR Raca = IF(ISFILTERED(D_Raca[raca_cor]), CONCATENATEX(VALUES(D_Raca[raca_cor]), D_Raca[raca_cor], ", "), "")
+			VAR Setor = IF(ISFILTERED(D_Comparavel[comparavel_AFL]), "setores comparáveis ao AFL", "todos os setores")
+			VAR Partes = FILTER(UNION(ROW("@o", 1, "@t", "31/12/" & A), ROW("@o", 2, "@t", Local), ROW("@o", 3, "@t", Setor), ROW("@o", 4, "@t", Sexo),
+			    ROW("@o", 5, "@t", Esc), ROW("@o", 6, "@t", Raca), ROW("@o", 7, "@t", "RAIS (" & IF(A >= 2022, "eSocial", "declaratória") & ")")), NOT ISBLANK([@t]) && [@t] <> "")
+			VAR Texto = CONCATENATEX(Partes, [@t], " · ", [@o], ASC)
+			RETURN IF(ISBLANK(A), "", Texto)
+		isHidden
+		displayFolder: Empregos\Apoio
+		lineageTag: bef76d55-d439-43f0-8c0a-4ed79a97f8d8
+
+	/// Linha de contexto da página Empregos · AFL.
+	measure Contexto_Emp_AFL =
+			VAR A = [Ano_Ref]
+			VAR TemUF = ISFILTERED(D_UF[uf])
+			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
+			VAR Local = IF(NOT TemUF || NUF = COUNTROWS(ALL(D_UF[uf])), "Brasil", IF(NUF = 1, SELECTEDVALUE(D_UF[estado]), NUF & " UFs"))
+			VAR Sexo = IF(ISFILTERED(D_Sexo[sexo]), CONCATENATEX(VALUES(D_Sexo[sexo]), D_Sexo[sexo], ", "), "")
+			VAR Esc = IF(ISFILTERED(D_Escolaridade[escolaridade_agrupada]), CONCATENATEX(VALUES(D_Escolaridade[escolaridade_agrupada]), D_Escolaridade[escolaridade_agrupada], ", "), "")
+			VAR Raca = IF(ISFILTERED(D_Raca[raca_cor]), CONCATENATEX(VALUES(D_Raca[raca_cor]), D_Raca[raca_cor], ", "), "")
+			VAR Setor = IF(ISFILTERED(D_AflAtividade[nome]) && COUNTROWS(VALUES(D_AflAtividade[nome])) < COUNTROWS(ALL(D_AflAtividade[nome])), CONCATENATEX(VALUES(D_AflAtividade[nome]), D_AflAtividade[nome], ", "), "alimentação fora do lar (AFL)")
+			VAR Partes = FILTER(UNION(ROW("@o", 1, "@t", "31/12/" & A), ROW("@o", 2, "@t", Local), ROW("@o", 3, "@t", Setor), ROW("@o", 4, "@t", Sexo),
+			    ROW("@o", 5, "@t", Esc), ROW("@o", 6, "@t", Raca), ROW("@o", 7, "@t", "RAIS (" & IF(A >= 2022, "eSocial", "declaratória") & ")")), NOT ISBLANK([@t]) && [@t] <> "")
+			VAR Texto = CONCATENATEX(Partes, [@t], " · ", [@o], ASC)
+			RETURN IF(ISBLANK(A), "", Texto)
+		isHidden
+		displayFolder: Empregos\Apoio
+		lineageTag: 237d2889-3578-4247-9d4c-2c7af53ba071
+
+	/// Manchete da página Empregos · Todos os setores.
+	measure Manchete_Emp_Total_HTML =
+			VAR A = [Ano_Ref]
+			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
+			VAR Prep = IF(NOT ISFILTERED(D_UF[uf]) || NUF = COUNTROWS(ALL(D_UF[uf])), "No Brasil", IF(NUF = 1, "Em " & SELECTEDVALUE(D_UF[estado]), "Nas " & NUF & " UFs escolhidas"))
+			VAR Valor = [Empregos_Ref]
+			VAR Var = [Empregos_Var]
+			VAR VarPct = [Empregos_Var_Pct]
+			VAR Seq = [Emp_Sequencia_Altas_AFL]
+			VAR Contexto = [Contexto_Emp_Total]
+			VAR Pos = [Emp_Posicao_AFL_Divisao]
+			VAR Divs = [Emp_Total_Divisoes]
+			VAR Texto = Prep & ", o emprego formal fechou " & A & " com " & FORMAT(Valor, "#,0", "pt-BR") & " vínculos" & IF(ISBLANK(Pos), "", "; o AFL é a " & Pos & "ª maior divisão entre " & Divs)
+			VAR Valido = NOT ISBLANK(A) && NOT ISBLANK(Valor)
+			RETURN
+			    IF(NOT Valido,
+			        "<div role='text' style='width:100%;height:118px;font-family:Segoe UI,Arial,sans-serif;font-size:24px;color:#434446;'>Não há dados para os filtros selecionados.</div>",
+			        "<div role='group' aria-label='Resumo do emprego formal' style='width:100%;height:118px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			            & "<div style='height:48px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;'><span style='min-width:0;font-size:36px;line-height:42px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Texto, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span></div>"
+			            & "<div style='height:30px;margin:4px 0 0;font-size:24px;line-height:30px;color:#434446;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Contexto, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</div>"
+			        & "</div>")
+		displayFolder: HTML\Empregos
+		lineageTag: 51e632d8-9028-4e8b-bfa1-6e2097ea99cb
+
+	/// Manchete da página Empregos · AFL.
+	measure Manchete_Emp_AFL_HTML =
+			VAR A = [Ano_Ref]
+			VAR NUF = COUNTROWS(VALUES(D_UF[uf]))
+			VAR Prep = IF(NOT ISFILTERED(D_UF[uf]) || NUF = COUNTROWS(ALL(D_UF[uf])), "No Brasil", IF(NUF = 1, "Em " & SELECTEDVALUE(D_UF[estado]), "Nas " & NUF & " UFs escolhidas"))
+			VAR Valor = [Empregos_Ref]
+			VAR Var = [Empregos_Var]
+			VAR VarPct = [Empregos_Var_Pct]
+			VAR Seq = [Emp_Sequencia_Altas_AFL]
+			VAR Contexto = [Contexto_Emp_AFL]
+			VAR Fecho = SWITCH(TRUE(), ISBLANK(Var), IF(A = 2022, "primeiro ano da fonte eSocial", "primeiro ano da série"),
+			    Var > 0, IF(Seq >= 2, Seq & "ª alta seguida", "alta de " & IF(ISBLANK(VarPct), "—", FORMAT(VarPct, "0.0%", "pt-BR"))), Var < 0, "queda de " & IF(ISBLANK(ABS(VarPct)), "—", FORMAT(ABS(VarPct), "0.0%", "pt-BR")) & " sobre " & (A - 1), "estável")
+			VAR Texto = Prep & ", o AFL fechou " & A & " com " & FORMAT(Valor, "#,0", "pt-BR") & " empregos formais: " & Fecho
+			VAR Valido = NOT ISBLANK(A) && NOT ISBLANK(Valor)
+			RETURN
+			    IF(NOT Valido,
+			        "<div role='text' style='width:100%;height:118px;font-family:Segoe UI,Arial,sans-serif;font-size:24px;color:#434446;'>Não há dados para os filtros selecionados.</div>",
+			        "<div role='group' aria-label='Resumo do emprego formal' style='width:100%;height:118px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
+			            & "<div style='height:48px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;'><span style='min-width:0;font-size:36px;line-height:42px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Texto, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span></div>"
+			            & "<div style='height:30px;margin:4px 0 0;font-size:24px;line-height:30px;color:#434446;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(Contexto, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</div>"
+			        & "</div>")
+		displayFolder: HTML\Empregos
+		lineageTag: 5cf4bb1f-0638-4334-8ae9-a731dd810839
+
+	/// Título do gráfico de série (índice): crescimento desde o início do trecho, AFL × comparáveis.
+	measure Titulo_Emp_Serie_HTML =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Afl = [Empregos_Ref_AFL]
+			VAR Comp = [Empregos_Ref_Comparavel]
+			VAR AflI = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			VAR CompI = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I)
+			VAR CAfl = DIVIDE(Afl, AflI) - 1
+			VAR CComp = DIVIDE(Comp, CompI) - 1
+			VAR Afl19 = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = 2019)
+			VAR Afl20 = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = 2020)
+			VAR Comp19 = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = 2019)
+			VAR Comp20 = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = 2020)
+			VAR L1 = IF(ISBLANK(A), "Sem dados para os filtros escolhidos", IF(A <= I, I & " é o primeiro ano do trecho: ainda não há crescimento a comparar",
+			    "Desde " & I & ", o emprego do AFL cresceu " & IF(ISBLANK(CAfl), "—", FORMAT(CAfl, "0.0%", "pt-BR")) & " e o dos comparáveis, " & IF(ISBLANK(CComp), "—", FORMAT(CComp, "0.0%", "pt-BR"))))
+			VAR L2 = IF(ISBLANK(A), "", IF(A >= 2022, "Índice de empregos em 31/12, base 100 = 31/12/" & I & ". 2021 e os anos anteriores ficam no trecho anterior (nova fonte: eSocial)",
+			    "Índice de empregos em 31/12, base 100 = 31/12/" & I & IF(Afl19 > 0 && Afl20 > 0 && Comp19 > 0, ". Em 2020 o AFL perdeu " & IF(ISBLANK(ABS(DIVIDE(Afl20, Afl19) - 1)), "—", FORMAT(ABS(DIVIDE(Afl20, Afl19) - 1), "0.0%", "pt-BR")) & " dos empregos; os comparáveis, " & IF(ISBLANK(ABS(DIVIDE(Comp20, Comp19) - 1)), "—", FORMAT(ABS(DIVIDE(Comp20, Comp19) - 1), "0.0%", "pt-BR")), "")))
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#F58220" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: c57a3a11-7a7a-459f-a275-33024d92d08d
+
+	/// Tabela de contratos: AFL × Comparáveis, em % dos empregos de 31/12 do ano de referência (categorias exclusivas, na ordem intermitente, aprendiz, parcial, CLT, prazo determinado).
+	measure Emp_Contratos_HTML =
+			VAR A = [Ano_Ref]
+			VAR TotA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR cltA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] = "CLT Prazo Indeterminado")
+			VAR detA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] IN {"CLT Prazo Determinado", "Contrato por Prazo Determinado", "Temporário", "Contrato Temporário"})
+			VAR interA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] = "Sim")
+			VAR parcA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] = "Sim")
+			VAR aprA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] = "Aprendiz")
+			VAR TotC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR cltC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] = "CLT Prazo Indeterminado")
+			VAR detC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] IN {"CLT Prazo Determinado", "Contrato por Prazo Determinado", "Temporário", "Contrato Temporário"})
+			VAR interC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] = "Sim")
+			VAR parcC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] = "Sim")
+			VAR aprC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] = "Aprendiz")
+			RETURN IF(ISBLANK(A) || TotA = 0, "<div style='font-family:Segoe UI,Arial,sans-serif;font-size:21px;color:#434446;'>Sem dados para os filtros escolhidos.</div>",
+			    "<table style='width:100%;border-collapse:collapse;font-family:Segoe UI,Arial,sans-serif;font-size:21px;font-variant-numeric:tabular-nums;'><tr style='color:#434446;'><th style='text-align:left;font-weight:600;padding-bottom:6px;'>Contrato</th><th style='text-align:right;font-weight:600;color:#B86218;'>AFL</th><th style='text-align:right;font-weight:600;'>Comparáveis</th></tr>" & "<tr><td style='padding:9px 0;border-top:1px solid #E8E8E9;'>CLT por prazo indeterminado</td><td style='text-align:right;font-weight:600;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotA) || TotA = 0, "—", FORMAT(DIVIDE(cltA, TotA), "0.0%", "pt-BR")) & "</td><td style='text-align:right;color:#434446;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotC) || TotC = 0, "—", FORMAT(DIVIDE(cltC, TotC), "0.0%", "pt-BR")) & "</td></tr>" & "<tr><td style='padding:9px 0;border-top:1px solid #E8E8E9;'>Prazo determinado ou temporário</td><td style='text-align:right;font-weight:600;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotA) || TotA = 0, "—", FORMAT(DIVIDE(detA, TotA), "0.0%", "pt-BR")) & "</td><td style='text-align:right;color:#434446;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotC) || TotC = 0, "—", FORMAT(DIVIDE(detC, TotC), "0.0%", "pt-BR")) & "</td></tr>" & "<tr><td style='padding:9px 0;border-top:1px solid #E8E8E9;'>Intermitente</td><td style='text-align:right;font-weight:600;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotA) || TotA = 0, "—", FORMAT(DIVIDE(interA, TotA), "0.0%", "pt-BR")) & "</td><td style='text-align:right;color:#434446;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotC) || TotC = 0, "—", FORMAT(DIVIDE(interC, TotC), "0.0%", "pt-BR")) & "</td></tr>" & "<tr><td style='padding:9px 0;border-top:1px solid #E8E8E9;'>Parcial</td><td style='text-align:right;font-weight:600;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotA) || TotA = 0, "—", FORMAT(DIVIDE(parcA, TotA), "0.0%", "pt-BR")) & "</td><td style='text-align:right;color:#434446;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotC) || TotC = 0, "—", FORMAT(DIVIDE(parcC, TotC), "0.0%", "pt-BR")) & "</td></tr>" & "<tr><td style='padding:9px 0;border-top:1px solid #E8E8E9;'>Aprendiz</td><td style='text-align:right;font-weight:600;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotA) || TotA = 0, "—", FORMAT(DIVIDE(aprA, TotA), "0.0%", "pt-BR")) & "</td><td style='text-align:right;color:#434446;border-top:1px solid #E8E8E9;'>" & IF(ISBLANK(TotC) || TotC = 0, "—", FORMAT(DIVIDE(aprC, TotC), "0.0%", "pt-BR")) & "</td></tr>" & "</table>")
+		displayFolder: HTML\Empregos
+		lineageTag: 4122c6ac-6261-4b6a-a5ee-05e69fb3aec5
+
+	/// Título do card de contratos: % de CLT por prazo indeterminado no AFL e o contraste com os comparáveis.
+	measure Titulo_Emp_Contrato_HTML =
+			VAR A = [Ano_Ref]
+			VAR TotA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR cltA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] = "CLT Prazo Indeterminado")
+			VAR detA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] IN {"CLT Prazo Determinado", "Contrato por Prazo Determinado", "Temporário", "Contrato Temporário"})
+			VAR interA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] = "Sim")
+			VAR parcA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] = "Sim")
+			VAR aprA = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] = "Aprendiz")
+			VAR TotC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A)
+			VAR cltC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] = "CLT Prazo Indeterminado")
+			VAR detC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] <> "Sim", F_rais[modalidade_contrato] IN {"CLT Prazo Determinado", "Contrato por Prazo Determinado", "Temporário", "Contrato Temporário"})
+			VAR interC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] = "Sim")
+			VAR parcC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] <> "Aprendiz", F_rais[trabalho_parcial] = "Sim")
+			VAR aprC = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A, F_rais[trabalho_intermitente] <> "Sim", F_rais[modalidade_contrato] = "Aprendiz")
+			VAR PA = DIVIDE(cltA, TotA)
+			VAR PC = DIVIDE(cltC, TotC)
+			VAR DA = DIVIDE(detA, TotA)
+			VAR DC = DIVIDE(detC, TotC)
+			VAR L1 = IF(ISBLANK(A) || TotA = 0, "Sem dados para os filtros escolhidos", IF(ISBLANK(PA), "—", FORMAT(PA, "0.0%", "pt-BR")) & " dos empregos do AFL são CLT por prazo indeterminado")
+			VAR L2 = IF(L1 = "Sem dados para os filtros escolhidos", "", "Prazo determinado ou temporário: " & IF(ISBLANK(DA), "—", FORMAT(DA, "0.0%", "pt-BR")) & " no AFL e " & IF(ISBLANK(DC), "—", FORMAT(DC, "0.0%", "pt-BR")) & " nos comparáveis")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#1D1E21" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: e3fd4918-768f-4edd-a790-3a9d427e06e8
+
+	/// Empregos em 31/12 da divisão de D_Rank_Divisao no ano de referência; o item AFL usa os seis CNAEs e as divisões não incluem os CNAEs do AFL.
+	measure Emp_Divisao =
+			VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])
+			VAR A = [Ano_Ref]
+			RETURN IF(ISBLANK(Nome) || ISBLANK(A), BLANK(), IF(Nome = "AFL · conjunto de 6 CNAEs", [Empregos_Ref_AFL],
+			    CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), KEEPFILTERS(D_Cnae[nm_divisao] = Nome), KEEPFILTERS(D_Cnae[setor_afl] = "Não"))))
+		formatString: #,0
+		displayFolder: Empregos\Ranking
+		lineageTag: 71a7633b-5c67-4434-85f4-4044d2f50886
+
+	/// Valor do ranking: as 10 maiores divisões em empregos e sempre o AFL; as demais voltam BLANK.
+	measure Emp_Divisao_Top =
+			VAR EhAFL = SELECTEDVALUE(D_Rank_Divisao[nm_divisao]) = "AFL · conjunto de 6 CNAEs"
+			VAR Valor = [Emp_Divisao]
+			VAR Posicao = IF(NOT ISBLANK(Valor), RANKX(ALLSELECTED(D_Rank_Divisao[nm_divisao]), [Emp_Divisao], , DESC, DENSE))
+			RETURN IF(NOT ISBLANK(Valor) && (EhAFL || Posicao <= 10), Valor)
+		formatString: #,0
+		displayFolder: Empregos\Ranking
+		lineageTag: f7844ebd-3620-46ba-b927-a3a455d4beee
+
+	/// Cor do ranking: AFL em laranja, demais divisões em cinza neutro.
+	measure Cor_Emp_Divisao = IF(SELECTEDVALUE(D_Rank_Divisao[nm_divisao]) = "AFL · conjunto de 6 CNAEs", "#F58220", "#DDDDDE")
+		isHidden
+		displayFolder: Empregos\Ranking
+		lineageTag: 90b1ebf2-702c-4daa-a081-8de7325700a0
+
+	/// Posição do AFL entre todas as divisões em empregos (ignora os botões de setor).
+	measure Emp_Posicao_AFL_Divisao =
+			VAR Divs = ADDCOLUMNS(ALL(D_Rank_Divisao[nm_divisao]), "@v", [Emp_Divisao])
+			VAR Validas = FILTER(Divs, NOT ISBLANK([@v]))
+			VAR ValorAFL = MAXX(FILTER(Validas, [nm_divisao] = "AFL · conjunto de 6 CNAEs"), [@v])
+			RETURN IF(NOT ISBLANK(ValorAFL), COUNTROWS(FILTER(Validas, [@v] > ValorAFL)) + 1)
+		formatString: 0
+		isHidden
+		displayFolder: Empregos\Ranking
+		lineageTag: 367a9618-d703-4c4d-8c2d-33456d526fbf
+
+	/// Quantidade de divisões com empregos no contexto (ignora os botões de setor).
+	measure Emp_Total_Divisoes = COUNTROWS(FILTER(ADDCOLUMNS(ALL(D_Rank_Divisao[nm_divisao]), "@v", [Emp_Divisao]), NOT ISBLANK([@v])))
+		formatString: 0
+		isHidden
+		displayFolder: Empregos\Ranking
+		lineageTag: 51907d7d-00e8-49ed-826b-01c69af6f7a8
+
+	/// Título do ranking de divisões: posição do AFL em empregos e em crescimento.
+	measure Titulo_Emp_Ranking_HTML =
+			VAR Pos = [Emp_Posicao_AFL_Divisao]
+			VAR N = [Emp_Total_Divisoes]
+			VAR L1 = IF(ISBLANK(Pos), "O AFL não tem empregos para os filtros escolhidos", IF(Pos = 1, "O AFL é a maior divisão do emprego formal entre as " & N, "O AFL é a " & Pos & "ª maior divisão do emprego formal entre as " & N))
+			VAR L2 = IF(ISBLANK(Pos), "", "O gráfico mostra as 10 maiores divisões e o AFL, em empregos de 31/12/" & [Ano_Ref] & ". Compare por participação, nunca o AFL contra o total.")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#F58220" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: 7d23c5b0-40e6-4eb3-bfee-5c3972e4b985
+
+	/// Variação % dos empregos da atividade do AFL sobre o ano anterior (BLANK quando não há ano comparável).
+	measure Emp_Atividade_Var = [Empregos_Var_Pct]
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Empregos\Atividades
+		lineageTag: cfff06f0-60fa-4e39-a016-98c6f88cb2bf
+
+	/// Título das atividades do AFL: atividade líder e peso nos empregos do AFL.
+	measure Titulo_Emp_Atividades_HTML =
+			VAR T = FILTER(ADDCOLUMNS(VALUES(D_AflAtividade[nome]), "@v", [Empregos_Ref]), NOT ISBLANK([@v]))
+			VAR Tot = SUMX(T, [@v])
+			VAR Lider = TOPN(1, T, [@v], DESC, D_AflAtividade[nome], ASC)
+			VAR Nome = CONCATENATEX(Lider, D_AflAtividade[nome], "")
+			VAR Peso = DIVIDE(MAXX(Lider, [@v]), Tot)
+			VAR L1 = IF(Tot = 0, "Sem dados para os filtros escolhidos", IF(COUNTROWS(T) = 1, Nome & " reúne todos os empregos do filtro", Nome & " concentra " & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & " dos empregos do AFL"))
+			VAR L2 = IF(Tot = 0, "", "Empregos em 31/12/" & [Ano_Ref] & " nas 6 atividades (CNAEs) do AFL")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#1D1E21" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: 8498f6e1-e8e6-427b-95ce-d13b42e5c4c6
+
+	/// Empregos por UF (as 10 maiores); as demais voltam BLANK.
+	measure Emp_UF_Top =
+			VAR Valor = [Empregos_Ref]
+			VAR Posicao = IF(NOT ISBLANK(Valor), RANKX(ALLSELECTED(D_UF[uf]), [Empregos_Ref], , DESC, DENSE))
+			RETURN IF(NOT ISBLANK(Valor) && Posicao <= 10, Valor)
+		formatString: #,0
+		displayFolder: Empregos\UF
+		lineageTag: afa99118-f56f-4dcd-b62b-3d77e2c33d85
+
+	/// Peso do AFL nos empregos comparáveis da UF: AFL ÷ (AFL + comparáveis).
+	measure Emp_UF_Peso_AFL = DIVIDE([Empregos_Ref_AFL], [Empregos_Ref_AFL] + [Empregos_Ref_Comparavel])
+		formatString: 0.0%
+		displayFolder: Empregos\UF
+		lineageTag: c7bf7eee-8c24-4260-aa30-39317b204dec
+
+	/// Peso do AFL nos empregos comparáveis, só nas 10 UFs com mais empregos do AFL.
+	measure Emp_UF_Peso_Top =
+			VAR Valor = [Emp_UF_Peso_AFL]
+			VAR Posicao = IF(NOT ISBLANK([Empregos_Ref_AFL]), RANKX(ALLSELECTED(D_UF[uf]), [Empregos_Ref_AFL], , DESC, DENSE))
+			RETURN IF(NOT ISBLANK(Valor) && Posicao <= 10, Valor)
+		formatString: 0.0%
+		displayFolder: Empregos\UF
+		lineageTag: 1f1fb96e-85c4-4b98-a9db-7b0ae3d0fa32
+
+	/// Título das UFs (página AFL): UF líder e participação nos empregos do AFL, com a UF onde o AFL mais pesa.
+	measure Titulo_Emp_UF_AFL_HTML =
+			VAR T = FILTER(ADDCOLUMNS(VALUES(D_UF[uf]), "@v", [Empregos_Ref], "@p", [Emp_UF_Peso_AFL]), NOT ISBLANK([@v]))
+			VAR Tot = SUMX(T, [@v])
+			VAR Lider = TOPN(1, T, [@v], DESC, D_UF[uf], ASC)
+			VAR UF = CONCATENATEX(Lider, D_UF[uf], "")
+			VAR Mais = TOPN(1, T, [@p], DESC, D_UF[uf], ASC)
+			VAR UFMais = CONCATENATEX(Mais, D_UF[uf], "")
+			VAR PMais = MAXX(Mais, [@p])
+			VAR L1 = IF(Tot = 0, "Sem dados para os filtros escolhidos", IF(COUNTROWS(T) = 1, UF & " reúne os empregos do filtro", UF & " tem " & IF(ISBLANK(DIVIDE(MAXX(Lider, [@v]), Tot)), "—", FORMAT(DIVIDE(MAXX(Lider, [@v]), Tot), "0.0%", "pt-BR")) & " dos empregos do AFL"))
+			VAR L2 = IF(Tot = 0 || COUNTROWS(T) = 1, "", "Onde o AFL pesa mais: " & UFMais & " (" & IF(ISBLANK(PMais), "—", FORMAT(PMais, "0.0%", "pt-BR")) & " dos empregos comparáveis)")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#1D1E21" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: 1089cb94-33a7-40db-b4f2-8999aacee1fc
+
+	/// Título das UFs (página Todos os setores): UF onde o AFL mais pesa no emprego comparável.
+	measure Titulo_Emp_UF_Total_HTML =
+			VAR T = FILTER(ADDCOLUMNS(VALUES(D_UF[uf]), "@a", [Empregos_Ref_AFL], "@p", [Emp_UF_Peso_AFL]), NOT ISBLANK([@a]))
+			VAR Mais = TOPN(1, T, [@p], DESC, D_UF[uf], ASC)
+			VAR UFMais = CONCATENATEX(Mais, D_UF[uf], "")
+			VAR PMais = MAXX(Mais, [@p])
+			VAR L1 = IF(COUNTROWS(T) = 0, "Sem dados para os filtros escolhidos", IF(COUNTROWS(T) = 1, "Peso do AFL nos empregos comparáveis", "Em " & UFMais & ", o AFL é " & IF(ISBLANK(PMais), "—", FORMAT(PMais, "0.0%", "pt-BR")) & " do emprego comparável"))
+			VAR L2 = IF(COUNTROWS(T) = 0, "", "Peso do AFL nos empregos comparáveis, nas 10 UFs com mais empregos do AFL")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#1D1E21" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: a08b0c90-ae79-4f3d-91f8-c099ea1d87c1
+
+	/// Valor constante usado pelos mini-gráficos transparentes que abrem tooltips (botões ⓘ).
+	measure Info_Gatilho_Valor = 1
+		formatString: 0
+		isHidden
+		displayFolder: Base\Apoio
+		lineageTag: 4a522cbe-bb99-4f05-bfa4-2f74672fc973
+
 	column Coluna
 		dataType: string
 		isHidden

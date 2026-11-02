@@ -1,0 +1,36 @@
+table D_AflAtividade
+	lineageTag: b59b006e-e9ce-4296-a322-d730ca8a2679
+
+	column cnae_fiscal
+		dataType: string
+		lineageTag: fc5dff76-dba6-471e-9021-87fe027dec0d
+		summarizeBy: none
+		sourceColumn: cnae_fiscal
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: 73aad987-6a3c-45f6-94fb-86c2e960f1bf
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: 2ca43f7f-3abf-4cd1-a8f2-e107a27d23d2
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_AflAtividade = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [cnae_fiscal = text, nome = text, ordem = text], {{"5611201", "Restaurantes e similares", "1"}, {"5611203", "Lanchonetes, casas de chá, de sucos e similares", "2"}, {"4721102", "Padaria e confeitaria (revenda)", "3"}, {"5620104", "Alimentos preparados p/ consumo domiciliar", "4"}, {"5611204", "Bares sem entretenimento", "5"}, {"5611205", "Bares com entretenimento", "6"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

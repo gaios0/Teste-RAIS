@@ -199,6 +199,8 @@ def medidas():
         for g, suf in (("AFL", "AFL"), ("Comparável", "Comparavel")):
             add(f"{base}_{suf}", f"{base} só do grupo {g}, independente do filtro de setores da página.",
                 f"CALCULATE([{base}], " + GRUPO.format(g=g) + ")", f"Base\\{suf}", fmt)
+    import dax_rais
+    m += dax_rais.medidas()
     return m
 
 
@@ -230,11 +232,45 @@ def gravar_medidas():
     return len(medidas())
 
 
+# ------------------------------------------------------------------ tabelas locais (importadas) de apoio aos visuais
+def _tabela_m(nome, colunas, linhas):
+    """Tabela importada por M (#table), com lineageTags preservados."""
+    arq = TAB / f"{nome}.tmdl"
+    tags = tags_existentes(arq)
+    tag_tab = re.search(r"^\tlineageTag: ([0-9a-f-]+)", arq.read_text(encoding="utf-8"), re.M).group(1) if arq.exists() else str(uuid.uuid4())
+    L = [f"table {nome}", f"\tlineageTag: {tag_tab}", ""]
+    for c in colunas:
+        L += [f"\tcolumn {c}", "\t\tdataType: string", f"\t\tlineageTag: {tags.get(c, str(uuid.uuid4()))}", "\t\tsummarizeBy: none", f"\t\tsourceColumn: {c}", "",
+              "\t\tannotation SummarizationSetBy = Automatic", ""]
+    tipos = ", ".join(f"{c} = text" for c in colunas)
+    corpo = ", ".join("{" + ", ".join('"' + str(v).replace('"', '""') + '"' for v in l) + "}" for l in linhas)
+    L += [f"\tpartition {nome} = m", "\t\tmode: import", "\t\tsource =", "\t\t\t\tlet", f"\t\t\t\t    Fonte = #table(type table [{tipos}], {{{corpo}}})",
+          "\t\t\t\tin", "\t\t\t\t    Fonte", "", "\tannotation PBI_ResultType = Table", ""]
+    arq.write_text("\n".join(L), encoding="utf-8")
+
+
+AFL_ATIVIDADES = [("5611201", "Restaurantes e similares", "1"), ("5611203", "Lanchonetes, casas de chá, de sucos e similares", "2"),
+                  ("4721102", "Padaria e confeitaria (revenda)", "3"), ("5620104", "Alimentos preparados p/ consumo domiciliar", "4"),
+                  ("5611204", "Bares sem entretenimento", "5"), ("5611205", "Bares com entretenimento", "6")]
+LOCAIS = ["D_Comparavel", "D_AflAtividade", "D_Rank_Divisao"]
+
+
+def tabelas_locais():
+    import json
+    divs = json.loads((RAIZ / "docs" / "previa" / "divisoes.json").read_text(encoding="utf-8"))
+    _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Só os comparáveis ao AFL"), ("Não", "Demais setores")])
+    _tabela_m("D_AflAtividade", ["cnae_fiscal", "nome", "ordem"], AFL_ATIVIDADES)
+    _tabela_m("D_Rank_Divisao", ["nm_divisao", "setor_principal"], [(n, s) for n, s in divs] + [("AFL · conjunto de 6 CNAEs", "Serviços")])
+
+
 # ------------------------------------------------------------------ relações e refs
 def relacoes():
     arq = DEF / "relationships.tmdl"
     t = arq.read_text(encoding="utf-8")
     nl = "\r\n" if "\r\n" in t else "\n"
+    for de, para in (("D_Cnae.setor_comparavel_afl", "D_Comparavel.comparavel_AFL"), ("D_Cnae.cnae_fiscal", "D_AflAtividade.cnae_fiscal")):
+        if f"fromColumn: {de}{nl}\ttoColumn: {para}" not in t:
+            t = t.rstrip("\r\n") + nl + nl + nl.join([f"relationship {uuid.uuid4()}", f"\tfromColumn: {de}", f"\ttoColumn: {para}"]) + nl
     for fato in ("F_rais", "F_Mediana"):
         if f"fromColumn: {fato}.ano{nl}\ttoColumn: D_Calendario.Ano" in t:
             continue
@@ -247,16 +283,16 @@ def refs():
     arq = DEF / "model.tmdl"
     t = arq.read_text(encoding="utf-8")
     nl = "\r\n" if "\r\n" in t else "\n"
-    for tab in ("_medidas", "D_Calendario"):
+    for tab in ("_medidas", "D_Calendario", *LOCAIS):
         if f"ref table {tab}{nl}" not in t:
             t = t.replace(f"ref table F_rais{nl}", f"ref table F_rais{nl}ref table {tab}{nl}", 1) if tab == "_medidas" else \
                 t.replace(f"ref table D_Ano{nl}", f"ref table D_Ano{nl}ref table {tab}{nl}", 1)
-    t = t.replace('annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS"]',
-                  'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario"]')
+    t = re.sub(r'annotation PBI_QueryOrder = \[.*?\]', 'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao"]', t)
     arq.write_text(t, encoding="utf-8", newline="")
 
 
 def main():
+    tabelas_locais()
     calendario()
     n = gravar_medidas()
     relacoes()

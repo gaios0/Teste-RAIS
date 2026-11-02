@@ -1,0 +1,28 @@
+table D_Comparavel
+	lineageTag: 657f9a02-fc76-4f0d-aa35-62fb81c97f74
+
+	column comparavel_AFL
+		dataType: string
+		lineageTag: b5c64c93-e752-4934-87a9-22e997ca8911
+		summarizeBy: none
+		sourceColumn: comparavel_AFL
+
+		annotation SummarizationSetBy = Automatic
+
+	column comparavel_AFL_rotulo
+		dataType: string
+		lineageTag: d30db3af-b9e7-4c51-9561-ec7fc94ad823
+		summarizeBy: none
+		sourceColumn: comparavel_AFL_rotulo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Comparavel = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [comparavel_AFL = text, comparavel_AFL_rotulo = text], {{"Sim", "Só os comparáveis ao AFL"}, {"Não", "Demais setores"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

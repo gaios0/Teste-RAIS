@@ -9,7 +9,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario"]
+annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -24,6 +24,9 @@ ref table D_Escolaridade
 ref table D_FaixaIdade
 ref table D_Raca
 ref table D_Ano
+ref table D_Rank_Divisao
+ref table D_AflAtividade
+ref table D_Comparavel
 ref table D_Calendario
 
 ref cultureInfo pt-BR
