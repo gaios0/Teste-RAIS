@@ -1,0 +1,34 @@
+table D_Escolaridade
+	lineageTag: 7c611bc7-714d-46da-b694-5ef6440231d4
+	sourceLineageTag: abd64357-a85d-4601-bf62-5127be892057
+
+	column escolaridade_agrupada
+		dataType: string
+		isNullable: false
+		lineageTag: b888d6e4-97b8-4791-912e-93b3954f3fa1
+		sourceLineageTag: 86be082f-3918-4634-be53-c7d4b776d13b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: escolaridade_agrupada
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f32bdc76-977a-4c69-9d3c-e1591bdf8149
+		sourceLineageTag: d556ee8a-f0a8-4f1a-80f1-25ed355e2d53
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Escolaridade = entity
+		mode: directQuery
+		source
+			entityName: D_Escolaridade
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

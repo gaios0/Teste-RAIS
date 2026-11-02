@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "RAIS Emprego Formal"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "15fb8401-c272-4a3b-9983-a5ff1574d2e7"
+  }
+}

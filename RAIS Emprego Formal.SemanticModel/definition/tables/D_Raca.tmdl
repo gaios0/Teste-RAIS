@@ -1,0 +1,54 @@
+table D_Raca
+	lineageTag: 27604ca6-5af7-4827-8a96-fbbdcfc085b3
+	sourceLineageTag: 48e96c90-e07c-4684-b9f6-5992814da7e7
+
+	column raca_cor
+		dataType: string
+		isNullable: false
+		lineageTag: 090a58da-6ea9-45a3-a88d-6115ef529242
+		sourceLineageTag: 661b48dc-b7a9-4e11-b18f-808107f83283
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: raca_cor
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_raca
+		dataType: string
+		lineageTag: 37fc0d80-a7e8-4ffe-8967-c9fefd43a40d
+		sourceLineageTag: 4a14d7b0-5b6f-42b6-a8ef-a09b91156d59
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: grupo_raca
+
+		annotation SummarizationSetBy = Automatic
+
+	column declarada
+		dataType: string
+		lineageTag: 672351a1-b4f0-4566-b4f8-aedfbf75429e
+		sourceLineageTag: d48a3a79-a013-4047-b57c-68b7354bb7fe
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: declarada
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 150ed725-dcdb-46a4-b6d6-77f170592d08
+		sourceLineageTag: 4b207f19-97bf-4155-aaa8-1a0b63f1cd86
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Raca = entity
+		mode: directQuery
+		source
+			entityName: D_Raca
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

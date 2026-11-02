@@ -1,0 +1,11 @@
+expression 'DirectQuery para AS – Painel_RAIS' =
+		let
+		    Source = AnalysisServices.Database("powerbi://api.powerbi.com/v1.0/myorg/Testes", "Painel_RAIS"),
+		    Cubes = Table.Combine(Source[Data]),
+		    Cube = Cubes{[Id="Model", Kind="Cube"]}[Data]
+		in
+		    Cube
+	lineageTag: 04703471-f9c5-4bbc-83d3-a9430adf03f7
+
+	annotation PBI_IncludeFutureArtifacts = True
+

@@ -1,0 +1,34 @@
+table D_FaixaIdade
+	lineageTag: d1874d80-d4ea-40cd-ba5e-9d9744881f0e
+	sourceLineageTag: fa643d4d-ffc8-4455-aa96-c48ef2857e54
+
+	column faixa_idade
+		dataType: string
+		isNullable: false
+		lineageTag: 242a603e-24e3-4df1-8b19-ca947d7ca67b
+		sourceLineageTag: 9bad2476-e863-4a2e-a3e0-26a15ef6d7e0
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: faixa_idade
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8b6a444d-9194-4fb6-84e3-117c69e341c8
+		sourceLineageTag: 2e2dadd4-7859-4ce1-9971-47a44cfb5d9d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_FaixaIdade = entity
+		mode: directQuery
+		source
+			entityName: D_FaixaIdade
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

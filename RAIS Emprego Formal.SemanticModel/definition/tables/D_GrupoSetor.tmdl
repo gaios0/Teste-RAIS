@@ -1,0 +1,34 @@
+table D_GrupoSetor
+	lineageTag: 4c96ec5b-49e9-4bf7-855d-90e2b687cff5
+	sourceLineageTag: 9b0bdb65-2352-4560-bbcb-de04579a2f38
+
+	column grupo_setor
+		dataType: string
+		isNullable: false
+		lineageTag: 0537c4be-fcc4-4029-acaf-8de7fc8561b4
+		sourceLineageTag: 779c0ae1-0194-4cda-ae24-744047ec47a3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: grupo_setor
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 84648ef8-e95c-483b-bedd-3a65002e9779
+		sourceLineageTag: 55d4e276-2e6c-415d-a5cd-cc5f9e5bd77c
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_GrupoSetor = entity
+		mode: directQuery
+		source
+			entityName: D_GrupoSetor
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

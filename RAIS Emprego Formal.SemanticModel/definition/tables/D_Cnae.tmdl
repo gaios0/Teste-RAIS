@@ -1,0 +1,101 @@
+table D_Cnae
+	lineageTag: b82dffe9-39d5-4ad8-97b2-70efa22809f6
+	sourceLineageTag: c629db0f-d80e-4f3e-a644-11e1b10a05fa
+
+	column cnae_fiscal
+		dataType: string
+		isNullable: false
+		lineageTag: df0ae809-04cb-4fa0-ace7-78f4c9f4766f
+		sourceLineageTag: 0aaf75b6-252c-4110-8ef2-845f4458cc1c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cnae_fiscal
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_subclasse
+		dataType: string
+		lineageTag: 12c58e9a-8172-49bf-9f17-c5e1a7a522d0
+		sourceLineageTag: 5f9f980b-1f33-4e14-bea0-a7471e7de4b1
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_subclasse
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_classe
+		dataType: string
+		lineageTag: a985bbcb-8bcd-4bcd-9fda-11089e06ecd9
+		sourceLineageTag: 09422bda-e434-4c59-9baf-95b4ca20bbee
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_classe
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_divisao
+		dataType: string
+		lineageTag: 485f4e6b-ce1e-4e18-8f38-3fe426cb0cb5
+		sourceLineageTag: afe40878-3650-4ea4-8501-31d0b3743b89
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_divisao
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_secao
+		dataType: string
+		lineageTag: b20e88fb-0c16-423c-90c8-e07c7e093752
+		sourceLineageTag: ff27f52c-fd87-4156-aa5e-fbf93b364bdc
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_secao
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_afl
+		dataType: string
+		lineageTag: 429be569-ca12-4123-b045-be3dd61e1eb6
+		sourceLineageTag: b406bf3a-28c6-4661-94cc-2e1c52728097
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_afl
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_comparavel_afl
+		dataType: string
+		lineageTag: a8ff2d8d-c027-48f9-8cef-c036beea4536
+		sourceLineageTag: 11a00452-11eb-48be-b3cf-654261ce74ce
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_comparavel_afl
+
+		annotation SummarizationSetBy = Automatic
+
+	column setor_principal
+		dataType: string
+		lineageTag: 7dd28796-fae3-47bc-99aa-cbe81b25d221
+		sourceLineageTag: a9d341b9-e141-48a8-9192-9c04da9d4d49
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_setor
+		dataType: string
+		lineageTag: 0758f98d-7889-45b2-aa97-000a5a42e163
+		sourceLineageTag: dd2bc069-aef9-4217-9ffc-9aaeaeb97a1c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: grupo_setor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Cnae = entity
+		mode: directQuery
+		source
+			entityName: D_Cnae
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

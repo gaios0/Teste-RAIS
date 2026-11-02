@@ -1,0 +1,28 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table F_rais
+ref table D_Cnae
+ref table F_Mediana
+ref table D_UF
+ref table D_GrupoSetor
+ref table D_Sexo
+ref table D_Escolaridade
+ref table D_FaixaIdade
+ref table D_Raca
+ref table D_Ano
+
+ref cultureInfo pt-BR
+

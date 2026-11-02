@@ -1,0 +1,34 @@
+table D_Sexo
+	lineageTag: 3f72654e-526c-495a-bd23-ab282bfb8945
+	sourceLineageTag: bc54691c-444c-47e6-a468-fee71eaf11bf
+
+	column sexo
+		dataType: string
+		isNullable: false
+		lineageTag: 7f20e931-9ddd-4429-ac0b-47231ef041bc
+		sourceLineageTag: 7fca845d-3129-4f36-a147-2e1ad76b4423
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: sexo
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7759599b-ff89-4407-b8dc-5e9f75881ec9
+		sourceLineageTag: 578474e4-cf1f-4421-8e31-8fb7d78e45f1
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Sexo = entity
+		mode: directQuery
+		source
+			entityName: D_Sexo
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

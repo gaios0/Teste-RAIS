@@ -1,0 +1,32 @@
+table D_Ano
+	lineageTag: 92dcca69-eb08-4847-95ff-0eda223c35eb
+	sourceLineageTag: 39b59d59-869a-49b2-bdb6-1a1689605543
+
+	column ano
+		dataType: int64
+		isNullable: false
+		formatString: 0
+		lineageTag: 54d8e95a-dc8e-4d7b-9cd3-ef3d2091cdb4
+		sourceLineageTag: 2173390f-5e18-48de-9abe-8e985aeb82d8
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column base
+		dataType: string
+		lineageTag: bbf5de06-d2a4-4273-a031-0fcd1ae3b886
+		sourceLineageTag: 95dedeff-d5fb-4f8f-9a23-eba215789e48
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: base
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ano = entity
+		mode: directQuery
+		source
+			entityName: D_Ano
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

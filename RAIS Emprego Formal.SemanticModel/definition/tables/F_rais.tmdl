@@ -1,0 +1,370 @@
+table F_rais
+	lineageTag: 6cd3c3a5-a157-4da9-a9b0-db51c8d3669c
+	sourceLineageTag: d839f655-e6ff-4e60-b427-d809a6e6ecc0
+
+	column uf
+		dataType: string
+		isHidden
+		lineageTag: 11cbe06d-4e2d-4f5a-b1a6-b67c33b38227
+		sourceLineageTag: c6ef554f-2a58-4b79-9789-2d943091d817
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: uf
+
+		annotation SummarizationSetBy = User
+
+	column estado
+		dataType: string
+		isHidden
+		lineageTag: e9b07176-6fa4-4a3d-b861-b8d45f5f1869
+		sourceLineageTag: fc2194c5-5ae7-4dae-8fc5-b00de992dc0c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: estado
+
+		annotation SummarizationSetBy = User
+
+	column municipio
+		dataType: string
+		lineageTag: 25da921c-b804-4392-8569-427240b46439
+		sourceLineageTag: aaef1d09-bf91-4878-bc4a-117843c99ff4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: municipio
+
+		annotation SummarizationSetBy = User
+
+	column ambito
+		dataType: string
+		lineageTag: 1804ccb5-4943-4177-a3fa-e710a54b99a5
+		sourceLineageTag: 2b7a1b70-c28c-44a6-9021-84327017e38f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ambito
+
+		annotation SummarizationSetBy = User
+
+	column cnae_fiscal
+		dataType: string
+		isHidden
+		lineageTag: cc2500ac-616d-4e1e-ac9e-658da6f05e9a
+		sourceLineageTag: e08604c6-9cb1-4a5e-8133-91dd200ca269
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cnae_fiscal
+
+		annotation SummarizationSetBy = User
+
+	column nm_subclasse
+		dataType: string
+		isHidden
+		lineageTag: d006ca12-f9f1-4433-9748-1ce7ad45488b
+		sourceLineageTag: b6087638-a5f4-4d18-acca-e178373829f3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_subclasse
+
+		annotation SummarizationSetBy = User
+
+	column nm_classe
+		dataType: string
+		isHidden
+		lineageTag: efc1a75b-85f9-40a8-97dd-e7267260ab11
+		sourceLineageTag: c99227e1-7ba8-4a1f-9b35-6d61a4e53b70
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_classe
+
+		annotation SummarizationSetBy = User
+
+	column nm_divisao
+		dataType: string
+		isHidden
+		lineageTag: cdcab97d-e827-4dcb-bd36-bd13662f42e9
+		sourceLineageTag: c01d5ee5-7021-4bd3-bf28-ebec55c54988
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_divisao
+
+		annotation SummarizationSetBy = User
+
+	column nm_secao
+		dataType: string
+		isHidden
+		lineageTag: da4935f7-0016-4595-8bf4-ec629378c180
+		sourceLineageTag: c42e84ca-12a8-4c64-be98-92479aadaccf
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_secao
+
+		annotation SummarizationSetBy = User
+
+	column setor_afl
+		dataType: string
+		isHidden
+		lineageTag: 6417a1c0-ab7c-4d2a-92d7-6ae7973aef57
+		sourceLineageTag: 07f7190a-7a7c-490e-a219-139297299c74
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_afl
+
+		annotation SummarizationSetBy = User
+
+	column setor_comparavel_afl
+		dataType: string
+		isHidden
+		lineageTag: c2f388c1-74b8-43a9-97ae-fab0c28c036b
+		sourceLineageTag: 974307a6-171b-43f6-8e34-bef0940af3b0
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_comparavel_afl
+
+		annotation SummarizationSetBy = User
+
+	column setor_principal
+		dataType: string
+		isHidden
+		lineageTag: bf9c26bc-b791-4982-84d3-8a4eef763f08
+		sourceLineageTag: cf9406fc-d3e1-4eb0-a0d5-b5995bfb3fea
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: setor_principal
+
+		annotation SummarizationSetBy = User
+
+	column cbo_2002
+		dataType: string
+		lineageTag: 7c3cd0be-2372-4461-b036-29ebcce2b521
+		sourceLineageTag: 9929f9b6-0d1e-47cf-8425-865ea5740c10
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cbo_2002
+
+		annotation SummarizationSetBy = User
+
+	column categoria_vinculo
+		dataType: string
+		lineageTag: 9dcdba96-8878-4ba9-83dc-7d5c9e6d97cc
+		sourceLineageTag: 716da178-86d0-435a-89e9-98471a7c265e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: categoria_vinculo
+
+		annotation SummarizationSetBy = User
+
+	column natureza_empresa
+		dataType: string
+		lineageTag: 699bd657-30aa-475d-9477-43aaf8bfd7b1
+		sourceLineageTag: cf55ffc1-ab1f-4f69-9890-e929eb60a97d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: natureza_empresa
+
+		annotation SummarizationSetBy = User
+
+	column modalidade_contrato
+		dataType: string
+		lineageTag: 22cda63a-60ba-463a-a552-6547674d52c5
+		sourceLineageTag: 886dfd2e-9e4a-4a9f-b6c8-a854a30d1f0e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: modalidade_contrato
+
+		annotation SummarizationSetBy = User
+
+	column tipo_admissao
+		dataType: string
+		lineageTag: 18030976-7f3a-417a-a5c6-8c7697311cd2
+		sourceLineageTag: f813f1f7-96c3-47e5-a724-840ac8dbad92
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: tipo_admissao
+
+		annotation SummarizationSetBy = User
+
+	column trabalho_intermitente
+		dataType: string
+		lineageTag: 5165e38a-454e-43b3-a101-a4e2b7d90282
+		sourceLineageTag: 7721cf41-3e4e-48a9-967e-d25d8c5f9542
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: trabalho_intermitente
+
+		annotation SummarizationSetBy = User
+
+	column trabalho_parcial
+		dataType: string
+		lineageTag: 3714f1c7-8523-4451-9f44-5a66e93f757b
+		sourceLineageTag: 33420177-cd41-4ccc-afbf-5a3d99db173f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: trabalho_parcial
+
+		annotation SummarizationSetBy = User
+
+	column faixa_horas_contratuais
+		dataType: string
+		lineageTag: 23816cf5-4f5f-47c9-b212-bf0fcb16b7c8
+		sourceLineageTag: 4f06db73-e84d-4511-8c1b-88618eb66b06
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: faixa_horas_contratuais
+
+		annotation SummarizationSetBy = User
+
+	column sexo
+		dataType: string
+		isHidden
+		lineageTag: a8c25c99-1582-467f-bd8e-78725131a8cc
+		sourceLineageTag: 0393f76d-a1a8-4371-94f4-96d5c8398f80
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: sexo
+
+		annotation SummarizationSetBy = User
+
+	column faixa_idade
+		dataType: string
+		isHidden
+		lineageTag: a32d274d-ccac-4753-b440-181481b59baa
+		sourceLineageTag: d6bbf52e-e9b3-4aed-9d9e-3f679221abed
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: faixa_idade
+
+		annotation SummarizationSetBy = User
+
+	column escolaridade_agrupada
+		dataType: string
+		isHidden
+		lineageTag: 69ddd963-ffcd-4f5d-a215-bd6d0977cc20
+		sourceLineageTag: f94f1ba2-47ea-41d1-9939-7d91e7d9bd89
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: escolaridade_agrupada
+
+		annotation SummarizationSetBy = User
+
+	column raca_cor
+		dataType: string
+		isHidden
+		lineageTag: 2f9c69c1-ba1c-48af-b149-6d171c287145
+		sourceLineageTag: ffc725e4-871a-4aa0-9384-001d6f224953
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: raca_cor
+
+		annotation SummarizationSetBy = User
+
+	column indicador_portador_deficiencia
+		dataType: string
+		lineageTag: ac633516-4b4a-44d7-819c-a9128fec6dbc
+		sourceLineageTag: f6dc451a-f453-4f72-bfb6-072418815937
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: indicador_portador_deficiencia
+
+		annotation SummarizationSetBy = User
+
+	column tipo_deficiencia
+		dataType: string
+		lineageTag: c9f116aa-968a-4908-b75c-004816cacd93
+		sourceLineageTag: 8e85b0c4-2eb8-457a-a1c0-3b8037e6644e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: tipo_deficiencia
+
+		annotation SummarizationSetBy = User
+
+	column vinculos
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bbac7ed4-f384-4b1a-b71d-dd1d8bb31507
+		sourceLineageTag: 279bbdc1-de2a-49ee-a1c3-fe4a3faf50a1
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: vinculos
+
+		annotation SummarizationSetBy = User
+
+	column soma_salario_valido
+		dataType: double
+		isHidden
+		lineageTag: 04f3e2fa-391e-47b2-83cd-6423f068b3b2
+		sourceLineageTag: 174e046e-e13e-4548-89cc-ad3c8185d56b
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: soma_salario_valido
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column soma_sm_valido
+		dataType: double
+		isHidden
+		lineageTag: 5d6bf7e7-8511-4539-9678-5598f530c679
+		sourceLineageTag: 5c355519-fb31-4052-bd6f-556812b928af
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: soma_sm_valido
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qtd_salario_valido
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dc03da98-e373-4bce-915a-68af67144fd7
+		sourceLineageTag: 0072fb8e-3128-414c-9fd5-c5711c0558c9
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: qtd_salario_valido
+
+		annotation SummarizationSetBy = User
+
+	column soma_idade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8bc1fe5d-e9af-4fca-adb6-53caea684eec
+		sourceLineageTag: c3bcf100-2ec8-4a48-a849-0a3437c90173
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: soma_idade
+
+		annotation SummarizationSetBy = User
+
+	column qtd_idade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 90a50213-cf1a-45a1-bcb5-186277686d53
+		sourceLineageTag: 90896cd3-40e1-4c26-8b68-8504990ea8ba
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: qtd_idade
+
+		annotation SummarizationSetBy = User
+
+	column ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4359c2b5-2986-45e9-92e5-37cec05e1505
+		sourceLineageTag: 0870f10a-fbf2-4257-8835-7cad6f4189e8
+		dataCategory: Uncategorized
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = User
+
+	partition F_rais = entity
+		mode: directQuery
+		source
+			entityName: F_rais
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+

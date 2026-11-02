@@ -1,0 +1,52 @@
+relationship 75f34118-c344-45ec-ac53-d07b4bab2e34
+	fromColumn: F_rais.cnae_fiscal
+	toColumn: D_Cnae.cnae_fiscal
+
+relationship 5a271ef6-b30f-4237-b1c5-09463eb0b826
+	fromColumn: F_rais.uf
+	toColumn: D_UF.uf
+
+relationship a1eec959-fbf7-4214-8a83-03f394c74fba
+	fromColumn: F_rais.sexo
+	toColumn: D_Sexo.sexo
+
+relationship b94664ab-12c0-4f90-a1e5-b86733e8793e
+	fromColumn: F_rais.escolaridade_agrupada
+	toColumn: D_Escolaridade.escolaridade_agrupada
+
+relationship cc803c54-4e55-41c2-ba81-64f9e6084165
+	fromColumn: F_rais.faixa_idade
+	toColumn: D_FaixaIdade.faixa_idade
+
+relationship ea213c30-2675-40b4-9c34-dcece8b4576a
+	fromColumn: F_rais.raca_cor
+	toColumn: D_Raca.raca_cor
+
+relationship 71320fe5-449a-4837-8faf-0ab1e737afaa
+	fromColumn: F_rais.ano
+	toColumn: D_Ano.ano
+
+relationship 778b9c77-835a-4df7-8b19-f13ec940490d
+	fromColumn: D_Cnae.grupo_setor
+	toColumn: D_GrupoSetor.grupo_setor
+
+relationship b3712537-f94e-47b0-8d76-af09411b254d
+	fromColumn: F_Mediana.grupo_setor
+	toColumn: D_GrupoSetor.grupo_setor
+
+relationship cdf54714-81c3-4757-be75-4d667f6cfa21
+	fromColumn: F_Mediana.uf
+	toColumn: D_UF.uf
+
+relationship f6426ed8-54a0-463b-914d-9e603a7baa13
+	fromColumn: F_Mediana.sexo
+	toColumn: D_Sexo.sexo
+
+relationship 4566cdd4-8598-4331-9fa0-effe2c473ea2
+	fromColumn: F_Mediana.escolaridade_agrupada
+	toColumn: D_Escolaridade.escolaridade_agrupada
+
+relationship 4fb53699-e623-493b-ad8a-272acd337a3c
+	fromColumn: F_Mediana.ano
+	toColumn: D_Ano.ano
+
