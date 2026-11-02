@@ -96,14 +96,13 @@ def montar(tema, recorte, refazer=False):
         vis[papel] = v["name"]
 
     # filtros
-    sync = {"Ano": "rais_ano", "Localização": "rais_uf", "Sexo": "rais_sexo", "Escolaridade": "rais_esc", "Raça/cor": "rais_raca", "Setores": "rais_setores", "CNAE AFL": "rais_cnae"}
+    sync = {"Ano": "rais_ano", "Localização": "rais_uf", "Sexo": "rais_sexo", "Escolaridade": "rais_esc", "Raça/cor": "rais_raca", "Setores": "rais_setores", "CNAE AFL": "rais_cnae", "Divisão": "rais_divisao"}
     campos = {"Ano": ("D_Calendario", "Ano"), "Localização": ("D_UF", "estado"), "Sexo": ("D_Sexo", "sexo"), "Escolaridade": ("D_Escolaridade", "escolaridade_agrupada"),
-              "Raça/cor": ("D_Raca", "raca_cor"), "CNAE AFL": ("D_AflAtividade", "nome")}
+              "Raça/cor": ("D_Raca", "raca_cor"), "CNAE AFL": ("D_AflAtividade", "nome"),
+              "Setores": ("D_Comparavel", "comparavel_AFL_rotulo"), "Divisão": ("D_Cnae", "nm_divisao")}
     for rot, (x, w) in pos.items():
         if rot == "Limpar":
             gravar("limpar", pb.limpar(n("limpar"), (x, 136, w, 48, prox()), LIMPAR_ARQ))
-        elif rot == "Setores":
-            gravar("f_setores", pb.slicer_comparavel(n("f_setores"), (x, 136, w, 48, prox()), sync[rot]))
         else:
             tab, col = campos[rot]
             gravar("f_" + rot, pb.slicer_dropdown(n("f_" + rot), (x - 4, 132, w + 8, 52, prox()), tab, col, sync[rot], rot,
@@ -115,9 +114,11 @@ def montar(tema, recorte, refazer=False):
         gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, prox()), m))
     # linha 2: série (índice) + contratos
     ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
-    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML"))
+    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML" if afl else "Titulo_Emp_SerieTotal_HTML"))
     series = [("Emp_Indice_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0"), ("Emp_Indice_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0"),
               ("Emp_Indice_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0"), ("Emp_Indice_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0")]
+    if not afl:
+        series += [("Emp_Indice_Sel_Pre", "Seleção atual (2009–2021)", "#98A2B3", "0.0"), ("Emp_Indice_Sel_Pos", "Seleção atual (2022 em diante)", "#98A2B3", "0.0")]
     tips = [("Empregos_Ref_AFL", "Empregos do AFL", "#,0"), ("Empregos_Ref_Comparavel", "Empregos dos comparáveis", "#,0"),
             ("Empregos_Var_Pct_AFL", "AFL sobre o ano anterior", "+0.0%;-0.0%;0.0%"), ("Empregos_Var_Pct_Comparavel", "Comparáveis sobre o ano anterior", "+0.0%;-0.0%;0.0%")]
     gravar("serie", pb.linhas(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, tips))

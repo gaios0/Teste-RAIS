@@ -154,8 +154,13 @@ def medidas():
     partes = ('VAR Partes = FILTER(UNION(ROW("@o", 1, "@t", "31/12/" & A), ROW("@o", 2, "@t", Local), ROW("@o", 3, "@t", Setor), ROW("@o", 4, "@t", Sexo),\n'
               '    ROW("@o", 5, "@t", Esc), ROW("@o", 6, "@t", Raca), ROW("@o", 7, "@t", "RAIS (" & IF(A >= 2022, "eSocial", "declaratória") & ")")), NOT ISBLANK([@t]) && [@t] <> "")\n'
               'VAR Texto = CONCATENATEX(Partes, [@t], " · ", [@o], ASC)\n')
+    add("Setor_Emp_Total", "Texto do recorte de setor da página Todos os setores: divisão(ões) escolhida(s), comparáveis, demais setores ou todos os setores.",
+        "VAR NDiv = COUNTROWS(VALUES(D_Cnae[nm_divisao]))\n"
+        "RETURN IF(ISFILTERED(D_Cnae[nm_divisao]) && NDiv < COUNTROWS(ALL(D_Cnae[nm_divisao])), IF(NDiv = 1, SELECTEDVALUE(D_Cnae[nm_divisao]), NDiv & \" divisões\"),\n"
+        "    IF(ISFILTERED(D_Comparavel[comparavel_AFL_rotulo]) && COUNTROWS(VALUES(D_Comparavel[comparavel_AFL_rotulo])) = 1, LOWER(SELECTEDVALUE(D_Comparavel[comparavel_AFL_rotulo])), \"todos os setores\"))",
+        f"{P}\\Apoio", None, True)
     add("Contexto_Emp_Total", "Linha de contexto da página Empregos · Todos os setores.",
-        contexto_comum + 'VAR Setor = IF(ISFILTERED(D_Comparavel[comparavel_AFL]), "setores comparáveis ao AFL", "todos os setores")\n' + partes + "RETURN IF(ISBLANK(A), \"\", Texto)", f"{P}\\Apoio", None, True)
+        contexto_comum + 'VAR Setor = [Setor_Emp_Total]\n' + partes + "RETURN IF(ISBLANK(A), \"\", Texto)", f"{P}\\Apoio", None, True)
     add("Contexto_Emp_AFL", "Linha de contexto da página Empregos · AFL.",
         contexto_comum + 'VAR Setor = IF(ISFILTERED(D_AflAtividade[nome]) && COUNTROWS(VALUES(D_AflAtividade[nome])) < COUNTROWS(ALL(D_AflAtividade[nome])), CONCATENATEX(VALUES(D_AflAtividade[nome]), D_AflAtividade[nome], ", "), "alimentação fora do lar (AFL)")\n'
         + partes + "RETURN IF(ISBLANK(A), \"\", Texto)", f"{P}\\Apoio", None, True)
@@ -165,7 +170,7 @@ def medidas():
                 "VAR Valor = [Empregos_Ref]\nVAR Variacao = [Empregos_Var]\nVAR VarPct = [Empregos_Var_Pct]\nVAR Seq = [Emp_Sequencia_Altas_AFL]\nVAR Contexto = [Contexto_Emp_" + u + "]\n")
         if u == "Total":
             fecho = ('VAR Pos = [Emp_Posicao_AFL_Divisao]\nVAR Divs = [Emp_Total_Divisoes]\n'
-                     'VAR Texto = Prep & ", o emprego formal fechou " & A & " com " & ' + num("Valor") + ' & " vínculos" & IF(ISBLANK(Pos), "", "; o AFL é a " & Pos & "ª maior divisão entre " & Divs)\n')
+                     'VAR SetorTxt = [Setor_Emp_Total]\nVAR Texto = Prep & ", " & IF(SetorTxt = "todos os setores", "o emprego formal", "o emprego em " & SetorTxt) & " fechou " & A & " com " & ' + num("Valor") + ' & " vínculos" & IF(ISBLANK(Pos) || SetorTxt <> "todos os setores", "", "; o AFL é a " & Pos & "ª maior divisão entre " & Divs)\n')
         else:
             fecho = ('VAR Fecho = SWITCH(TRUE(), ISBLANK(Variacao), IF(A = ' + str(QUEBRA) + ', "primeiro ano da fonte eSocial", "primeiro ano da série"),\n'
                      '    Variacao > 0, IF(Seq >= 2, Seq & "ª alta seguida", "alta de " & ' + pct("VarPct") + '), Variacao < 0, "queda de " & ' + pct("ABS(VarPct)") + ' & " sobre " & (A - 1), "estável")\n'
@@ -191,6 +196,19 @@ def medidas():
              "    \"Índice de empregos em 31/12, base 100 = 31/12/\" & I & IF(Afl19 > 0 && Afl20 > 0 && Comp19 > 0, \". Em 2020 o AFL perdeu \" & " + pct("ABS(DIVIDE(Afl20, Afl19) - 1)") + " & \" dos empregos; os comparáveis, \" & " + pct("ABS(DIVIDE(Comp20, Comp19) - 1)") + ", \"\")))\n")
     add("Titulo_Emp_Serie_HTML", "Título do gráfico de série (índice): crescimento desde o início do trecho, AFL × comparáveis.",
         serie + titulo_html("L1", "L2", '"#F58220"'), f"HTML\\{P}\\Títulos")
+    pre, resto = serie.split("VAR L1 = ", 1)
+    _, l2 = resto.split("VAR L2 = ", 1)
+    sel_vars = (f"VAR SelA = CALCULATE([Empregos], {ANO_FIXO.format(a='A')})\nVAR SelI = CALCULATE([Empregos], {ANO_FIXO.format(a='I')})\n"
+                "VAR CSel = DIVIDE(SelA, SelI) - 1\nVAR SetorSel = [Setor_Emp_Total]\nVAR NomeSel = IF(SetorSel = \"todos os setores\", \"mercado formal\", SetorSel)\n")
+    l1_total = ("VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(A <= I, I & \" é o primeiro ano do trecho: ainda não há crescimento a comparar\",\n"
+                "    \"Desde \" & I & \": AFL \" & " + pct("CAfl", True) + " & \", comparáveis \" & " + pct("CComp", True) + " & \", \" & NomeSel & \" \" & " + pct("CSel", True) + "))\n")
+    add("Titulo_Emp_SerieTotal_HTML", "Título do gráfico de série (página Todos os setores): AFL, comparáveis e a seleção atual (mercado ou setores filtrados).",
+        pre + sel_vars + l1_total + "VAR L2 = " + l2 + titulo_html("L1", "L2", '"#F58220"'), f"HTML\\{P}\\Títulos")
+    for trecho, cond, rot in (("Pre", f"A < {QUEBRA}", "2009–2021"), ("Pos", f"A >= {QUEBRA}", "2022 em diante")):
+        add(f"Emp_Indice_Sel_{trecho}", f"Índice de empregos da seleção atual (todo o mercado ou os filtros de setor e divisão), trecho {rot}; BLANK fora do trecho.",
+            "VAR A = [Ano_Ref]\nVAR I = [Ano_Inicio_Trecho]\n"
+            f"VAR Fim = CALCULATE([Empregos], {ANO_FIXO.format(a='A')})\nVAR Base = CALCULATE([Empregos], {ANO_FIXO.format(a='I')})\n"
+            f"RETURN IF(NOT ISBLANK(A) && {cond} && Base > 0, DIVIDE(Fim, Base) * 100)", f"{P}\\Séries", "0.0")
 
     # --- contratos (tabela AFL × Comparáveis, categorias exclusivas)
     def cat_sum(g, cat):

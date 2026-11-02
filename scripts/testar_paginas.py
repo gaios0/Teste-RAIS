@@ -2,6 +2,7 @@
 
 Uso: python scripts/testar_paginas.py emp
 """
+import os
 import re
 import subprocess
 import sys
@@ -15,7 +16,11 @@ def definicoes():
     """Todas as medidas do projeto como DEFINE MEASURE (sobrescrevem as do modelo carregado)."""
     import modelo_base as mb
     blocos = [f"MEASURE _medidas[{nome}] =\n{dax}" for nome, _, dax, _, _, _ in mb.medidas()]
-    return "DEFINE\n" + "\n".join(blocos) + "\n"
+    tabela = ""
+    if os.environ.get("RAIS_SEM_D_INDICADOR") == "1":        # antes de reabrir o PBIP, a tabela local ainda não existe no modelo carregado
+        linhas = ", ".join(f'{{"{n}", "{i + 1}"}}' for i, n in enumerate(mb.INDICADORES))
+        tabela = f'TABLE D_Indicador = DATATABLE("indicador", STRING, "ordem", STRING, {{{linhas}}})\n'
+    return "DEFINE\n" + tabela + "\n".join(blocos) + "\n"
 
 
 def rodar(consultas):
@@ -53,14 +58,62 @@ def emp():
     return q
 
 
+def perfil():
+    A = "D_Calendario[Ano] = 2025"
+    q = []
+    for u in ("Total", "AFL"):
+        extra = ', D_Cnae[setor_afl] = "Sim"' if u == "AFL" else ""
+        for n in (f"Manchete_Perfil_{u}_HTML", f"KPI_Mulheres_{u}_HTML", f"KPI_Jovens_{u}_HTML", f"KPI_Escol_{u}_HTML"):
+            q.append(f"-- {u} {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}{extra}))")
+    for n in ("Titulo_Pir_HTML", "Esc_Barras_HTML", "Titulo_Esc_HTML", "Titulo_CBO_HTML", "Raca_HTML", "Titulo_Raca_HTML"):
+        q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}, D_Cnae[setor_afl] = \"Sim\"))")
+    q.append('-- piramide\nEVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(D_FaixaIdade[faixa_idade], "m", [Pir_Mulheres], "h", [Pir_Homens], "mc", [Pir_Mulheres_Comp], "hc", [Pir_Homens_Comp]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim")')
+    q.append('-- cbo\nEVALUATE TOPN(10, CALCULATETABLE(SUMMARIZECOLUMNS(F_rais[cbo_2002], "v", [Emp_CBO_Top], "m", [Perf_Mulheres], "r", [Remuneracao_Media_Ref]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim"), [v], DESC)')
+    return q
+
+
+def salario():
+    A = "D_Calendario[Ano] = 2025"
+    q = []
+    for u in ("Total", "AFL"):
+        extra = ', D_Cnae[setor_afl] = "Sim"' if u == "AFL" else ""
+        for n in (f"Manchete_Salario_{u}_HTML", f"KPI_Mediana_{u}_HTML", f"KPI_RazaoSexo_{u}_HTML", f"KPI_RazaoRaca_{u}_HTML"):
+            q.append(f"-- {u} {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}{extra}))")
+    for n in ("Titulo_Rem_Serie_HTML", "Titulo_Rem_Esc_HTML", "Titulo_Rem_Gap_HTML", "Titulo_Rem_UF_HTML", "Rotulo_Gap_Sexo_HTML"):
+        q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}))")
+    q.append('-- serie\nEVALUATE SUMMARIZECOLUMNS(D_Calendario[Ano], "ma_pre", [Rem_Media_AFL_Pre], "ma_pos", [Rem_Media_AFL_Pos], "md_pre", [Rem_Mediana_AFL_Pre], "md_pos", [Rem_Mediana_AFL_Pos], "mc_pos", [Rem_Media_Comp_Pos], "mdc_pos", [Rem_Mediana_Comp_Pos]) ORDER BY D_Calendario[Ano]')
+    q.append('-- esc\nEVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(D_Escolaridade[escolaridade_agrupada], "afl", [Rem_Esc_AFL], "comp", [Rem_Esc_Comp], "rs_afl", [Rem_Razao_Sexo_AFL], "rs_comp", [Rem_Razao_Sexo_Comp], "rr_afl", [Rem_Razao_Raca_AFL], "rr_comp", [Rem_Razao_Raca_Comp]), D_Calendario[Ano] = 2025)')
+    q.append('-- uf\nEVALUATE TOPN(5, CALCULATETABLE(SUMMARIZECOLUMNS(D_UF[uf], "v", [Rem_UF_Top], "r", [Rem_UF_Razao_Comp]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim"), [v], DESC)')
+    return q
+
+
+def contrata():
+    A = "D_Calendario[Ano] = 2025"
+    q = []
+    for u in ("Total", "AFL"):
+        extra = ', D_Cnae[setor_afl] = "Sim"' if u == "AFL" else ""
+        for n in (f"Manchete_Contrata_{u}_HTML", f"KPI_Contrata1_{u}_HTML", f"KPI_Contrata2_{u}_HTML", f"KPI_Contrata3_{u}_HTML"):
+            q.append(f"-- {u} {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}{extra}))")
+    for n in ("Titulo_Contrata_Rank_Total_HTML", "Titulo_Contrata_Rank_AFL_HTML", "Titulo_Contrata_Serie_HTML", "Titulo_Contrata_UF_HTML", "Contrata_Tabela_HTML"):
+        q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}, D_Cnae[setor_afl] = \"Sim\"))")
+    q.append('-- ranking divisoes (mulheres)\nEVALUATE TOPN(12, SUMMARIZECOLUMNS(D_Rank_Divisao[nm_divisao], KEEPFILTERS(TREATAS({2025}, D_Calendario[Ano])), "v", [Ind_Divisao_Top]), [v], DESC)')
+    q.append('-- ranking divisoes (primeiro emprego)\nEVALUATE TOPN(6, SUMMARIZECOLUMNS(D_Rank_Divisao[nm_divisao], KEEPFILTERS(TREATAS({2021}, D_Calendario[Ano])), KEEPFILTERS(TREATAS({"Primeiro emprego"}, D_Indicador[indicador])), "v", [Ind_Divisao_Top]), [v], DESC)')
+    q.append('-- atividades (jovens)\nEVALUATE SUMMARIZECOLUMNS(D_AflAtividade[nome], KEEPFILTERS(TREATAS({2025}, D_Calendario[Ano])), KEEPFILTERS(TREATAS({"Até 24 anos"}, D_Indicador[indicador])), "v", [Ind_Valor_Ctx])')
+    q.append('-- uf (mulheres)\nEVALUATE TOPN(5, SUMMARIZECOLUMNS(D_UF[uf], KEEPFILTERS(TREATAS({2025}, D_Calendario[Ano])), "v", [Ind_UF_Top]), [v], DESC)')
+    q.append('-- serie (mulheres)\nEVALUATE SUMMARIZECOLUMNS(D_Calendario[Ano], "a_pre", [Ind_Serie_AFL_Pre], "a_pos", [Ind_Serie_AFL_Pos], "c_pre", [Ind_Serie_Comp_Pre], "c_pos", [Ind_Serie_Comp_Pos]) ORDER BY D_Calendario[Ano]')
+    return q
+
+
 def main():
-    saida = rodar(emp() if "emp" in sys.argv[1:] or not sys.argv[1:] else [])
+    alvo = sys.argv[1:] or ["emp"]
+    consultas = {"emp": emp, "perfil": perfil, "salario": salario, "contrata": contrata}
+    saida = rodar([c for a in alvo for c in consultas[a]()])
     for bloco in saida.split("--- ")[1:]:
         cab = bloco.split("\n")[0]
         corpo = bloco[len(cab):].strip()
         erro = "ERRO" in corpo[:200]
         print(("!! " if erro else "## ") + cab)
-        print("   " + (corpo[:700] if erro else texto(corpo)[:900]))
+        print("   " + (corpo[:160].replace("\n", " ") if erro else texto(corpo)[:900]))
 
 
 if __name__ == "__main__":

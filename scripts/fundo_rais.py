@@ -40,7 +40,7 @@ DEFS = """<defs><filter id="md" x="-5%" y="-5%" width="110%" height="115%" color
 
 # filtros por recorte: (rótulo, largura fixa ou None = divide o resto)
 FILTROS = {
-    "Todos os setores": [("Ano", 140), ("Setores", 360), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
+    "Todos os setores": [("Ano", 140), ("Setores", 250), ("Divisão", 300), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
     "AFL": [("Ano", 140), ("CNAE AFL", 300), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
 }
 

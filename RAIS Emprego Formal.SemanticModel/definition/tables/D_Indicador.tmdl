@@ -1,0 +1,29 @@
+table D_Indicador
+	lineageTag: 4e781ea8-ab8f-448c-a63b-9a9cd1968690
+
+	column indicador
+		dataType: string
+		lineageTag: f5239cd4-4b09-4aca-aa61-810eec58aea2
+		summarizeBy: none
+		sourceColumn: indicador
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: 60e1f3a9-ae35-4873-8dac-025163017de6
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Indicador = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [indicador = text, ordem = text], {{"Primeiro emprego", "1"}, {"Mulheres", "2"}, {"Até 24 anos", "3"}, {"55 anos ou mais", "4"}, {"Superior", "5"}, {"Negros", "6"}, {"Intermitente", "7"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

@@ -200,7 +200,11 @@ def medidas():
             add(f"{base}_{suf}", f"{base} só do grupo {g}, independente do filtro de setores da página.",
                 f"CALCULATE([{base}], " + GRUPO.format(g=g) + ")", f"Base\\{suf}", fmt)
     import dax_rais
-    m += dax_rais.medidas()
+    import dax_rais2
+    import dax_rais3
+    m += dax_rais.medidas() + dax_rais2.medidas() + dax_rais3.medidas()
+    # medida sem VAR própria não pode começar com RETURN: acrescenta uma VAR inócua
+    m = [(t[0], t[1], "VAR _A = 0\n" + t[2] if t[2].lstrip().startswith("RETURN") else t[2]) + tuple(t[3:]) for t in m]
     return m
 
 
@@ -241,7 +245,7 @@ def _tabela_m(nome, colunas, linhas):
     L = [f"table {nome}", f"\tlineageTag: {tag_tab}", ""]
     for c in colunas:
         L += [f"\tcolumn {c}", "\t\tdataType: string", f"\t\tlineageTag: {tags.get(c, str(uuid.uuid4()))}", "\t\tsummarizeBy: none", f"\t\tsourceColumn: {c}"]
-        if c == "nome" and "ordem" in colunas:
+        if c in ("nome", "indicador") and "ordem" in colunas:
             L.append("\t\tsortByColumn: ordem")
         L += ["", "\t\tannotation SummarizationSetBy = Automatic", ""]
     tipos = ", ".join(f"{c} = text" for c in colunas)
@@ -254,13 +258,15 @@ def _tabela_m(nome, colunas, linhas):
 AFL_ATIVIDADES = [("5611201", "Restaurantes e similares", "1"), ("5611203", "Lanchonetes, casas de chá, de sucos e similares", "2"),
                   ("4721102", "Padaria e confeitaria (revenda)", "3"), ("5620104", "Alimentos preparados p/ consumo domiciliar", "4"),
                   ("5611204", "Bares sem entretenimento", "5"), ("5611205", "Bares com entretenimento", "6")]
-LOCAIS = ["D_Comparavel", "D_AflAtividade", "D_Rank_Divisao"]
+LOCAIS = ["D_Comparavel", "D_AflAtividade", "D_Rank_Divisao", "D_Indicador"]
+INDICADORES = ["Primeiro emprego", "Mulheres", "Até 24 anos", "55 anos ou mais", "Superior", "Negros", "Intermitente"]
 
 
 def tabelas_locais():
     import json
     divs = json.loads((RAIZ / "docs" / "previa" / "divisoes.json").read_text(encoding="utf-8"))
-    _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Só os comparáveis ao AFL"), ("Não", "Demais setores")])
+    _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Setores comparáveis ao AFL"), ("Não", "Demais setores")])
+    _tabela_m("D_Indicador", ["indicador", "ordem"], [(n, str(i + 1)) for i, n in enumerate(INDICADORES)])
     _tabela_m("D_AflAtividade", ["cnae_fiscal", "nome", "ordem"], AFL_ATIVIDADES)
     _tabela_m("D_Rank_Divisao", ["nm_divisao", "setor_principal"], [(n, s) for n, s in divs] + [("AFL · conjunto de 6 CNAEs", "Serviços")])
 
@@ -289,7 +295,7 @@ def refs():
         if f"ref table {tab}{nl}" not in t:
             t = t.replace(f"ref table F_rais{nl}", f"ref table F_rais{nl}ref table {tab}{nl}", 1) if tab == "_medidas" else \
                 t.replace(f"ref table D_Ano{nl}", f"ref table D_Ano{nl}ref table {tab}{nl}", 1)
-    t = re.sub(r'annotation PBI_QueryOrder = \[.*?\]', 'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao"]', t)
+    t = re.sub(r'annotation PBI_QueryOrder = \[.*?\]', 'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao","D_Indicador"]', t)
     arq.write_text(t, encoding="utf-8", newline="")
 
 
