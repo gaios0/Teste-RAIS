@@ -8,6 +8,7 @@ import random
 import re
 import shutil
 import sys
+import types
 from pathlib import Path
 
 import config_paginas as cp
@@ -23,7 +24,7 @@ IDS = {("Empregos", "Todos os setores"): "a3d1f2c4e6b8097a1c11", ("Empregos", "A
        ("Quem trabalha", "Todos os setores"): "a3d1f2c4e6b8097a1c21", ("Quem trabalha", "AFL"): "a3d1f2c4e6b8097a1c22",
        ("Quanto ganha", "Todos os setores"): "a3d1f2c4e6b8097a1c31", ("Quanto ganha", "AFL"): "a3d1f2c4e6b8097a1c32",
        ("Quem contrata", "Todos os setores"): "a3d1f2c4e6b8097a1c41", ("Quem contrata", "AFL"): "a3d1f2c4e6b8097a1c42"}
-BLANK_INICIAL = "533042cd0022947b421a"
+BLANK_INICIAL = None
 ANO_PADRAO = 2025
 
 
@@ -68,6 +69,126 @@ def atualizar_report(imagens):
     rj.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+# ------------------------------------------------------------------ corpos por tema
+def corpo_empregos(c):
+    pid, afl, u, n, gravar, prox, vis = c.pid, c.afl, c.u, c.n, c.gravar, c.prox, c.vis
+    gravar("manchete", pb.html(n("manchete"), (40, 196, 1840, 118, prox()), f"Manchete_Emp_{u}_HTML"))
+    kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
+    for i, m in enumerate((f"KPI_Emp_{u}_HTML", f"KPI_Peso_{u}_HTML", f"KPI_Cresc_{u}_HTML")):
+        gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, prox()), m))
+    # linha 2: série (índice) + contratos
+    ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
+    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML" if afl else "Titulo_Emp_SerieTotal_HTML"))
+    series = [("Emp_Indice_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0"), ("Emp_Indice_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0"),
+              ("Emp_Indice_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0"), ("Emp_Indice_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0")]
+    if not afl:
+        series += [("Emp_Indice_Sel_Pre", "Seleção atual (2009–2021)", "#98A2B3", "0.0"), ("Emp_Indice_Sel_Pos", "Seleção atual (2022 em diante)", "#98A2B3", "0.0")]
+    tips = [("Empregos_Ref_AFL", "Empregos do AFL", "#,0"), ("Empregos_Ref_Comparavel", "Empregos dos comparáveis", "#,0"),
+            ("Empregos_Var_Pct_AFL", "AFL sobre o ano anterior", "+0.0%;-0.0%;0.0%"), ("Empregos_Var_Pct_Comparavel", "Comparáveis sobre o ano anterior", "+0.0%;-0.0%;0.0%")]
+    gravar("serie", pb.linhas(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, tips))
+    gravar("t_contrato", pb.html(n("t_contrato"), (bx + 24, fb.L2_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_Contrato_HTML"))
+    gravar("contrato", pb.html(n("contrato"), (bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, prox()), "Emp_Contratos_HTML"))
+    # capítulo 2
+    if afl:
+        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Atividades_HTML"))
+        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, prox()), pb.coluna("D_AflAtividade", "nome"), "Empregos_Ref", "Empregos", "#,0",
+                                 tooltips=[("Emp_Atividade_Var", "Sobre o ano anterior", "+0.0%;-0.0%;0.0%")]))
+        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_AFL_HTML"))
+        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Top", "Empregos do AFL", "#,0",
+                               tooltips=[("Emp_UF_Peso_AFL", "Peso nos empregos comparáveis", "0.0%")]))
+    else:
+        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Ranking_HTML"))
+        gravar("setores", pb.botoes_setor(n("setores"), (ax + 24, fb.L3_Y + 100, aw - 48, 48, prox()), "D_Rank_Divisao", "setor_principal"))
+        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 158, aw - 32, fb.L3_H - 174, prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Emp_Divisao_Top", "Empregos", "#,0",
+                                 cor_por_medida="Cor_Emp_Divisao"))
+        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_Total_HTML"))
+        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Peso_Top", "Peso do AFL nos empregos comparáveis", "0.0%",
+                               tooltips=[("Empregos_Ref_AFL", "Empregos do AFL", "#,0")]))
+
+
+def cabecalho(c, manchete, kpis):
+    c.gravar("manchete", pb.html(c.n("manchete"), (40, 196, 1840, 118, c.prox()), manchete))
+    kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
+    for i, m in enumerate(kpis):
+        c.gravar(f"kpi{i + 1}", pb.html(c.n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, c.prox()), m))
+
+
+def geo():
+    return fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
+
+
+def titulo(c, papel, x, y, w, h, medida):
+    c.gravar(papel, pb.html(c.n(papel), (x, y, w, h, c.prox()), medida))
+
+
+def corpo_perfil(c):
+    u = c.u
+    ax, aw, bx, bw_ = geo()
+    cabecalho(c, f"Manchete_Perfil_{u}_HTML", [f"KPI_Mulheres_{u}_HTML", f"KPI_Jovens_{u}_HTML", f"KPI_Escol_{u}_HTML"])
+    # pirâmide etária (mulheres à esquerda, homens à direita)
+    titulo(c, "t_pir", ax + 24, fb.L2_Y + 16, aw - 48, 84, "Titulo_Pir_HTML")
+    c.gravar("pir", pb.barras_grupo(c.n("pir"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, c.prox()), pb.coluna("D_FaixaIdade", "faixa_idade"),
+                                    [("Pir_Mulheres", "Mulheres", cp.VIOLETA), ("Pir_Homens", "Homens", cp.CINZA_H)], "0.0%;0.0%;0.0%", empilhado=True,
+                                    sort_cat=("D_FaixaIdade", "faixa_idade", "Descending"),
+                                    tooltips=[("Pir_Mulheres_Comp", "Mulheres nos Comparáveis", "0.0%;0.0%;0.0%"), ("Pir_Homens_Comp", "Homens nos Comparáveis", "0.0%;0.0%;0.0%")]))
+    titulo(c, "t_esc", bx + 24, fb.L2_Y + 16, bw_ - 48, 112, "Titulo_Esc_HTML")
+    titulo(c, "esc", bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, "Esc_Barras_HTML")
+    titulo(c, "t_cbo", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_CBO_HTML")
+    c.gravar("cbo", pb.barras(c.n("cbo"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, c.prox()), pb.coluna("F_rais", "cbo_2002"), "Emp_CBO_Top", "Empregos", "#,0",
+                              tooltips=[("Perf_Mulheres", "Mulheres", "0.0%"), ("Remuneracao_Media_Ref", "Remuneração média de dezembro (R$)", "#,0.00")]))
+    titulo(c, "t_raca", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Raca_HTML")
+    titulo(c, "raca", bx + 24, fb.L3_Y + 140, bw_ - 48, fb.L3_H - 160, "Raca_HTML")
+
+
+def corpo_salario(c):
+    u = c.u
+    ax, aw, bx, bw_ = geo()
+    cabecalho(c, f"Manchete_Salario_{u}_HTML", [f"KPI_Mediana_{u}_HTML", f"KPI_RazaoSexo_{u}_HTML", f"KPI_RazaoRaca_{u}_HTML"])
+    titulo(c, "t_serie", ax + 24, fb.L2_Y + 16, aw - 96, 90, "Titulo_Rem_Serie_HTML")
+    s = [("Rem_Media_AFL_Pre", "AFL · média (2009–2021)", cp.LARANJA, "#,0"), ("Rem_Media_AFL_Pos", "AFL · média (2022 em diante)", cp.LARANJA, "#,0"),
+         ("Rem_Mediana_AFL_Pre", "AFL · mediana (2009–2021)", cp.LARANJA, "#,0"), ("Rem_Mediana_AFL_Pos", "AFL · mediana (2022 em diante)", cp.LARANJA, "#,0"),
+         ("Rem_Media_Comp_Pre", "Comparáveis · média (2009–2021)", cp.CINZA, "#,0"), ("Rem_Media_Comp_Pos", "Comparáveis · média (2022 em diante)", cp.CINZA, "#,0"),
+         ("Rem_Mediana_Comp_Pre", "Comparáveis · mediana (2009–2021)", cp.CINZA, "#,0"), ("Rem_Mediana_Comp_Pos", "Comparáveis · mediana (2022 em diante)", cp.CINZA, "#,0")]
+    c.gravar("serie", pb.linhas(c.n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, c.prox()), pb.coluna("D_Calendario", "Ano"), s, None,
+                                tracejadas=[m for m, *_ in s if "Mediana" in m]))
+    titulo(c, "t_esc", bx + 24, fb.L2_Y + 16, bw_ - 48, 88, "Titulo_Rem_Esc_HTML")
+    c.gravar("esc", pb.barras_grupo(c.n("esc"), (bx + 16, fb.L2_Y + 136, bw_ - 32, fb.L2_H - 152, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
+                                    [("Rem_Esc_AFL", "AFL", cp.LARANJA), ("Rem_Esc_Comp", "Comparáveis", cp.CINZA)], "#,0", sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending")))
+    titulo(c, "t_gap", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_Rem_Gap_HTML")
+    meia = (aw - 48 - 24) / 2
+    for i, (nome, rot) in enumerate((("Sexo", "Rotulo_Gap_Sexo_HTML"), ("Raca", "Rotulo_Gap_Raca_HTML"))):
+        x = ax + 24 + i * (meia + 24)
+        titulo(c, "r_" + nome, x, fb.L3_Y + 130, meia, 36, rot)
+        c.gravar("g_" + nome, pb.barras_grupo(c.n("g_" + nome), (x - 8, fb.L3_Y + 170, meia + 16, fb.L3_H - 186, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
+                                              [(f"Rem_Razao_{nome}_AFL", "AFL", cp.LARANJA), (f"Rem_Razao_{nome}_Comp", "Comparáveis", cp.CINZA)], "0%",
+                                              sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending")))
+    titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Rem_UF_HTML")
+    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Rem_UF_Top", "Remuneração média do AFL (R$)", "#,0",
+                             cor_fixa=cp.LARANJA, tooltips=[("Rem_UF_Razao_Comp", "AFL ÷ média dos Comparáveis", "0%")]))
+
+
+def corpo_contrata(c):
+    u = c.u
+    ax, aw, bx, bw_ = geo()
+    afl = c.afl
+    cabecalho(c, f"Manchete_Contrata_{u}_HTML", [f"KPI_Contrata1_{u}_HTML", f"KPI_Contrata2_{u}_HTML", f"KPI_Contrata3_{u}_HTML"])
+    titulo(c, "t_rank", ax + 24, fb.L2_Y + 16, aw - 48, 84, "Titulo_Contrata_Rank_AFL_HTML" if afl else "Titulo_Contrata_Rank_Total_HTML")
+    c.gravar("indicador", pb.botoes_setor(c.n("indicador"), (ax + 24, fb.L2_Y + 100, aw - 48, 48, c.prox()), "D_Indicador", "indicador", n=7, inicial="Mulheres"))
+    if afl:
+        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 174, c.prox()), pb.coluna("D_AflAtividade", "nome"), "Ind_Valor_Ctx", "Participação", "0.0%", cor_fixa=cp.LARANJA))
+    else:
+        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 174, c.prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Ind_Divisao_Top", "Participação", "0.0%",
+                                   cor_por_medida="Cor_Ind_Divisao"))
+    titulo(c, "t_serie", bx + 24, fb.L2_Y + 16, bw_ - 48, 88, "Titulo_Contrata_Serie_HTML")
+    s = [("Ind_Serie_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0%"), ("Ind_Serie_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0%"),
+         ("Ind_Serie_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0%"), ("Ind_Serie_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0%")]
+    c.gravar("serie", pb.linhas(c.n("serie"), (bx + 16, fb.L2_Y + 136, bw_ - 32, fb.L2_H - 152, c.prox()), pb.coluna("D_Calendario", "Ano"), s))
+    titulo(c, "t_tab", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_Contrata_Tabela_HTML")
+    titulo(c, "tabela", ax + 24, fb.L3_Y + 108, aw - 48, fb.L3_H - 128, "Contrata_Tabela_HTML")
+    titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_HTML")
+    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Top", "Participação no AFL", "0.0%", cor_fixa=cp.LARANJA))
+
+
 # ------------------------------------------------------------------ páginas
 def montar(tema, recorte, refazer=False):
     cfg = cp.PAGINAS[(tema, recorte)]
@@ -107,43 +228,14 @@ def montar(tema, recorte, refazer=False):
             tab, col = campos[rot]
             gravar("f_" + rot, pb.slicer_dropdown(n("f_" + rot), (x - 4, 132, w + 8, 52, prox()), tab, col, sync[rot], rot,
                                                   inicial=ANO_PADRAO if rot == "Ano" else None, unico=rot == "Ano"))
-    # manchete e KPIs
-    gravar("manchete", pb.html(n("manchete"), (40, 196, 1840, 118, prox()), f"Manchete_Emp_{u}_HTML"))
-    kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
-    for i, m in enumerate((f"KPI_Emp_{u}_HTML", f"KPI_Peso_{u}_HTML", f"KPI_Cresc_{u}_HTML")):
-        gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, prox()), m))
-    # linha 2: série (índice) + contratos
-    ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
-    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML" if afl else "Titulo_Emp_SerieTotal_HTML"))
-    series = [("Emp_Indice_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0"), ("Emp_Indice_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0"),
-              ("Emp_Indice_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0"), ("Emp_Indice_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0")]
-    if not afl:
-        series += [("Emp_Indice_Sel_Pre", "Seleção atual (2009–2021)", "#98A2B3", "0.0"), ("Emp_Indice_Sel_Pos", "Seleção atual (2022 em diante)", "#98A2B3", "0.0")]
-    tips = [("Empregos_Ref_AFL", "Empregos do AFL", "#,0"), ("Empregos_Ref_Comparavel", "Empregos dos comparáveis", "#,0"),
-            ("Empregos_Var_Pct_AFL", "AFL sobre o ano anterior", "+0.0%;-0.0%;0.0%"), ("Empregos_Var_Pct_Comparavel", "Comparáveis sobre o ano anterior", "+0.0%;-0.0%;0.0%")]
-    gravar("serie", pb.linhas(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, tips))
-    gravar("t_contrato", pb.html(n("t_contrato"), (bx + 24, fb.L2_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_Contrato_HTML"))
-    gravar("contrato", pb.html(n("contrato"), (bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, prox()), "Emp_Contratos_HTML"))
-    # capítulo 2
-    if afl:
-        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Atividades_HTML"))
-        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, prox()), pb.coluna("D_AflAtividade", "nome"), "Empregos_Ref", "Empregos", "#,0",
-                                 tooltips=[("Emp_Atividade_Var", "Sobre o ano anterior", "+0.0%;-0.0%;0.0%")]))
-        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_AFL_HTML"))
-        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Top", "Empregos do AFL", "#,0",
-                               tooltips=[("Emp_UF_Peso_AFL", "Peso nos empregos comparáveis", "0.0%")]))
-    else:
-        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Ranking_HTML"))
-        gravar("setores", pb.botoes_setor(n("setores"), (ax + 24, fb.L3_Y + 100, aw - 48, 48, prox()), "D_Rank_Divisao", "setor_principal"))
-        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 158, aw - 32, fb.L3_H - 174, prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Emp_Divisao_Top", "Empregos", "#,0",
-                                 cor_por_medida="Cor_Emp_Divisao"))
-        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_Total_HTML"))
-        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Peso_Top", "Peso do AFL nos empregos comparáveis", "0.0%",
-                               tooltips=[("Empregos_Ref_AFL", "Empregos do AFL", "#,0")]))
+    c = types.SimpleNamespace(pid=pid, afl=afl, u=u, n=n, gravar=gravar, prox=prox, vis=vis)
+    {"Empregos": corpo_empregos, "Quem trabalha": corpo_perfil, "Quanto ganha": corpo_salario, "Quem contrata": corpo_contrata}[tema](c)
     # interações: o gráfico de série ignora o segmentador de ano e não filtra os demais; os botões de setor só filtram o ranking
     todos = [v for p, v in vis.items() if p not in ("limpar",) and not p.startswith("f_") and p != "setores"]
-    inter = [{"source": vis["f_Ano"], "target": vis["serie"], "type": "NoFilter"}]
-    inter += [{"source": vis["serie"], "target": t, "type": "NoFilter"} for t in todos if t != vis["serie"]]
+    inter = []
+    if "serie" in vis:
+        inter = [{"source": vis["f_Ano"], "target": vis["serie"], "type": "NoFilter"}]
+        inter += [{"source": vis["serie"], "target": t, "type": "NoFilter"} for t in todos if t != vis["serie"]]
     if "setores" in vis:
         inter += [{"source": vis["setores"], "target": t, "type": "NoFilter"} for t in todos if t != vis["rank"]]
         inter.append({"source": vis["setores"], "target": vis["rank"], "type": "DataFilter"})
@@ -163,7 +255,7 @@ def main():
     refazer = "--refazer" in sys.argv
     recursos_base()
     imagens, ordem = [], []
-    for (tema, recorte) in cp.PAGINAS:
+    for (tema, recorte) in sorted(cp.PAGINAS, key=lambda k: (fb.TEMAS.index(k[0]), fb.RECORTES.index(k[1]))):
         pid, fundo = montar(tema, recorte, refazer)
         imagens.append(fundo)
         ordem.append(pid)

@@ -96,10 +96,10 @@ def filtros(recorte):
     return s, pos
 
 
-def trilho_setores(x, y, w):
+def trilho_setores(x, y, w, n=5):
     """Trilho dos botões de setor (5 segmentos) dentro de um card."""
     s = [f'<rect x="{R(x) + .5}" y="{y + .5}" width="{R(w) - 1}" height="47" rx="4" fill="{K["card"]}" stroke="{K["borda"]}"/>']
-    s += [f'<rect x="{R(x + j * w / 5)}" y="{y + 10}" width="1" height="28" fill="{K["borda"]}"/>' for j in range(1, 5)]
+    s += [f'<rect x="{R(x + j * w / n)}" y="{y + 10}" width="1" height="28" fill="{K["borda"]}"/>' for j in range(1, n)]
     return s
 
 
@@ -110,6 +110,9 @@ def legenda(x, y, itens):
         if forma == "quadro":
             s.append(f'<rect x="{R(cursor)}" y="{y}" width="14" height="14" rx="3" fill="{cor}"/>')
             cursor += 22
+        elif forma == "tracejado":
+            s.append(f'<rect x="{R(cursor)}" y="{y + 5}" width="8" height="4" rx="1" fill="{cor}"/><rect x="{R(cursor) + 14}" y="{y + 5}" width="8" height="4" rx="1" fill="{cor}"/>')
+            cursor += 34
         else:
             s.append(f'<rect x="{R(cursor)}" y="{y + 5}" width="26" height="4" rx="2" fill="{cor}"/>')
             cursor += 34
@@ -153,6 +156,8 @@ def montar(tema, recorte, cfg):
     for chave, (x, y) in {"L2A": (cx(0) + 24, L2_Y + 106), "L2B": (cx(8) + 24, L2_Y + 108), "L3A": (cx(0) + 24, L3_Y + 100), "L3B": (cx(8) + 24, L3_Y + 108)}.items():
         if cfg.get("legendas", {}).get(chave):
             s.append(legenda(x, y, cfg["legendas"][chave]))
+    if cfg.get("trilho_ind"):
+        s.append(trilho_setores(cx(0) + 24, L2_Y + 100, cw(8) - 48, 7))
     if cfg.get("trilho"):
         s.append(trilho_setores(cx(0) + 24, L3_Y + 100, cw(8) - 48))
     s.append(nota(cfg["nota"]))

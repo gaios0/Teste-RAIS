@@ -120,10 +120,10 @@ def slicer_comparavel(nome, pos, sync):
                   filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])])
 
 
-def botoes_setor(nome, pos, tabela, col):
+def botoes_setor(nome, pos, tabela, col, n=5, inicial=None):
     """Botão de setor (5 mosaicos); o trilho está no fundo."""
     tema = lambda i: {"solid": {"color": {"expr": {"ThemeDataColor": {"ColorId": i, "Percent": 0}}}}}
-    obj = {"layout": [{"properties": {"orientation": lit("2D"), "style": lit("'Cards'"), "autoGrid": lit("true"), "maxTiles": lit("5L")}}],
+    obj = {"layout": [{"properties": {"orientation": lit("2D"), "style": lit("'Cards'"), "autoGrid": lit("true"), "maxTiles": lit(f"{n}L")}}],
            "overFlow": [{"properties": {"overFlowDirection": lit("1D")}}],
            "value": [{"properties": {"show": lit("true")}}, {"properties": {"fontSize": lit("16D")}, "selector": {"id": "default"}},
                      {"properties": {"fontColor": tema(0)}, "selector": {"id": "selection:selected"}}],
@@ -131,6 +131,9 @@ def botoes_setor(nome, pos, tabela, col):
                          [{"properties": {"fillColor": tema(5)}, "selector": {"id": s}} for s in ("interaction:hover", "interaction:press", "selection:selected")],
            "outline": [{"properties": {"show": lit("false")}, "selector": {"id": "default"}}],
            "background": [{"properties": {"show": lit("false")}, "selector": {"id": "selection:selected"}}]}
+    if inicial is not None:
+        obj["general"] = [{"properties": {"filter": {"filter": {"Version": 2, "From": [{"Name": "d", "Entity": tabela, "Type": 0}], "Where": [{"Condition": {"In": {
+            "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": col}}], "Values": [[{"Literal": {"Value": f"'{inicial}'"}}]]}}}]}}}}]
     cont = {"stylePreset": [{"properties": {"name": lit("''")}}], "title": [{"properties": {"show": lit("false")}}]}
     return visual(nome, "advancedSlicerVisual", pos, {"Values": {"projections": [{"field": {"Column": {"Expression": {"SourceRef": {"Entity": tabela}}, "Property": col}},
                                                                                 "queryRef": f"{tabela}.{col}", "nativeQueryRef": col}]}}, obj, cont)
@@ -156,14 +159,14 @@ def _eixos():
             "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}
 
 
-def linhas(nome, pos, categoria, series, tooltips=None):
+def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=()):
     """Gráfico de linhas; series = [(medida, rótulo, cor, formato)]; cada série com marcador e linha de 3 px; sem rótulos de dados."""
     q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, f) for m, r, c, f in series]}}
     if tooltips:
         q["Tooltips"] = {"projections": [medida(m, r, f) for m, r, f in tooltips]}
     o = _eixos()
     o["dataPoint"] = [{"properties": {"fill": cor(c)}, "selector": {"metadata": f"_medidas.{m}"}} for m, r, c, f in series]
-    o["lineStyles"] = [{"properties": {"strokeWidth": lit("3L"), "showMarker": lit("true"), "markerColor": cor(c), "lineChartType": lit("'straight'")},
+    o["lineStyles"] = [{"properties": {"strokeWidth": lit("3L"), "showMarker": lit("true"), "markerColor": cor(c), "lineChartType": lit("'straight'"), **({"lineStyle": lit("'dashed'")} if m in tracejadas else {})},
                         "selector": {"metadata": f"_medidas.{m}"}} for m, r, c, f in series]
     o["labels"] = [{"properties": {"show": lit("false")}}]
     o["categoryAxis"][0]["properties"]["axisType"] = lit("'Categorical'")
@@ -187,3 +190,23 @@ def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", 
     o["valueAxis"] = [{"properties": {"show": lit("false")}}]
     sort = {"sort": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": medida_valor}}, "direction": "Descending"}]}
     return visual(nome, "clusteredBarChart", pos, q, o, container(), sort=sort)
+
+
+def barras_grupo(nome, pos, categoria, series, fmt, ordem_por=None, tooltips=None, empilhado=False, sort_cat=None):
+    """Barras horizontais com mais de uma série (AFL × Comparáveis, ou mulheres × homens empilhados).
+    series = [(medida, rótulo, cor)]; ordena pela medida `ordem_por` (decrescente) ou pela coluna `sort_cat` (tabela, coluna, direção)."""
+    q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, fmt) for m, r, c in series]}}
+    if tooltips:
+        q["Tooltips"] = {"projections": [medida(m, r, f) for m, r, f in tooltips]}
+    o = _eixos()
+    o["dataPoint"] = [{"properties": {"fill": cor(c)}, "selector": {"metadata": f"_medidas.{m}"}} for m, r, c in series]
+    o["labels"] = [{"properties": {"show": lit("true"), "fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "color": cor("#1D1E21"),
+                                   "labelDisplayUnits": lit("1D"), **({} if empilhado else {"labelPosition": lit("'OutsideEnd'")})}}]
+    o["categoryAxis"][0]["properties"].update({"innerPadding": lit("12L" if not empilhado else "6L"), "maxMarginFactor": lit("40L"), "preferredCategoryWidth": lit("40D")})
+    o["valueAxis"] = [{"properties": {"show": lit("false")}}]
+    if sort_cat:
+        tab, col, d = sort_cat
+        sort = {"sort": [{"field": {"Column": {"Expression": {"SourceRef": {"Entity": tab}}, "Property": col}}, "direction": d}]}
+    else:
+        sort = {"sort": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": ordem_por or series[0][0]}}, "direction": "Descending"}]}
+    return visual(nome, "stackedBarChart" if empilhado else "clusteredBarChart", pos, q, o, container(), sort=sort)

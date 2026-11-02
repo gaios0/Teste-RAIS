@@ -1,0 +1,178 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c32",
+  "displayName": "Quanto ganha · AFL",
+  "displayOption": "FitToWidth",
+  "height": 1652,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'ganha-afl-bg3939400058634832.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "ganha-afl-bg3939400058634832.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "9c74fe99f1adc00943c5",
+      "target": "cde6fd3756841ddf81fc",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "8c82d3d622b21e6ff0da",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "267b72fcf0513917ae07",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "bc79deba0a42a00496dd",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "c5417047de2e4f6fa7d5",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "7938551bab3a32dcaa7c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "02e5cf26f5621f266692",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "012e260903b4cf9fb900",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "d02de2e503660df7be6d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "e70e2e1f7dc2baa44b92",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "720eecb1352017ad68de",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "6d1d84609c8bff7f94f3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "e799171de8364b3fa018",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "454c52de6780bd06c6b0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cde6fd3756841ddf81fc",
+      "target": "ca81dcf6383d242f8f20",
+      "type": "NoFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ef21b173c4e2465ab5b0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_Cnae"
+              }
+            },
+            "Property": "setor_afl"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_Cnae",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "setor_afl"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Sim'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  }
+}

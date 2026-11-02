@@ -1,0 +1,110 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c41",
+  "displayName": "Quem contrata · Todos os setores",
+  "displayOption": "FitToWidth",
+  "height": 1652,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'contrata-todos-bg6029155298460717.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "contrata-todos-bg6029155298460717.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "ec17191ab6cc48a73520",
+      "target": "7d8f0b5322d770a58b06",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "a5ef3d74aa0d93fb1cd5",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "31e15e0ef95ec30c0839",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "c5ea2f6a87c34f27171a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "95e78121d5afb1ef43f2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "57928e30186703bba327",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "fe37cae2c6348248eafa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "49d054510fe8e0880067",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "9d1fac4ceb3188bda460",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "714f764219d95795f25a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "0c07ca0221090789f642",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "4215b97b33e0cac4b771",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7d8f0b5322d770a58b06",
+      "target": "95aec370e5dad0dc675f",
+      "type": "NoFilter"
+    }
+  ]
+}

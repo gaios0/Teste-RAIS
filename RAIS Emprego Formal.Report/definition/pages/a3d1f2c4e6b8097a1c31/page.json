@@ -1,0 +1,120 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c31",
+  "displayName": "Quanto ganha · Todos os setores",
+  "displayOption": "FitToWidth",
+  "height": 1652,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'ganha-todos-bg2902673665430285.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "ganha-todos-bg2902673665430285.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "d6a08fb185985b41eace",
+      "target": "6400ccd7fd9d91d54add",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "5bfa2c41f163cfd80c15",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "9d73a4c2b036c0f96c40",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "de3ff54dae4fc7d069b6",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "8c5f624c7ebdd47a709a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "e056043560af089b0408",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "443997b6ca212043f6ae",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "16a0314683ba0472be2a",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "2052195a83dac2047e34",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "388957732ffb7795b7aa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "d55040acc005be1cb541",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "d0bc21f63321e724e1a9",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "661c548f6e52463aebfa",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "184964481399a6722c0b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6400ccd7fd9d91d54add",
+      "target": "bf30c21cd793427d0bcd",
+      "type": "NoFilter"
+    }
+  ]
+}

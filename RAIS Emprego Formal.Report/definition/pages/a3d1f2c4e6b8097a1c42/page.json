@@ -1,0 +1,168 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c42",
+  "displayName": "Quem contrata · AFL",
+  "displayOption": "FitToWidth",
+  "height": 1652,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'contrata-afl-bg2039164430053242.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "contrata-afl-bg2039164430053242.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "b5d7a6e98f580b3c5c3d",
+      "target": "2f9eabed78ebe157214f",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "990f45b129b5610f8f71",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "f253a95c7e60a4993098",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "297966fe63a5e1c9f9e0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "808d973880edad1c9846",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "6274b3c5100fc69aff7d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "a5225a1b8c95cbb7b924",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "2a9e2195545ee6e8f4cb",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "bf079071aeada688da6c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "f978ed454a6dc93bcdb6",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "763cd6f902b44fa5f57e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "de69f5525444f7c52c39",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2f9eabed78ebe157214f",
+      "target": "2a25ad784aa16109ce9b",
+      "type": "NoFilter"
+    }
+  ],
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "15c973be941046ce8b13",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_Cnae"
+              }
+            },
+            "Property": "setor_afl"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_Cnae",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "setor_afl"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Sim'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  }
+}
