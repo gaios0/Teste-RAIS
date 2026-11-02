@@ -1,0 +1,241 @@
+table _medidas
+	lineageTag: 028d1157-91ef-453d-85dd-746b03714cac
+
+	/// Ano de referência: o último ano com dados no contexto (com o segmentador de ano, o ano escolhido).
+	measure Ano_Ref = CALCULATE(MAX(F_rais[ano]))
+		formatString: 0
+		displayFolder: Base\Ano
+		lineageTag: 51cee68c-e5bd-46e2-96fd-ed57e050e95a
+
+	/// Primeiro ano do trecho comparável do ano de referência: 2009 (RAIS declaratória) ou 2022 (eSocial).
+	measure Ano_Inicio_Trecho =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), IF(A >= 2022, 2022, 2009))
+		formatString: 0
+		displayFolder: Base\Ano
+		lineageTag: 74fa2538-176c-400f-9b03-bde20450d73c
+
+	/// Fonte do ano de referência: RAIS declaratória (até 2021) ou eSocial (desde 2022).
+	measure Fonte_RAIS_Ref =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), IF(A >= 2022, "eSocial", "RAIS declaratória"))
+		displayFolder: Base\Ano
+		lineageTag: 42d4e7b1-a873-4d43-bd4a-6b3837f11152
+
+	/// 1 quando o ano de referência pode ser comparado com o anterior (não é 2009 nem 2022, a quebra do eSocial).
+	measure Comparavel_Ano_Anterior =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A) && A <> 2009 && A <> 2022, 1, 0)
+		formatString: 0
+		isHidden
+		displayFolder: Base\Ano
+		lineageTag: e73b7536-d295-4e31-b0c5-931c297a952e
+
+	/// Vínculos ativos em 31/12 no contexto. Em visuais por ano é o estoque do ano; não some anos.
+	measure Empregos = SUM(F_rais[vinculos])
+		formatString: #,0
+		displayFolder: Base\Empregos
+		lineageTag: 83a2ef84-fbae-48f8-84ca-f4345754f972
+
+	/// Empregos formais em 31/12 do ano de referência (um único ano).
+	measure Empregos_Ref =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), CALCULATE([Empregos], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
+		formatString: #,0
+		displayFolder: Base\Empregos
+		lineageTag: 6652b43f-53cf-4439-aa15-c1c5d35ba613
+
+	/// Empregos em 31/12 do ano anterior; BLANK em 2009 e em 2022 (quebra do eSocial: 2022 não se compara com 2021).
+	measure Empregos_Ano_Anterior =
+			VAR A = [Ano_Ref]
+			RETURN IF([Comparavel_Ano_Anterior] = 1, CALCULATE([Empregos], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A - 1))
+		formatString: #,0
+		displayFolder: Base\Empregos
+		lineageTag: bb7281fe-b3ce-4d98-8522-141d45139d31
+
+	/// Variação absoluta dos empregos sobre o ano anterior (BLANK quando não há ano comparável).
+	measure Empregos_Var =
+			VAR Ant = [Empregos_Ano_Anterior]
+			RETURN IF(NOT ISBLANK(Ant), [Empregos_Ref] - Ant)
+		formatString: +#,0;-#,0;0
+		displayFolder: Base\Empregos
+		lineageTag: a3e7316a-a288-4f20-97a3-2fb3beedf005
+
+	/// Variação % dos empregos sobre o ano anterior (BLANK quando não há ano comparável).
+	measure Empregos_Var_Pct = DIVIDE([Empregos_Var], [Empregos_Ano_Anterior])
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\Empregos
+		lineageTag: f7f1efd4-5afd-468c-ab7f-4bea5939cd23
+
+	/// Empregos em 31/12 do primeiro ano do trecho comparável (2009 ou 2022).
+	measure Empregos_Inicio_Trecho =
+			VAR I = [Ano_Inicio_Trecho]
+			RETURN IF(NOT ISBLANK(I), CALCULATE([Empregos], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I))
+		formatString: #,0
+		displayFolder: Base\Empregos
+		lineageTag: 26fbe08f-0851-4e98-9b39-f785ebe83e61
+
+	/// Crescimento médio ao ano dentro do trecho: (fim ÷ início)^(1 ÷ anos) − 1; BLANK no primeiro ano do trecho.
+	measure Empregos_Cresc_Medio_Ano =
+			VAR A = [Ano_Ref]
+			VAR I = [Ano_Inicio_Trecho]
+			VAR Fim = [Empregos_Ref]
+			VAR Ini = [Empregos_Inicio_Trecho]
+			RETURN IF(A > I && Ini > 0, (Fim / Ini) ^ (1 / (A - I)) - 1)
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\Empregos
+		lineageTag: 97f91834-62e1-4db5-9e6f-0aa5159c26e8
+
+	/// Remuneração média de dezembro (R$ nominais) no contexto = soma ÷ quantidade de salários válidos (0,3 a 150 SM).
+	measure Remuneracao_Media = DIVIDE(SUM(F_rais[soma_salario_valido]), SUM(F_rais[qtd_salario_valido]))
+		formatString: #,0.00
+		displayFolder: Base\Remuneração
+		lineageTag: 258432a5-6824-4a87-85c0-70f7bc34a640
+
+	/// Remuneração média de dezembro do ano de referência (R$ nominais).
+	measure Remuneracao_Media_Ref =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), CALCULATE([Remuneracao_Media], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
+		formatString: #,0.00
+		displayFolder: Base\Remuneração
+		lineageTag: 68fb7235-351b-4fef-ae64-8ee40c32b88c
+
+	/// Remuneração média de dezembro do ano de referência em salários mínimos.
+	measure Remuneracao_Media_SM_Ref =
+			VAR A = [Ano_Ref]
+			RETURN IF(NOT ISBLANK(A), CALCULATE(DIVIDE(SUM(F_rais[soma_sm_valido]), SUM(F_rais[qtd_salario_valido])), REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
+		formatString: 0.00
+		displayFolder: Base\Remuneração
+		lineageTag: f3615ef7-e950-45d3-9f58-83c5d404d1d9
+
+	/// 1 quando a mediana pré-calculada (F_Mediana: setor, UF, sexo e escolaridade) existe para os filtros do contexto; 0 com raça, idade, CNAE, município ou atributos do vínculo.
+	measure Mediana_Disponivel =
+			VAR Bloqueado =
+			    ISFILTERED(D_Raca[raca_cor])
+			    || ISFILTERED(D_Raca[grupo_raca])
+			    || ISFILTERED(D_Raca[declarada])
+			    || ISFILTERED(D_FaixaIdade[faixa_idade])
+			    || ISFILTERED(D_Cnae[cnae_fiscal])
+			    || ISFILTERED(D_Cnae[nm_subclasse])
+			    || ISFILTERED(D_Cnae[nm_classe])
+			    || ISFILTERED(D_Cnae[nm_divisao])
+			    || ISFILTERED(D_Cnae[nm_secao])
+			    || ISFILTERED(D_Cnae[setor_afl])
+			    || ISFILTERED(D_Cnae[setor_comparavel_afl])
+			    || ISFILTERED(D_Cnae[setor_principal])
+			    || ISFILTERED(F_rais[municipio])
+			    || ISFILTERED(F_rais[ambito])
+			    || ISFILTERED(F_rais[cbo_2002])
+			    || ISFILTERED(F_rais[categoria_vinculo])
+			    || ISFILTERED(F_rais[natureza_empresa])
+			    || ISFILTERED(F_rais[modalidade_contrato])
+			    || ISFILTERED(F_rais[tipo_admissao])
+			    || ISFILTERED(F_rais[trabalho_intermitente])
+			    || ISFILTERED(F_rais[trabalho_parcial])
+			    || ISFILTERED(F_rais[faixa_horas_contratuais])
+			    || ISFILTERED(F_rais[indicador_portador_deficiencia])
+			    || ISFILTERED(F_rais[tipo_deficiencia])
+			VAR Varios = (ISFILTERED(D_UF[uf]) && NOT HASONEVALUE(D_UF[uf])) || (ISFILTERED(D_Sexo[sexo]) && NOT HASONEVALUE(D_Sexo[sexo]))
+			    || (ISFILTERED(D_Escolaridade[escolaridade_agrupada]) && NOT HASONEVALUE(D_Escolaridade[escolaridade_agrupada]))
+			    || (COUNTROWS(VALUES(D_GrupoSetor[grupo_setor])) > 1 && COUNTROWS(VALUES(D_GrupoSetor[grupo_setor])) < COUNTROWS(ALL(D_GrupoSetor[grupo_setor])))
+			RETURN IF(Bloqueado || Varios, 0, 1)
+		formatString: 0
+		isHidden
+		displayFolder: Base\Remuneração
+		lineageTag: db16ba73-f35d-410c-a4a2-f1ae11f577e8
+
+	/// Mediana da remuneração de dezembro do ano de referência (R$ nominais), da F_Mediana; recorte "Todos" quando a dimensão não está filtrada. BLANK quando a mediana não existe para os filtros.
+	measure Remuneracao_Mediana_Ref =
+			VAR A = [Ano_Ref]
+			VAR G = IF(COUNTROWS(VALUES(D_GrupoSetor[grupo_setor])) = COUNTROWS(ALL(D_GrupoSetor[grupo_setor])), "Todos", SELECTEDVALUE(D_GrupoSetor[grupo_setor]))
+			VAR U = IF(ISFILTERED(D_UF[uf]), SELECTEDVALUE(D_UF[uf]), "Todos")
+			VAR S = IF(ISFILTERED(D_Sexo[sexo]), SELECTEDVALUE(D_Sexo[sexo]), "Todos")
+			VAR E = IF(ISFILTERED(D_Escolaridade[escolaridade_agrupada]), SELECTEDVALUE(D_Escolaridade[escolaridade_agrupada]), "Todos")
+			RETURN
+			    IF([Mediana_Disponivel] = 1 && NOT ISBLANK(A) && NOT ISBLANK(G),
+			        CALCULATE(MAX(F_Mediana[mediana_salario]),
+			            REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), REMOVEFILTERS(D_UF), REMOVEFILTERS(D_Sexo),
+			            REMOVEFILTERS(D_Escolaridade), REMOVEFILTERS(D_GrupoSetor),
+			            F_Mediana[ano] = A, F_Mediana[grupo_setor] = G, F_Mediana[uf] = U, F_Mediana[sexo] = S, F_Mediana[escolaridade_agrupada] = E))
+		formatString: #,0.00
+		displayFolder: Base\Remuneração
+		lineageTag: 65b9f550-5812-4895-b2db-81ceb870a082
+
+	/// Empregos_Ref só do grupo AFL, independente do filtro de setores da página.
+	measure Empregos_Ref_AFL = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL")
+		formatString: #,0
+		displayFolder: Base\AFL
+		lineageTag: 2d464993-8aa5-47d7-8863-82b223877458
+
+	/// Empregos_Ref só do grupo Comparável, independente do filtro de setores da página.
+	measure Empregos_Ref_Comparavel = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável")
+		formatString: #,0
+		displayFolder: Base\Comparavel
+		lineageTag: f3e01a9d-aebe-4763-a1fc-e28120bb4223
+
+	/// Empregos_Var_Pct só do grupo AFL, independente do filtro de setores da página.
+	measure Empregos_Var_Pct_AFL = CALCULATE([Empregos_Var_Pct], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL")
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\AFL
+		lineageTag: 6d246386-06a4-49af-8ab0-aeaebcf0f16e
+
+	/// Empregos_Var_Pct só do grupo Comparável, independente do filtro de setores da página.
+	measure Empregos_Var_Pct_Comparavel = CALCULATE([Empregos_Var_Pct], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável")
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\Comparavel
+		lineageTag: 9e3995ab-d975-4da9-99de-63909e65d92c
+
+	/// Empregos_Cresc_Medio_Ano só do grupo AFL, independente do filtro de setores da página.
+	measure Empregos_Cresc_Medio_Ano_AFL = CALCULATE([Empregos_Cresc_Medio_Ano], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL")
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\AFL
+		lineageTag: ffccf56f-00ab-455f-a84b-9f6cee97f17d
+
+	/// Empregos_Cresc_Medio_Ano só do grupo Comparável, independente do filtro de setores da página.
+	measure Empregos_Cresc_Medio_Ano_Comparavel = CALCULATE([Empregos_Cresc_Medio_Ano], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável")
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Base\Comparavel
+		lineageTag: 93260bbd-dfb3-4c62-946b-b8452a88647b
+
+	/// Remuneracao_Media_Ref só do grupo AFL, independente do filtro de setores da página.
+	measure Remuneracao_Media_Ref_AFL = CALCULATE([Remuneracao_Media_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL")
+		formatString: #,0.00
+		displayFolder: Base\AFL
+		lineageTag: ea1378c2-46ee-4a35-bfd9-f66c6268baf1
+
+	/// Remuneracao_Media_Ref só do grupo Comparável, independente do filtro de setores da página.
+	measure Remuneracao_Media_Ref_Comparavel = CALCULATE([Remuneracao_Media_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável")
+		formatString: #,0.00
+		displayFolder: Base\Comparavel
+		lineageTag: 2d00e72b-d0f3-4b56-9ba0-b43022138fc9
+
+	/// Remuneracao_Mediana_Ref só do grupo AFL, independente do filtro de setores da página.
+	measure Remuneracao_Mediana_Ref_AFL = CALCULATE([Remuneracao_Mediana_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL")
+		formatString: #,0.00
+		displayFolder: Base\AFL
+		lineageTag: 87dd818d-535f-47d7-a1d6-f0df7727b24d
+
+	/// Remuneracao_Mediana_Ref só do grupo Comparável, independente do filtro de setores da página.
+	measure Remuneracao_Mediana_Ref_Comparavel = CALCULATE([Remuneracao_Mediana_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável")
+		formatString: #,0.00
+		displayFolder: Base\Comparavel
+		lineageTag: b93d77c2-c634-4024-8b11-61b53c6d2c02
+
+	column Coluna
+		dataType: string
+		isHidden
+		lineageTag: 503a4d37-8358-48fd-8340-b01b7c433d98
+		summarizeBy: none
+		sourceColumn: Coluna
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [Coluna = text], {})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

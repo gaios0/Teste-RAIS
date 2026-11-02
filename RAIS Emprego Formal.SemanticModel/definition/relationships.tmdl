@@ -50,3 +50,12 @@ relationship 4fb53699-e623-493b-ad8a-272acd337a3c
 	fromColumn: F_Mediana.ano
 	toColumn: D_Ano.ano
 
+relationship 758e2adc-e0ef-4876-a506-7ba4f4ee9186
+	toCardinality: many
+	fromColumn: F_rais.ano
+	toColumn: D_Calendario.Ano
+
+relationship de4bc3a4-b256-44d9-b38d-46f9d9483021
+	toCardinality: many
+	fromColumn: F_Mediana.ano
+	toColumn: D_Calendario.Ano

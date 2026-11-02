@@ -1,0 +1,261 @@
+table D_Calendario
+	lineageTag: cd4e0d09-ee5d-4bd2-9e97-dbbc16370160
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cde905ea-9ee6-4a99-b179-158f3034fb43
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 93e81892-d737-4fab-bb28-a1372eee3d33
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Num'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d4703f0-547e-449c-a1d3-6a46f09a967f
+		summarizeBy: none
+		sourceColumn: Mês Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Mês'
+		dataType: string
+		lineageTag: bc4a525a-f92c-4a08-a112-bb6c21dd3d69
+		summarizeBy: none
+		sourceColumn: Nome do Mês
+		sortByColumn: 'Mês Num'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: f1def9a1-e1ef-40c4-a63e-f7523ea92fd0
+		summarizeBy: none
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e549e6a-fbfb-4333-b4d6-799865522063
+		summarizeBy: none
+		sourceColumn: Dia da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Dia'
+		dataType: string
+		lineageTag: 5f6ddb9c-f709-4de9-a37b-7672997a3f41
+		summarizeBy: none
+		sourceColumn: Nome do Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semestre
+		dataType: string
+		lineageTag: 654090af-c951-41cd-9048-002cd2553536
+		summarizeBy: none
+		sourceColumn: Semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: string
+		lineageTag: 71dc68b6-eeb5-4adb-b393-8cb7152bc825
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês/Ano'
+		dataType: string
+		lineageTag: 6b53b7e4-6156-418f-8964-7e342e136e17
+		summarizeBy: none
+		sourceColumn: Mês/Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Ano'
+		dataType: int64
+		formatString: 0
+		lineageTag: 40e42a62-b896-440f-96b7-4b2a594d9e7c
+		summarizeBy: none
+		sourceColumn: Semana do Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Mês'
+		dataType: int64
+		formatString: 0
+		lineageTag: a4ab6ffa-f281-457a-9084-3603576282fe
+		summarizeBy: none
+		sourceColumn: Semana do Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Início da Semana'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 464bff21-98ee-48a0-83ca-3525d94357b3
+		summarizeBy: none
+		sourceColumn: Início da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Fim da Semana'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dbf1c074-cf78-4e82-8dd2-d9fb1b071f7f
+		summarizeBy: none
+		sourceColumn: Fim da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Mês Abrev'
+		dataType: string
+		lineageTag: f42bbe7e-88fe-41c5-944b-09a3b5e59d6a
+		summarizeBy: none
+		sourceColumn: Mês Abrev
+		sortByColumn: 'Mês Num'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias Uteis'
+		dataType: string
+		lineageTag: fdd8e0c6-b4a7-49f1-90f5-09b190f2e9dd
+		summarizeBy: none
+		sourceColumn: Dias Uteis
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana Letra'
+		dataType: string
+		lineageTag: a960b66c-d6ec-4552-b5a9-df88359e2f6f
+		summarizeBy: none
+		sourceColumn: Dia da Semana Letra
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Mes Letra'
+		dataType: string
+		lineageTag: 2bd2e1df-16a0-40e8-a955-1a6574a08291
+		summarizeBy: none
+		sourceColumn: Semana do Mes Letra
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_mes_num
+		dataType: string
+		lineageTag: aa42b639-f728-4060-8746-7427fafda84a
+		summarizeBy: none
+		sourceColumn: ano_mes_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data ate Hoje'
+		dataType: string
+		lineageTag: 07d41788-d77e-4a4a-bc78-8dd0fefc559c
+		summarizeBy: none
+		sourceColumn: Data ate Hoje
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Atual'
+		dataType: string
+		lineageTag: 773b40b2-5e96-4e03-acaa-a83851ede1bc
+		summarizeBy: none
+		sourceColumn: Dia Atual
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Trimestre'
+		dataType: string
+		lineageTag: 38dc2e78-f727-46b0-a0a4-fa6a2eab3528
+		summarizeBy: none
+		sourceColumn: Ano Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fonte RAIS'
+		dataType: string
+		lineageTag: 662fefe9-0cb9-4fa8-ad94-3559ed068980
+		summarizeBy: none
+		sourceColumn: Fonte RAIS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trecho da Série'
+		dataType: string
+		lineageTag: 4f712819-9a33-4203-b8c9-198d271c4b8d
+		summarizeBy: none
+		sourceColumn: Trecho da Série
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Calendario = m
+		mode: import
+		source =
+				let
+				    // Calendário padrão do time. A fato da RAIS é DirectQuery e só tem o ano, então o intervalo é fixo:
+				    // de 01/01/2009 (início da base) ao fim do ano corrente.
+				    DataInicial = #date(2009, 1, 1),
+				    DataFinal = Date.EndOfYear(Date.From(DateTime.LocalNow())),
+				    Duracao = Duration.Days(DataFinal - DataInicial) + 1,
+				    Fonte = List.Dates(DataInicial, Duracao, #duration(1, 0, 0, 0)),
+				    #"Convertido para Tabela" = Table.FromList(Fonte, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Convertido para Tabela",{{"Column1", type date}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"Column1", "Data"}}),
+				    #"Ano Inserido" = Table.AddColumn(#"Colunas Renomeadas", "Ano", each Date.Year([Data]), Int64.Type),
+				    #"Mês Inserido" = Table.AddColumn(#"Ano Inserido", "Mês", each Date.Month([Data]), Int64.Type),
+				    #"Nome do Mês Inserido" = Table.AddColumn(#"Mês Inserido", "Nome do Mês", each Date.MonthName([Data]), type text),
+				    #"Dia Inserido" = Table.AddColumn(#"Nome do Mês Inserido", "Dia", each Date.Day([Data]), Int64.Type),
+				    #"Dia da Semana Inserido" = Table.AddColumn(#"Dia Inserido", "Dia da Semana", each Date.DayOfWeek([Data]), Int64.Type),
+				    #"Nome do Dia Inserido" = Table.AddColumn(#"Dia da Semana Inserido", "Nome do Dia", each Date.DayOfWeekName([Data]), type text),
+				    #"Coluna Condicional Adicionada" = Table.AddColumn(#"Nome do Dia Inserido", "Semestre", each if [Mês] <= 6 then "S1" else "S2"),
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(#"Coluna Condicional Adicionada",{{"Semestre", type text}}),
+				    #"Coluna Condicional Adicionada1" = Table.AddColumn(#"Tipo Alterado1", "Trimestre", each if [Mês] <= 3 then "T1" else if [Mês] <= 6 then "T2" else if [Mês] <= 9 then "T3" else "T4"),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Coluna Condicional Adicionada1",{{"Trimestre", type text}}),
+				    #"Coluna Personalizada Adicionada" = Table.AddColumn(#"Tipo Alterado2", "Mês/Ano", each Text.Combine({Text.Start([Nome do Mês], 3), "/", Text.From([Ano], "pt-BR")}), type text),
+				    #"Colunas Renomeadas1" = Table.RenameColumns(#"Coluna Personalizada Adicionada",{{"Data", "ID Data"}}),
+				    #"Semana do Ano Inserida" = Table.AddColumn(#"Colunas Renomeadas1", "Semana do Ano", each Date.WeekOfYear([ID Data]), Int64.Type),
+				    #"Semana do Mês Inserida" = Table.AddColumn(#"Semana do Ano Inserida", "Semana do Mês", each Date.WeekOfMonth([ID Data]), Int64.Type),
+				    #"Início da Semana Inserido" = Table.AddColumn(#"Semana do Mês Inserida", "Início da Semana", each Date.StartOfWeek([ID Data]), type date),
+				    #"Fim da Semana Inserido" = Table.AddColumn(#"Início da Semana Inserido", "Fim da Semana", each Date.EndOfWeek([ID Data]), type date),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Fim da Semana Inserido",{{"Nome do Mês", Text.Proper, type text}, {"Nome do Dia", Text.Proper, type text}}),
+				    #"Colunas Renomeadas2" = Table.RenameColumns(#"Colocar Cada Palavra Em Maiúscula",{{"ID Data", "Data"}}),
+				    #"Primeiros Caracteres Inseridos" = Table.AddColumn(#"Colunas Renomeadas2", "Primeiros caracteres", each Text.Start([Nome do Mês], 3), type text),
+				    #"Colunas Renomeadas3" = Table.RenameColumns(#"Primeiros Caracteres Inseridos",{{"Primeiros caracteres", "Mês Abrev"}, {"Mês", "Mês Num"}}),
+				    #"Coluna Condicional Adicionada2" = Table.AddColumn(#"Colunas Renomeadas3", "Dias Uteis", each if [Dia da Semana] = 0 then "Não" else if [Dia da Semana] = 6 then "Não" else "Sim"),
+				    #"Primeiros Caracteres Inseridos1" = Table.AddColumn(#"Coluna Condicional Adicionada2", "Dia da Semana Letra", each Text.Start([Nome do Dia], 3), type text),
+				    #"Coluna Condicional Adicionada3" = Table.AddColumn(#"Primeiros Caracteres Inseridos1", "Semana do Mes Letra", each if [Dia] <= 7 then "S1" else if [Dia] <= 15 then "S2" else if [Dia] <= 22 then "S3" else "S4"),
+				    #"Personalização adicionada" = Table.AddColumn(#"Coluna Condicional Adicionada3", "ano_mes_num", each Number.ToText([Ano]) & "-" & Number.ToText([Mês Num])),
+				    #"Coluna condicional inserida" = Table.AddColumn(#"Personalização adicionada", "Data ate Hoje", each if [Data] <= Date.From(DateTime.LocalNow()) then "Sim" else "Não"),
+				    #"Coluna condicional inserida 1" = Table.AddColumn(#"Coluna condicional inserida", "Dia Atual", each if [Data] = Date.From(DateTime.LocalNow()) then "Dia Atual" else if [Data] = Date.AddDays(Date.From(DateTime.LocalNow()),-1) then "Dia Anterior" else "Não"),
+				    #"Tipo Alterado3" = Table.TransformColumnTypes(#"Coluna condicional inserida 1", {{"Semana do Mes Letra", type text}, {"Dias Uteis", type text}, {"ano_mes_num", type text}, {"Data ate Hoje", type text}, {"Dia Atual", type text}}),
+				    #"Ano Trimestre Adicionado" = Table.AddColumn(#"Tipo Alterado3", "Ano Trimestre",
+				        each Text.From([Ano]) & " " & (if [Trimestre] = "T1" then "1º" else if [Trimestre] = "T2" then "2º" else if [Trimestre] = "T3" then "3º" else "4º"), type text),
+				    // RAIS: quebra de série em 2022 (eSocial). Anos de trechos diferentes não se comparam.
+				    #"Fonte RAIS Adicionada" = Table.AddColumn(#"Ano Trimestre Adicionado", "Fonte RAIS", each if [Ano] >= 2022 then "eSocial" else "RAIS declaratória", type text),
+				    #"Trecho Adicionado" = Table.AddColumn(#"Fonte RAIS Adicionada", "Trecho da Série", each if [Ano] >= 2022 then "2022 em diante" else "2009–2021", type text)
+				in
+				    #"Trecho Adicionado"
+
+	annotation PBI_ResultType = Table
