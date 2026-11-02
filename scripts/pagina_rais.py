@@ -13,6 +13,7 @@ from pathlib import Path
 
 import config_paginas as cp
 import fundo_rais as fb
+import navegacao_rais
 import pbir_rais as pb
 
 RF_RECURSOS = Path("C:/dados/datalab/rf/painel/Receita Federal Empresas e Mercado.Report/StaticResources/RegisteredResources")
@@ -260,6 +261,7 @@ def main():
         imagens.append(fundo)
         ordem.append(pid)
     atualizar_report(imagens)
+    navegacao_rais.gerar({k: IDS[k] for k in cp.PAGINAS})
     pj = pb.DEF / "pages" / "pages.json"
     d = json.loads(pj.read_text(encoding="utf-8"))
     antigas = [p for p in d["pageOrder"] if p not in ordem and p != BLANK_INICIAL and not p.startswith("a3d1f2c4e6b8097a1c")]
