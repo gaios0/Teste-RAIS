@@ -202,7 +202,8 @@ def medidas():
     import dax_rais
     import dax_rais2
     import dax_rais3
-    m += dax_rais.medidas() + dax_rais2.medidas() + dax_rais3.medidas()
+    import dax_dicas
+    m += dax_rais.medidas() + dax_rais2.medidas() + dax_rais3.medidas() + dax_dicas.medidas()
     # medida sem VAR própria não pode começar com RETURN: acrescenta uma VAR inócua
     m = [(t[0], t[1], "VAR _A = 0\n" + t[2] if t[2].lstrip().startswith("RETURN") else t[2]) + tuple(t[3:]) for t in m]
     return m

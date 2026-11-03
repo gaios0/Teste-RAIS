@@ -17,7 +17,6 @@ table D_FaixaIdade
 	column ordem
 		dataType: int64
 		isHidden
-		formatString: 0
 		lineageTag: 8b6a444d-9194-4fb6-84e3-117c69e341c8
 		sourceLineageTag: 2e2dadd4-7859-4ce1-9971-47a44cfb5d9d
 		dataCategory: Uncategorized
@@ -31,4 +30,6 @@ table D_FaixaIdade
 		source
 			entityName: D_FaixaIdade
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
 

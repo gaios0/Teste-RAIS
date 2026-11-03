@@ -153,7 +153,7 @@ def montar(tema, recorte, cfg):
     s.append(card(cx(8), L2_Y, cw(4), L2_H))
     s.append(card(cx(0), L3_Y, cw(8), L3_H))
     s.append(card(cx(8), L3_Y, cw(4), L3_H))
-    for chave, (x, y) in {"L2A": (cx(0) + 24, L2_Y + 106), "L2B": (cx(8) + 24, L2_Y + 108), "L3A": (cx(0) + 24, L3_Y + 100), "L3B": (cx(8) + 24, L3_Y + 108)}.items():
+    for chave, (x, y) in {"L2A": (cx(0) + 24, L2_Y + 106), "L2B": (cx(8) + 24, L2_Y + 122), "L3A": (cx(0) + 24, L3_Y + 124), "L3B": (cx(8) + 24, L3_Y + 108)}.items():
         if cfg.get("legendas", {}).get(chave):
             s.append(legenda(x, y, cfg["legendas"][chave]))
     if cfg.get("trilho_ind"):

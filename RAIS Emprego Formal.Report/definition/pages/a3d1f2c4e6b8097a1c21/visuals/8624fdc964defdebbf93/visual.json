@@ -135,7 +135,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "14L"
                 }
               }
             },
@@ -327,7 +327,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }

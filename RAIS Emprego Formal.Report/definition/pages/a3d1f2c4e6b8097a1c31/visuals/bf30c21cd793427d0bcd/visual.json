@@ -46,8 +46,8 @@
                 }
               },
               "queryRef": "_medidas.Rem_UF_Top",
-              "nativeQueryRef": "Remuneração média do AFL (R$)",
-              "displayName": "Remuneração média do AFL (R$)",
+              "nativeQueryRef": "Remuneração média (R$)",
+              "displayName": "Remuneração média (R$)",
               "format": "#,0"
             }
           ]
@@ -119,7 +119,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "10L"
                 }
               }
             },
@@ -174,7 +174,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#1D1E21'"
                     }
                   }
                 }
@@ -311,7 +311,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }

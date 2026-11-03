@@ -26,5 +26,8 @@ ACENTOS_CONTRATA = [LARANJA, "#17B26A", "#1D1E21"]
 for _rec, _trilho, _l2a in (("Todos os setores", True, None), ("AFL", False, None)):
     sfx = "todos" if _rec == "Todos os setores" else "afl"
     PAGINAS[("Quem trabalha", _rec)] = dict(nome=f"trabalha-{sfx}", acentos=ACENTOS_PERFIL, legendas={"L2A": LEG_PIR}, trilho=False, nota=NOTA_PERFIL)
-    PAGINAS[("Quanto ganha", _rec)] = dict(nome=f"ganha-{sfx}", acentos=ACENTOS_REM, legendas={"L2A": LEG_REM, "L2B": LEG_AFL_COMP, "L3A": LEG_AFL_COMP}, trilho=False, nota=NOTA_REM)
-    PAGINAS[("Quem contrata", _rec)] = dict(nome=f"contrata-{sfx}", acentos=ACENTOS_CONTRATA, legendas={"L2B": LEG_SERIE}, trilho=False, trilho_ind=True, nota=NOTA_CONTRATA)
+    todos = _rec == "Todos os setores"
+    PAGINAS[("Quanto ganha", _rec)] = dict(nome=f"ganha-{sfx}", acentos=ACENTOS_REM, legendas={"L2A": LEG_REM + ([("Seleção atual · média", CINZA_H, "linha")] if todos else []),
+                                                                                                "L2B": LEG_AFL_COMP + ([("Seleção atual", CINZA_H, "quadro")] if todos else []),
+                                                                                                "L3A": LEG_AFL_COMP + ([("Seleção atual", CINZA_H, "quadro")] if todos else [])}, trilho=False, nota=NOTA_REM)
+    PAGINAS[("Quem contrata", _rec)] = dict(nome=f"contrata-{sfx}", acentos=ACENTOS_CONTRATA, legendas={"L2B": [("AFL", LARANJA, "linha"), ("Comparáveis", CINZA, "linha")] + ([("Seleção atual", CINZA_H, "linha")] if _rec == "Todos os setores" else [])}, trilho=False, trilho_ind=True, nota=NOTA_CONTRATA)

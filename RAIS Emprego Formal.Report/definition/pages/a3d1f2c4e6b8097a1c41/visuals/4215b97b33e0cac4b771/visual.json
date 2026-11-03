@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Titulo_Contrata_UF_HTML"
+                  "Property": "Titulo_Contrata_UF_Total_HTML"
                 }
               },
-              "queryRef": "_medidas.Titulo_Contrata_UF_HTML",
-              "nativeQueryRef": "Titulo_Contrata_UF_HTML"
+              "queryRef": "_medidas.Titulo_Contrata_UF_Total_HTML",
+              "nativeQueryRef": "Titulo_Contrata_UF_Total_HTML"
             }
           ]
         }

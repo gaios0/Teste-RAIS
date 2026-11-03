@@ -299,8 +299,6 @@ table F_rais
 
 		annotation SummarizationSetBy = User
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	column soma_sm_valido
 		dataType: double
 		isHidden
@@ -311,8 +309,6 @@ table F_rais
 		sourceColumn: soma_sm_valido
 
 		annotation SummarizationSetBy = User
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column qtd_salario_valido
 		dataType: int64
@@ -367,4 +363,6 @@ table F_rais
 		source
 			entityName: F_rais
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
 

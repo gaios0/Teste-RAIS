@@ -83,7 +83,7 @@ table D_Calendario
 
 	column 'Mês/Ano'
 		dataType: string
-		lineageTag: 6b53b7e4-6156-418f-8964-7e342e136e17
+		lineageTag: 1b38e603-ed94-459e-8898-e371b7e69e1f
 		summarizeBy: none
 		sourceColumn: Mês/Ano
 

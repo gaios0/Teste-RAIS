@@ -42,12 +42,32 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Ind_UF_Top"
+                  "Property": "Ind_UF_Todos_Top"
                 }
               },
-              "queryRef": "_medidas.Ind_UF_Top",
-              "nativeQueryRef": "Participação no AFL",
-              "displayName": "Participação no AFL",
+              "queryRef": "_medidas.Ind_UF_Todos_Top",
+              "nativeQueryRef": "Participação",
+              "displayName": "Participação",
+              "format": "0.0%"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Ind_UF_AFL_Dica"
+                }
+              },
+              "queryRef": "_medidas.Ind_UF_AFL_Dica",
+              "nativeQueryRef": "No AFL desta UF",
+              "displayName": "No AFL desta UF",
               "format": "0.0%"
             }
           ]
@@ -63,7 +83,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Ind_UF_Top"
+                "Property": "Ind_UF_Todos_Top"
               }
             },
             "direction": "Descending"
@@ -99,7 +119,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "10L"
                 }
               }
             },
@@ -154,7 +174,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#1D1E21'"
                     }
                   }
                 }
@@ -162,7 +182,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Ind_UF_Top"
+            "metadata": "_medidas.Ind_UF_Todos_Top"
           }
         }
       ],
@@ -291,7 +311,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }

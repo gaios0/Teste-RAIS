@@ -5,7 +5,7 @@
     "x": 56.0,
     "y": 698,
     "z": 1500,
-    "height": 282,
+    "height": 286,
     "width": 1189.3,
     "tabOrder": 1500
   },
@@ -99,7 +99,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "14L"
                 }
               }
             },
@@ -291,7 +291,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }

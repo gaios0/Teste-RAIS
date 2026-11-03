@@ -58,12 +58,9 @@ table F_Mediana
 
 		annotation SummarizationSetBy = Automatic
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	column qtd_salario_valido
 		dataType: int64
 		isHidden
-		formatString: 0
 		lineageTag: 1704a2e3-d216-4ae9-977d-064270119ead
 		sourceLineageTag: c70825fa-bb21-489e-bc65-7988155e8916
 		dataCategory: Uncategorized
@@ -75,7 +72,6 @@ table F_Mediana
 	column ano
 		dataType: int64
 		isHidden
-		formatString: 0
 		lineageTag: 4e5ee81e-00ff-4c60-b131-b5624dfe0576
 		sourceLineageTag: c6b81ede-cdf9-4053-92b3-be332f80d14d
 		dataCategory: Uncategorized
@@ -89,4 +85,6 @@ table F_Mediana
 		source
 			entityName: F_Mediana
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
 

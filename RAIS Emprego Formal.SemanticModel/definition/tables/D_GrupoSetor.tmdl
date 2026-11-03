@@ -17,7 +17,6 @@ table D_GrupoSetor
 	column ordem
 		dataType: int64
 		isHidden
-		formatString: 0
 		lineageTag: 84648ef8-e95c-483b-bedd-3a65002e9779
 		sourceLineageTag: 55d4e276-2e6c-415d-a5cd-cc5f9e5bd77c
 		dataCategory: Uncategorized
@@ -31,4 +30,6 @@ table D_GrupoSetor
 		source
 			entityName: D_GrupoSetor
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
 

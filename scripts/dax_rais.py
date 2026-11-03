@@ -33,16 +33,16 @@ def chip_ref(txt):
             'font-size:20px;line-height:26px;font-weight:600;\'>Comparáveis " & ' + txt + ' & " <span style=\'font-weight:400;font-size:17px;color:#434446;\'>· ref.</span></span>"')
 
 
-def kpi_html(aria, rotulo, valor, linha3, cor3='"#434446"', chips=None):
+def kpi_html(aria, rotulo, valor, linha3, cor3='"#434446"', chips=None, duas=False):
     """KPI de 156 px: rótulo, valor, linha de comparação e (opcional) chips."""
     extra = (' & "<div style=\'display:flex;gap:8px;margin-top:3px;white-space:nowrap;\'>" & ' + chips + ' & "</div>"') if chips else ""
     return (
         "RETURN\n"
-        f"    \"<div role='group' aria-label='{aria}' style='width:100%;height:156px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;"
+        f"    \"<div role='group' aria-label='{aria}' style='width:100%;height:172px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;"
         "background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>\"\n"
         "        & \"<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>\" & " + rotulo + " & \"</div>\"\n"
         "        & \"<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>\" & " + valor + " & \"</div>\"\n"
-        "        & \"<div style='margin-top:3px;font-size:22px;line-height:26px;color:\" & " + cor3 + " & \";white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>\" & " + linha3 + " & \"</div>\""
+        "        & \"<div style='margin-top:3px;" + ("font-size:20px;line-height:24px;max-height:48px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;" if duas else "font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;") + "color:\" & " + cor3 + " & \";overflow:hidden;'>\" & " + linha3 + " & \"</div>\""
         + extra + "\n        & \"</div>\"")
 
 
@@ -178,7 +178,7 @@ def medidas():
         return (topo + fecho + "VAR Valido = NOT ISBLANK(A) && NOT ISBLANK(Valor)\nRETURN\n    IF(NOT Valido,\n"
                 "        \"<div role='text' style='width:100%;height:118px;font-family:Segoe UI,Arial,sans-serif;font-size:24px;color:#434446;'>Não há dados para os filtros selecionados.</div>\",\n"
                 "        \"<div role='group' aria-label='Resumo do emprego formal' style='width:100%;height:118px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>\"\n"
-                "            & \"<div style='height:48px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;'><span style='min-width:0;font-size:36px;line-height:42px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;'>\" & " + esc("Texto") + " & \"</span></div>\"\n"
+                "            & \"<div style='max-height:84px;overflow:hidden;'><span style='display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-width:0;font-size:34px;line-height:40px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;'>\" & " + esc("Texto") + " & \"</span></div>\"\n"
                 "            & \"<div style='height:30px;margin:4px 0 0;font-size:24px;line-height:30px;color:#434446;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>\" & " + esc("Contexto") + " & \"</div>\"\n"
                 "        & \"</div>\")")
     add("Manchete_Emp_Total_HTML", "Manchete da página Empregos · Todos os setores.", manchete("Total"), f"HTML\\{P}")

@@ -3,9 +3,9 @@
   "name": "2f9eabed78ebe157214f",
   "position": {
     "x": 1293.3,
-    "y": 676,
+    "y": 686,
     "z": 1700,
-    "height": 304,
+    "height": 298,
     "width": 570.7,
     "tabOrder": 1700
   },
@@ -130,7 +130,14 @@
             "axisType": {
               "expr": {
                 "Literal": {
-                  "Value": "'Categorical'"
+                  "Value": "'Continuous'"
+                }
+              }
+            },
+            "labelAngle": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
                 }
               }
             }

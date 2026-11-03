@@ -76,7 +76,7 @@ def corpo_empregos(c):
     gravar("manchete", pb.html(n("manchete"), (40, 196, 1840, 118, prox()), f"Manchete_Emp_{u}_HTML"))
     kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
     for i, m in enumerate((f"KPI_Emp_{u}_HTML", f"KPI_Peso_{u}_HTML", f"KPI_Cresc_{u}_HTML")):
-        gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, prox()), m))
+        gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 12, fb.cw(4) - 84, 172, prox()), m))
     # linha 2: série (índice) + contratos
     ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
     gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML" if afl else "Titulo_Emp_SerieTotal_HTML"))
@@ -107,11 +107,18 @@ def corpo_empregos(c):
                                tooltips=[("Empregos_Ref_AFL", "Empregos do AFL", "#,0")]))
 
 
-def cabecalho(c, manchete, kpis):
+TIPS = {"Tip_RazaoSexo_HTML": "a3d1f2c4e6b8097a1c51", "Tip_RazaoRaca_HTML": "a3d1f2c4e6b8097a1c52", "Tip_Mediana_HTML": "a3d1f2c4e6b8097a1c53",
+        "Tip_Contrata_Pos_HTML": "a3d1f2c4e6b8097a1c54", "Tip_Contrata_Dif_HTML": "a3d1f2c4e6b8097a1c55", "Tip_Contrata_Max_Total_HTML": "a3d1f2c4e6b8097a1c56",
+        "Tip_Contrata_Max_AFL_HTML": "a3d1f2c4e6b8097a1c57"}
+CINZA_SEL = "#98A2B3"
+
+
+def cabecalho(c, manchete, kpis, tips=None):
     c.gravar("manchete", pb.html(c.n("manchete"), (40, 196, 1840, 118, c.prox()), manchete))
     kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
     for i, m in enumerate(kpis):
-        c.gravar(f"kpi{i + 1}", pb.html(c.n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 20, fb.cw(4) - 84, 156, c.prox()), m))
+        tip = TIPS[tips[i]] if tips and tips[i] else None
+        c.gravar(f"kpi{i + 1}", pb.html(c.n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 12, fb.cw(4) - 84, 172, c.prox()), m, tooltip=tip))
 
 
 def geo():
@@ -136,58 +143,75 @@ def corpo_perfil(c):
     titulo(c, "esc", bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, "Esc_Barras_HTML")
     titulo(c, "t_cbo", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_CBO_HTML")
     c.gravar("cbo", pb.barras(c.n("cbo"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, c.prox()), pb.coluna("F_rais", "cbo_2002"), "Emp_CBO_Top", "Empregos", "#,0",
-                              tooltips=[("Perf_Mulheres", "Mulheres", "0.0%"), ("Remuneracao_Media_Ref", "Remuneração média de dezembro (R$)", "#,0.00")]))
+                              tooltips=[("Perf_Mulheres", "Mulheres", "0.0%"), ("Remuneracao_Media_Ref", "Remuneração média de dezembro (R$)", "#,0.00")], foco=True, espaco=14))
     titulo(c, "t_raca", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Raca_HTML")
     titulo(c, "raca", bx + 24, fb.L3_Y + 140, bw_ - 48, fb.L3_H - 160, "Raca_HTML")
 
 
 def corpo_salario(c):
     u = c.u
+    todos = not c.afl
     ax, aw, bx, bw_ = geo()
-    cabecalho(c, f"Manchete_Salario_{u}_HTML", [f"KPI_Mediana_{u}_HTML", f"KPI_RazaoSexo_{u}_HTML", f"KPI_RazaoRaca_{u}_HTML"])
+    cabecalho(c, f"Manchete_Salario_{u}_HTML", [f"KPI_Mediana_{u}_HTML", f"KPI_RazaoSexo_{u}_HTML", f"KPI_RazaoRaca_{u}_HTML"],
+              ["Tip_Mediana_HTML", "Tip_RazaoSexo_HTML", "Tip_RazaoRaca_HTML"])
     titulo(c, "t_serie", ax + 24, fb.L2_Y + 16, aw - 96, 90, "Titulo_Rem_Serie_HTML")
     s = [("Rem_Media_AFL_Pre", "AFL · média (2009–2021)", cp.LARANJA, "#,0"), ("Rem_Media_AFL_Pos", "AFL · média (2022 em diante)", cp.LARANJA, "#,0"),
          ("Rem_Mediana_AFL_Pre", "AFL · mediana (2009–2021)", cp.LARANJA, "#,0"), ("Rem_Mediana_AFL_Pos", "AFL · mediana (2022 em diante)", cp.LARANJA, "#,0"),
          ("Rem_Media_Comp_Pre", "Comparáveis · média (2009–2021)", cp.CINZA, "#,0"), ("Rem_Media_Comp_Pos", "Comparáveis · média (2022 em diante)", cp.CINZA, "#,0"),
          ("Rem_Mediana_Comp_Pre", "Comparáveis · mediana (2009–2021)", cp.CINZA, "#,0"), ("Rem_Mediana_Comp_Pos", "Comparáveis · mediana (2022 em diante)", cp.CINZA, "#,0")]
+    if todos:
+        s += [("Rem_Media_Sel_Pre", "Seleção atual · média (2009–2021)", CINZA_SEL, "#,0"), ("Rem_Media_Sel_Pos", "Seleção atual · média (2022 em diante)", CINZA_SEL, "#,0")]
     c.gravar("serie", pb.linhas(c.n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, c.prox()), pb.coluna("D_Calendario", "Ano"), s, None,
                                 tracejadas=[m for m, *_ in s if "Mediana" in m]))
-    titulo(c, "t_esc", bx + 24, fb.L2_Y + 16, bw_ - 48, 88, "Titulo_Rem_Esc_HTML")
-    c.gravar("esc", pb.barras_grupo(c.n("esc"), (bx + 16, fb.L2_Y + 136, bw_ - 32, fb.L2_H - 152, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
-                                    [("Rem_Esc_AFL", "AFL", cp.LARANJA), ("Rem_Esc_Comp", "Comparáveis", cp.CINZA)], "#,0", sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending")))
-    titulo(c, "t_gap", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_Rem_Gap_HTML")
+    # escolaridade (card estreito): título 100, legenda em +120 (fundo), gráfico em +146
+    titulo(c, "t_esc", bx + 24, fb.L2_Y + 16, bw_ - 48, 100, "Titulo_Rem_Esc_HTML")
+    esc = [("Rem_Esc_AFL", "AFL", cp.LARANJA), ("Rem_Esc_Comp", "Comparáveis", cp.CINZA)] + ([("Rem_Esc_Sel", "Seleção atual", CINZA_SEL)] if todos else [])
+    c.gravar("esc", pb.barras_grupo(c.n("esc"), (bx + 16, fb.L2_Y + 146, bw_ - 32, fb.L2_H - 158, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
+                                    esc, "#,0", sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending"), espaco=8, fonte=14))
+    # razões por sexo e cor
+    titulo(c, "t_gap", ax + 24, fb.L3_Y + 16, aw - 48, 100, "Titulo_Rem_Gap_HTML")
     meia = (aw - 48 - 24) / 2
     for i, (nome, rot) in enumerate((("Sexo", "Rotulo_Gap_Sexo_HTML"), ("Raca", "Rotulo_Gap_Raca_HTML"))):
         x = ax + 24 + i * (meia + 24)
-        titulo(c, "r_" + nome, x, fb.L3_Y + 130, meia, 36, rot)
-        c.gravar("g_" + nome, pb.barras_grupo(c.n("g_" + nome), (x - 8, fb.L3_Y + 170, meia + 16, fb.L3_H - 186, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
-                                              [(f"Rem_Razao_{nome}_AFL", "AFL", cp.LARANJA), (f"Rem_Razao_{nome}_Comp", "Comparáveis", cp.CINZA)], "0%",
-                                              sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending")))
+        titulo(c, "r_" + nome, x, fb.L3_Y + 150, meia, 30, rot)
+        ser = [(f"Rem_Razao_{nome}_AFL", "AFL", cp.LARANJA), (f"Rem_Razao_{nome}_Comp", "Comparáveis", cp.CINZA)] + ([(f"Rem_Razao_{nome}", "Seleção atual", CINZA_SEL)] if todos else [])
+        c.gravar("g_" + nome, pb.barras_grupo(c.n("g_" + nome), (x - 8, fb.L3_Y + 184, meia + 16, fb.L3_H - 196, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
+                                              ser, "0%", sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending"), espaco=8, fonte=14))
     titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Rem_UF_HTML")
-    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Rem_UF_Top", "Remuneração média do AFL (R$)", "#,0",
-                             cor_fixa=cp.LARANJA, tooltips=[("Rem_UF_Razao_Comp", "AFL ÷ média dos Comparáveis", "0%")]))
+    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Rem_UF_Top", "Remuneração média (R$)", "#,0",
+                             cor_fixa=cp.LARANJA if c.afl else "#1D1E21", tooltips=[("Rem_UF_Razao_Comp", "AFL ÷ média dos Comparáveis", "0%")], foco=True, espaco=10))
 
 
 def corpo_contrata(c):
     u = c.u
     ax, aw, bx, bw_ = geo()
     afl = c.afl
-    cabecalho(c, f"Manchete_Contrata_{u}_HTML", [f"KPI_Contrata1_{u}_HTML", f"KPI_Contrata2_{u}_HTML", f"KPI_Contrata3_{u}_HTML"])
+    cabecalho(c, f"Manchete_Contrata_{u}_HTML", [f"KPI_Contrata1_{u}_HTML", f"KPI_Contrata2_{u}_HTML", f"KPI_Contrata3_{u}_HTML"],
+              [None if afl else "Tip_Contrata_Pos_HTML", "Tip_Contrata_Dif_HTML", "Tip_Contrata_Max_AFL_HTML" if afl else "Tip_Contrata_Max_Total_HTML"])
     titulo(c, "t_rank", ax + 24, fb.L2_Y + 16, aw - 48, 84, "Titulo_Contrata_Rank_AFL_HTML" if afl else "Titulo_Contrata_Rank_Total_HTML")
-    c.gravar("indicador", pb.botoes_setor(c.n("indicador"), (ax + 24, fb.L2_Y + 100, aw - 48, 48, c.prox()), "D_Indicador", "indicador", n=7, inicial="Mulheres"))
+    c.gravar("indicador", pb.botoes_setor(c.n("indicador"), (ax + 24, fb.L2_Y + 100, aw - 48, 48, c.prox()), "D_Indicador", "indicador", n=7, inicial="Mulheres", fonte=14))
     if afl:
-        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 174, c.prox()), pb.coluna("D_AflAtividade", "nome"), "Ind_Valor_Ctx", "Participação", "0.0%", cor_fixa=cp.LARANJA))
+        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 170, c.prox()), pb.coluna("D_AflAtividade", "nome"), "Ind_Valor_Ctx", "Participação", "0.0%",
+                                   cor_fixa=cp.LARANJA, espaco=14, foco=True))
     else:
-        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 174, c.prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Ind_Divisao_Top", "Participação", "0.0%",
-                                   cor_por_medida="Cor_Ind_Divisao"))
-    titulo(c, "t_serie", bx + 24, fb.L2_Y + 16, bw_ - 48, 88, "Titulo_Contrata_Serie_HTML")
+        c.gravar("rank", pb.barras(c.n("rank"), (ax + 16, fb.L2_Y + 158, aw - 32, fb.L2_H - 170, c.prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Ind_Divisao_Top", "Participação", "0.0%",
+                                   cor_por_medida="Cor_Ind_Divisao", espaco=6, fonte=14, foco=True))
+    titulo(c, "t_serie", bx + 24, fb.L2_Y + 16, bw_ - 48, 100, "Titulo_Contrata_Serie_HTML")
     s = [("Ind_Serie_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0%"), ("Ind_Serie_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0%"),
          ("Ind_Serie_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0%"), ("Ind_Serie_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0%")]
-    c.gravar("serie", pb.linhas(c.n("serie"), (bx + 16, fb.L2_Y + 136, bw_ - 32, fb.L2_H - 152, c.prox()), pb.coluna("D_Calendario", "Ano"), s))
+    if not afl:
+        s += [("Ind_Serie_Sel_Pre", "Seleção atual (2009–2021)", CINZA_SEL, "0.0%"), ("Ind_Serie_Sel_Pos", "Seleção atual (2022 em diante)", CINZA_SEL, "0.0%")]
+    c.gravar("serie", pb.linhas(c.n("serie"), (bx + 16, fb.L2_Y + 146, bw_ - 32, fb.L2_H - 158, c.prox()), pb.coluna("D_Calendario", "Ano"), s, continuo=True))
     titulo(c, "t_tab", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_Contrata_Tabela_HTML")
-    titulo(c, "tabela", ax + 24, fb.L3_Y + 108, aw - 48, fb.L3_H - 128, "Contrata_Tabela_HTML")
-    titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_HTML")
-    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Top", "Participação no AFL", "0.0%", cor_fixa=cp.LARANJA))
+    titulo(c, "tabela", ax + 24, fb.L3_Y + 108, aw - 48, fb.L3_H - 128, "Contrata_Tabela_HTML" if afl else "Contrata_Tabela_Total_HTML")
+    if afl:
+        titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_HTML")
+        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Top", "Participação no AFL", "0.0%", cor_fixa=cp.LARANJA,
+                                 foco=True, espaco=10))
+    else:
+        titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_Total_HTML")
+        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Todos_Top", "Participação", "0.0%", cor_fixa="#1D1E21",
+                                 tooltips=[("Ind_UF_AFL_Dica", "No AFL desta UF", "0.0%")], foco=True, espaco=10))
 
 
 # ------------------------------------------------------------------ páginas
@@ -261,11 +285,18 @@ def main():
         imagens.append(fundo)
         ordem.append(pid)
     atualizar_report(imagens)
+    for medida_nome, pid in TIPS.items():
+        destino = pb.DEF / "pages" / pid
+        if destino.exists():
+            shutil.rmtree(destino)
+        pagina, vis, v = pb.pagina_tooltip(pid, "Dica · " + medida_nome.replace("Tip_", "").replace("_HTML", "").replace("_", " "), medida_nome)
+        pb.salvar(destino / "page.json", pagina)
+        pb.salvar(destino / "visuals" / v / "visual.json", vis)
     navegacao_rais.gerar({k: IDS[k] for k in cp.PAGINAS})
     pj = pb.DEF / "pages" / "pages.json"
     d = json.loads(pj.read_text(encoding="utf-8"))
     antigas = [p for p in d["pageOrder"] if p not in ordem and p != BLANK_INICIAL and not p.startswith("a3d1f2c4e6b8097a1c")]
-    d["pageOrder"] = [p for p in d["pageOrder"] if p.startswith("a3d1f2c4e6b8097a1c") and p not in ordem] + ordem + antigas + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
+    d["pageOrder"] = ordem + list(TIPS.values()) + [p for p in antigas if p not in TIPS.values()] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
     d["activePageName"] = ordem[0]
     pj.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 

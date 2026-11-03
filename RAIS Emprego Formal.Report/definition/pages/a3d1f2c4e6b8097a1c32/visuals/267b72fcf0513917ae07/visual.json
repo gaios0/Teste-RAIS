@@ -3,9 +3,9 @@
   "name": "267b72fcf0513917ae07",
   "position": {
     "x": 60.0,
-    "y": 344,
+    "y": 336,
     "z": 1000,
-    "height": 156,
+    "height": 172,
     "width": 518.7,
     "tabOrder": 1000
   },
@@ -114,6 +114,33 @@
           }
         }
       ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'a3d1f2c4e6b8097a1c53'"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
       "padding": [
         {
           "properties": {
@@ -142,19 +169,6 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualTooltip": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }

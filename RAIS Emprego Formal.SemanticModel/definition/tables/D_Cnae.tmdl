@@ -99,3 +99,5 @@ table D_Cnae
 			entityName: D_Cnae
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
 
+	annotation PBI_ResultType = Exception
+

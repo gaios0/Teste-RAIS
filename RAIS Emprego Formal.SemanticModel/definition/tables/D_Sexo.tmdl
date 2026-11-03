@@ -17,7 +17,6 @@ table D_Sexo
 	column ordem
 		dataType: int64
 		isHidden
-		formatString: 0
 		lineageTag: 7759599b-ff89-4407-b8dc-5e9f75881ec9
 		sourceLineageTag: 578474e4-cf1f-4421-8e31-8fb7d78e45f1
 		dataCategory: Uncategorized
@@ -31,4 +30,6 @@ table D_Sexo
 		source
 			entityName: D_Sexo
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
 

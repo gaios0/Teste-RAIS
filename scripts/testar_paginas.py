@@ -104,9 +104,24 @@ def contrata():
     return q
 
 
+def ajustes():
+    A = "D_Calendario[Ano] = 2025"
+    q = []
+    for n in ("Tip_RazaoSexo_HTML", "Tip_RazaoRaca_HTML", "Tip_Mediana_HTML", "Tip_Contrata_Pos_HTML", "Tip_Contrata_Dif_HTML", "Tip_Contrata_Max_Total_HTML", "Contrata_Tabela_Total_HTML",
+              "Manchete_Perfil_Total_HTML", "Titulo_Rem_Gap_HTML", "Titulo_Rem_Esc_HTML", "Titulo_Contrata_UF_Total_HTML", "KPI_Contrata2_Total_HTML", "KPI_Contrata1_Total_HTML",
+              "Titulo_Contrata_Serie_HTML", "Titulo_Contrata_Rank_Total_HTML", "Manchete_Contrata_Total_HTML"):
+        q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}))")
+    for n in ("Tip_Contrata_Max_AFL_HTML", "Manchete_Perfil_AFL_HTML"):
+        q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}, D_Cnae[setor_afl] = \"Sim\"))")
+    q.append('-- uf todos\nEVALUATE TOPN(5, CALCULATETABLE(SUMMARIZECOLUMNS(D_UF[uf], "v", [Ind_UF_Todos_Top], "a", [Ind_UF_AFL_Dica]), D_Calendario[Ano] = 2025), [v], DESC)')
+    q.append('-- serie sel\nEVALUATE TOPN(3, SUMMARIZECOLUMNS(D_Calendario[Ano], "p", [Ind_Serie_Sel_Pre], "q", [Ind_Serie_Sel_Pos], "m", [Rem_Media_Sel_Pos]), D_Calendario[Ano], DESC)')
+    q.append('-- esc sel\nEVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(D_Escolaridade[escolaridade_agrupada], "s", [Rem_Esc_Sel]), D_Calendario[Ano] = 2025)')
+    return q
+
+
 def main():
     alvo = sys.argv[1:] or ["emp"]
-    consultas = {"emp": emp, "perfil": perfil, "salario": salario, "contrata": contrata}
+    consultas = {"ajustes": ajustes, "emp": emp, "perfil": perfil, "salario": salario, "contrata": contrata}
     saida = rodar([c for a in alvo for c in consultas[a]()])
     for bloco in saida.split("--- ")[1:]:
         cab = bloco.split("\n")[0]

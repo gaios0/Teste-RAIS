@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Contrata_Tabela_HTML"
+                  "Property": "Contrata_Tabela_Total_HTML"
                 }
               },
-              "queryRef": "_medidas.Contrata_Tabela_HTML",
-              "nativeQueryRef": "Contrata_Tabela_HTML"
+              "queryRef": "_medidas.Contrata_Tabela_Total_HTML",
+              "nativeQueryRef": "Contrata_Tabela_Total_HTML"
             }
           ]
         }

@@ -29,3 +29,5 @@ table D_UF
 			entityName: D_UF
 			expressionSource: 'DirectQuery para AS – Painel_RAIS'
 
+	annotation PBI_ResultType = Exception
+

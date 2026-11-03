@@ -32,7 +32,7 @@ def manchete_corpo(texto_var, contexto_var, aria):
         "VAR Valido = NOT ISBLANK([Ano_Ref]) && NOT ISBLANK([Empregos_Ref])\nRETURN\n    IF(NOT Valido,\n"
         "        \"<div role='text' style='width:100%;height:118px;font-family:Segoe UI,Arial,sans-serif;font-size:24px;color:#434446;'>Não há dados para os filtros selecionados.</div>\",\n"
         f"        \"<div role='group' aria-label='{aria}' style='width:100%;height:118px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>\"\n"
-        "            & \"<div style='height:48px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;'><span style='min-width:0;font-size:36px;line-height:42px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis;'>\" & "
+        "            & \"<div style='max-height:84px;overflow:hidden;'><span style='display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-width:0;font-size:34px;line-height:40px;font-weight:600;font-variant-numeric:tabular-nums;overflow:hidden;'>\" & "
         + esc(texto_var) + " & \"</span></div>\"\n"
         "            & \"<div style='height:30px;margin:4px 0 0;font-size:24px;line-height:30px;color:#434446;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>\" & " + esc(contexto_var) + " & \"</div>\"\n"
         "        & \"</div>\")")
@@ -108,8 +108,8 @@ def perfil(add):
         vars_ + "VAR L1 = IF(ISBLANK(A) || TotA = 0, \"Sem dados para os filtros escolhidos\", " + pc("E2A") + " & \" dos empregados do AFL têm o ensino médio completo\")\n"
         "VAR L2 = IF(ISBLANK(A) || TotA = 0, \"\", \"Superior (completo ou não): \" & " + pc("E3A") + " & \" no AFL e \" & " + pc("E3C") + " & \" nos Comparáveis\")\n" + titulo_html("L1", "L2", '"#312E81"'), f"HTML\\{P1}\\Títulos")
     # ocupações
-    add("Emp_CBO_Top", "Empregos por ocupação (CBO); só as 8 maiores.",
-        "VAR V = [Empregos_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(F_rais[cbo_2002]), [Empregos_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 8, V)", f"{P1}\\Ocupações", "#,0")
+    add("Emp_CBO_Top", "Empregos por ocupação (CBO); as 300 maiores (o gráfico mostra as primeiras e rola; o modo foco amplia).",
+        "VAR V = [Empregos_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(F_rais[cbo_2002]), [Empregos_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 300, V)", f"{P1}\\Ocupações", "#,0")
     add("Titulo_CBO_HTML", "Título das ocupações: a mais comum, seus empregos e % de mulheres.",
         "VAR T = FILTER(ADDCOLUMNS(VALUES(F_rais[cbo_2002]), \"@v\", [Empregos_Ref]), NOT ISBLANK([@v]))\nVAR Lider1 = TOPN(1, T, [@v], DESC, F_rais[cbo_2002], ASC)\nVAR Nome = CONCATENATEX(Lider1, F_rais[cbo_2002], \"\")\n"
         "VAR V = MAXX(Lider1, [@v])\nVAR Mul = CALCULATE([Perf_Mulheres], KEEPFILTERS(TREATAS({Nome}, F_rais[cbo_2002])))\n"
@@ -154,10 +154,14 @@ def perfil(add):
             kpi_html("KPI de jovens", '"Até 24 anos"', pc("Perf_Ate24"), "\"idade média \" & FORMAT(Idade, \"0.0\", \"pt-BR\") & \" anos\" & IF([Ano_Ref] > I, \" (\" & FORMAT(IdadeI, \"0.0\", \"pt-BR\") & \" em \" & I & \")\", \"\")", '"#434446"', extra_afl("Perf_Ate24")), f"HTML\\{P1}\\KPIs")
         add(f"KPI_Escol_{u}_HTML", "KPI de ensino médio completo ou mais, com superior.",
             kpi_v("KPI de escolaridade", '"Ensino médio completo ou mais"', pc("Perf_MedioMais"), "\"superior (completo ou não): \" & " + pc("Perf_Superior"), '"#434446"', extra_afl("Perf_MedioMais")), f"HTML\\{P1}\\KPIs")
+        idade = "FORMAT([Perf_Idade], \"0.0\", \"pt-BR\")"
+        idade_a = "FORMAT(CALCULATE([Perf_Idade], " + G_AFL + "), \"0.0\", \"pt-BR\")"
+        idade_c = "FORMAT(CALCULATE([Perf_Idade], " + G_COMP + "), \"0.0\", \"pt-BR\")"
         if u == "AFL":
-            texto = PREP + "VAR Texto = Prep & \", \" & " + pc("Perf_Mulheres") + " & \" dos empregados do AFL são mulheres e \" & " + pc("Perf_Ate24") + " & \" têm até 24 anos\"\n"
+            texto = (PREP + "VAR Texto = Prep & \", o empregado do AFL tem em média \" & " + idade + " & \" anos e \" & " + pc("Perf_Mulheres") + " & \" são mulheres (Comparáveis: \" & "
+                     + idade_c + " & \" anos e \" & " + pc("Perf_Mulheres_Comp") + " & \")\"\n")
         else:
-            texto = (PREP + "VAR Texto = Prep & \", \" & " + pc("Perf_Mulheres") + " & \" dos empregados são mulheres e \" & " + pc("Perf_Ate24") + " & \" têm até 24 anos; no AFL, \" & " + pc("Perf_Mulheres_AFL") + " & \" e \" & " + pc("Perf_Ate24_AFL") + "\n")
+            texto = (PREP + "VAR Texto = Prep & \", o empregado tem em média \" & " + idade + " & \" anos e \" & " + pc("Perf_Mulheres") + " & \" são mulheres; no AFL, \" & " + idade_a + " & \" anos e \" & " + pc("Perf_Mulheres_AFL") + "\n")
         add(f"Manchete_Perfil_{u}_HTML", f"Manchete da página Quem trabalha · {u}.", texto + f"VAR Contexto = [Contexto_Emp_{u}]\n" + manchete_corpo("Texto", "Contexto", "Perfil dos empregados"), f"HTML\\{P1}")
 
 
@@ -186,11 +190,16 @@ def salario(add):
         "IF(SELECTEDVALUE(D_Escolaridade[escolaridade_agrupada]) IN {" + ", ".join(ESC_FORA) + "}, BLANK(), [Remuneracao_Media_Ref_AFL])", f"{P2}\\Escolaridade", "#,0")
     add("Rem_Esc_Comp", "Remuneração média de dezembro por escolaridade, Comparáveis.",
         "IF(SELECTEDVALUE(D_Escolaridade[escolaridade_agrupada]) IN {" + ", ".join(ESC_FORA) + "}, BLANK(), [Remuneracao_Media_Ref_Comparavel])", f"{P2}\\Escolaridade", "#,0")
+    for tr, cond in (("Pre", f"A < {QUEBRA}"), ("Pos", f"A >= {QUEBRA}")):
+        add(f"Rem_Media_Sel_{tr}", f"Remuneração média de dezembro da seleção atual (setores/divisão filtrados), trecho {tr}.",
+            f"VAR A = [Ano_Ref]\nRETURN IF(NOT ISBLANK(A) && {cond}, CALCULATE([Remuneracao_Media], {ANOF.format(a='A')}))", f"{P2}\\Séries", "#,0")
+    add("Rem_Esc_Sel", "Remuneração média de dezembro por escolaridade na seleção atual (setores/divisão filtrados).",
+        "IF(SELECTEDVALUE(D_Escolaridade[escolaridade_agrupada]) IN {" + ", ".join(ESC_FORA) + "}, BLANK(), [Remuneracao_Media_Ref])", f"{P2}\\Escolaridade", "#,0")
     add("Rem_UF_Top", "Remuneração média de dezembro por UF (10 maiores).",
         "VAR V = [Remuneracao_Media_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(D_UF[uf]), [Remuneracao_Media_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 10, V)", f"{P2}\\UF", "#,0")
     add("Rem_UF_Razao_Comp", "Remuneração média do AFL na UF ÷ média dos Comparáveis na UF.", "DIVIDE([Remuneracao_Media_Ref_AFL], [Remuneracao_Media_Ref_Comparavel])", f"{P2}\\UF", "0%")
-    for nome, txt in (("Sexo", "Mulheres ÷ homens"), ("Raca", "Negros ÷ brancos")):
-        add(f"Rotulo_Gap_{nome}_HTML", f"Rótulo do gráfico de razão ({txt}).", f"\"<div style='font-family:Segoe UI,Arial,sans-serif;font-size:21px;font-weight:600;color:#1D1E21;'>{txt} · remuneração média de dezembro, por escolaridade</div>\"", f"HTML\\{P2}\\Títulos", None, True)
+    for nome, txt in (("Sexo", "Salário das mulheres como % do dos homens"), ("Raca", "Salário dos negros como % do dos brancos")):
+        add(f"Rotulo_Gap_{nome}_HTML", f"Rótulo do gráfico de razão ({txt}).", f"\"<div style='font-family:Segoe UI,Arial,sans-serif;font-size:19px;font-weight:600;color:#1D1E21;white-space:nowrap;'>{txt}, por escolaridade</div>\"", f"HTML\\{P2}\\Títulos", None, True)
     # KPIs
     for u in ("Total", "AFL"):
         add(f"KPI_Mediana_{u}_HTML", "KPI de remuneração mediana de dezembro, com média, salários mínimos e chips.",
@@ -220,11 +229,11 @@ def salario(add):
         "VAR Sup = CALCULATE(DIVIDE([Remuneracao_Media_Ref_AFL], [Remuneracao_Media_Ref_Comparavel]), KEEPFILTERS(D_Escolaridade[escolaridade_agrupada] = \"Superior Completo\"))\n"
         "VAR Med = CALCULATE(DIVIDE([Remuneracao_Media_Ref_AFL], [Remuneracao_Media_Ref_Comparavel]), KEEPFILTERS(D_Escolaridade[escolaridade_agrupada] = \"Médio Completo\"))\n"
         "VAR L1 = IF(ISBLANK(Sup), \"Sem dados para os filtros escolhidos\", \"Com superior completo, o AFL paga \" & FORMAT(Sup, \"0%\", \"pt-BR\") & \" da média dos Comparáveis\")\n"
-        "VAR L2 = IF(ISBLANK(Sup), \"\", \"Com ensino médio completo: \" & FORMAT(Med, \"0%\", \"pt-BR\") & \". Remuneração média de dezembro (R$ nominais)\")\n" + titulo_html("L1", "L2", '"#1D1E21"'), f"HTML\\{P2}\\Títulos")
-    add("Titulo_Rem_Gap_HTML", "Título das razões por sexo e cor, AFL × Comparáveis.",
+        "VAR L2 = IF(ISBLANK(Sup), \"\", \"Com médio completo: \" & FORMAT(Med, \"0%\", \"pt-BR\") & \" · média de dezembro, R$ nominais\")\n" + titulo_html("L1", "L2", '"#1D1E21"'), f"HTML\\{P2}\\Títulos")
+    add("Titulo_Rem_Gap_HTML", "Título das razões por sexo e cor, AFL × Comparáveis (sem conclusão fixa).",
         "VAR S = [Rem_Razao_Sexo_AFL]\nVAR SC = [Rem_Razao_Sexo_Comp]\nVAR R = [Rem_Razao_Raca_AFL]\nVAR RC = [Rem_Razao_Raca_Comp]\n"
-        "VAR L1 = IF(ISBLANK(S) && ISBLANK(R), \"Sem dados para os filtros escolhidos\", \"A diferença salarial por sexo e por cor é menor no AFL do que nos Comparáveis\")\n"
-        "VAR L2 = IF(L1 = \"Sem dados para os filtros escolhidos\", \"\", \"Sem filtro de escolaridade: mulheres ganham \" & FORMAT(S, \"0%\", \"pt-BR\") & \" do salário dos homens no AFL (\" & FORMAT(SC, \"0%\", \"pt-BR\") & \" nos Comparáveis); negros, \" & FORMAT(R, \"0%\", \"pt-BR\") & \" do dos brancos (\" & FORMAT(RC, \"0%\", \"pt-BR\") & \")\")\n"
+        "VAR L1 = IF(ISBLANK(S) && ISBLANK(R), \"Sem dados para os filtros escolhidos\", \"Mulheres ganham \" & FORMAT(S, \"0%\", \"pt-BR\") & \" do salário dos homens no AFL (Comparáveis: \" & FORMAT(SC, \"0%\", \"pt-BR\") & \")\")\n"
+        "VAR L2 = IF(ISBLANK(S) && ISBLANK(R), \"\", \"Negros ganham \" & FORMAT(R, \"0%\", \"pt-BR\") & \" do salário dos brancos no AFL (Comparáveis: \" & FORMAT(RC, \"0%\", \"pt-BR\") & \") · média de dezembro, sem filtro de escolaridade\")\n"
         + titulo_html("L1", "L2", '"#1D1E21"'), f"HTML\\{P2}\\Títulos")
     add("Titulo_Rem_UF_HTML", "Título das UFs: maior média e maior distância para os Comparáveis.",
         "VAR T = FILTER(ADDCOLUMNS(VALUES(D_UF[uf]), \"@v\", [Remuneracao_Media_Ref], \"@r\", [Rem_UF_Razao_Comp]), NOT ISBLANK([@v]))\nVAR Lider1 = TOPN(1, T, [@v], DESC, D_UF[uf], ASC)\nVAR UF = CONCATENATEX(Lider1, D_UF[uf], \"\")\nVAR V = MAXX(Lider1, [@v])\n"

@@ -50,10 +50,12 @@ def salvar(caminho, obj):
     caminho.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def container(tooltip=None, titulo=False, extra=None):
+def container(tooltip=None, titulo=False, extra=None, cabecalho=False):
     c = {"title": [{"properties": {"show": lit("false")}}], "background": [{"properties": {"show": lit("false")}}],
          "border": [{"properties": {"show": lit("false")}}], "subTitle": [{"properties": {"show": lit("false")}}],
          "visualHeader": [{"properties": {"show": lit("false")}}]}
+    if cabecalho:       # mantém o cabeçalho do visual (aparece ao passar o mouse): modo foco, filtros e opções
+        c["visualHeader"] = [{"properties": {"show": lit("true")}}]
     if tooltip:
         c["visualTooltip"] = [{"properties": {"section": lit(f"'{tooltip}'"), "type": lit("'Canvas'"), "show": lit("true")}}]
     if extra:
@@ -120,12 +122,12 @@ def slicer_comparavel(nome, pos, sync):
                   filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])])
 
 
-def botoes_setor(nome, pos, tabela, col, n=5, inicial=None):
+def botoes_setor(nome, pos, tabela, col, n=5, inicial=None, fonte=16):
     """Botão de setor (5 mosaicos); o trilho está no fundo."""
     tema = lambda i: {"solid": {"color": {"expr": {"ThemeDataColor": {"ColorId": i, "Percent": 0}}}}}
     obj = {"layout": [{"properties": {"orientation": lit("2D"), "style": lit("'Cards'"), "autoGrid": lit("true"), "maxTiles": lit(f"{n}L")}}],
            "overFlow": [{"properties": {"overFlowDirection": lit("1D")}}],
-           "value": [{"properties": {"show": lit("true")}}, {"properties": {"fontSize": lit("16D")}, "selector": {"id": "default"}},
+           "value": [{"properties": {"show": lit("true")}}, {"properties": {"fontSize": lit(f"{fonte}D")}, "selector": {"id": "default"}},
                      {"properties": {"fontColor": tema(0)}, "selector": {"id": "selection:selected"}}],
            "fillCustom": [{"properties": {"show": lit("true")}, "selector": {"id": "default"}}] +
                          [{"properties": {"fillColor": tema(5)}, "selector": {"id": s}} for s in ("interaction:hover", "interaction:press", "selection:selected")],
@@ -159,7 +161,7 @@ def _eixos():
             "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}
 
 
-def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=()):
+def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=(), continuo=False):
     """Gráfico de linhas; series = [(medida, rótulo, cor, formato)]; cada série com marcador e linha de 3 px; sem rótulos de dados."""
     q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, f) for m, r, c, f in series]}}
     if tooltips:
@@ -169,12 +171,14 @@ def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=()):
     o["lineStyles"] = [{"properties": {"strokeWidth": lit("3L"), "showMarker": lit("true"), "markerColor": cor(c), "lineChartType": lit("'straight'"), **({"lineStyle": lit("'dashed'")} if m in tracejadas else {})},
                         "selector": {"metadata": f"_medidas.{m}"}} for m, r, c, f in series]
     o["labels"] = [{"properties": {"show": lit("false")}}]
-    o["categoryAxis"][0]["properties"]["axisType"] = lit("'Categorical'")
+    o["categoryAxis"][0]["properties"]["axisType"] = lit("'Continuous'" if continuo else "'Categorical'")
+    if continuo:
+        o["categoryAxis"][0]["properties"].update({"labelAngle": lit("0L")})
     o["valueAxis"] = [{"properties": {"fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "gridlineColor": cor("#EEEEEF"), "showAxisTitle": lit("false")}}]
     return visual(nome, "lineChart", pos, q, o, container())
 
 
-def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", cor_por_medida=None, tooltips=None, rotulos=True):
+def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", cor_por_medida=None, tooltips=None, rotulos=True, foco=False, espaco=18, fonte=16):
     """Barras horizontais ordenadas pelo valor (decrescente), rótulo completo fora da barra."""
     q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(medida_valor, exibir, fmt)]}}
     if tooltips:
@@ -186,13 +190,13 @@ def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", 
         o["dataPoint"] = [{"properties": {"fill": cor(cor_fixa)}, "selector": {"metadata": f"_medidas.{medida_valor}"}}]
     o["labels"] = [{"properties": {"show": lit("true" if rotulos else "false"), "fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "color": cor("#1D1E21"),
                                    "labelDisplayUnits": lit("1D"), "labelPosition": lit("'OutsideEnd'")}}]
-    o["categoryAxis"][0]["properties"].update({"innerPadding": lit("18L"), "maxMarginFactor": lit("40L"), "preferredCategoryWidth": lit("40D")})
+    o["categoryAxis"][0]["properties"].update({"innerPadding": lit(f"{espaco}L"), "maxMarginFactor": lit("40L"), "preferredCategoryWidth": lit("40D"), "fontSize": lit(f"{fonte}D")})
     o["valueAxis"] = [{"properties": {"show": lit("false")}}]
     sort = {"sort": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": medida_valor}}, "direction": "Descending"}]}
-    return visual(nome, "clusteredBarChart", pos, q, o, container(), sort=sort)
+    return visual(nome, "clusteredBarChart", pos, q, o, container(cabecalho=foco), sort=sort)
 
 
-def barras_grupo(nome, pos, categoria, series, fmt, ordem_por=None, tooltips=None, empilhado=False, sort_cat=None):
+def barras_grupo(nome, pos, categoria, series, fmt, ordem_por=None, tooltips=None, empilhado=False, sort_cat=None, foco=False, espaco=None, fonte=16):
     """Barras horizontais com mais de uma série (AFL × Comparáveis, ou mulheres × homens empilhados).
     series = [(medida, rótulo, cor)]; ordena pela medida `ordem_por` (decrescente) ou pela coluna `sort_cat` (tabela, coluna, direção)."""
     q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, fmt) for m, r, c in series]}}
@@ -202,11 +206,21 @@ def barras_grupo(nome, pos, categoria, series, fmt, ordem_por=None, tooltips=Non
     o["dataPoint"] = [{"properties": {"fill": cor(c)}, "selector": {"metadata": f"_medidas.{m}"}} for m, r, c in series]
     o["labels"] = [{"properties": {"show": lit("true"), "fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "color": cor("#1D1E21"),
                                    "labelDisplayUnits": lit("1D"), **({} if empilhado else {"labelPosition": lit("'OutsideEnd'")})}}]
-    o["categoryAxis"][0]["properties"].update({"innerPadding": lit("12L" if not empilhado else "6L"), "maxMarginFactor": lit("40L"), "preferredCategoryWidth": lit("40D")})
+    o["categoryAxis"][0]["properties"].update({"innerPadding": lit(f"{espaco}L" if espaco is not None else ("12L" if not empilhado else "6L")), "maxMarginFactor": lit("40L"), "preferredCategoryWidth": lit("40D"), "fontSize": lit(f"{fonte}D")})
     o["valueAxis"] = [{"properties": {"show": lit("false")}}]
     if sort_cat:
         tab, col, d = sort_cat
         sort = {"sort": [{"field": {"Column": {"Expression": {"SourceRef": {"Entity": tab}}, "Property": col}}, "direction": d}]}
     else:
         sort = {"sort": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": ordem_por or series[0][0]}}, "direction": "Descending"}]}
-    return visual(nome, "stackedBarChart" if empilhado else "clusteredBarChart", pos, q, o, container(), sort=sort)
+    return visual(nome, "barChart" if empilhado else "clusteredBarChart", pos, q, o, container(cabecalho=foco), sort=sort)
+
+
+def pagina_tooltip(pid, nome, medida_nome, largura=600, altura=450):
+    """Página de tooltip (600 × 450) com um visual HTML; devolve (page.json, visual.json, nome do visual)."""
+    pagina = {"$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json", "name": pid, "displayName": nome,
+              "displayOption": "FitToPage", "height": altura, "width": largura, "visibility": "HiddenInViewMode", "type": "Tooltip"}
+    v = nome_visual(pid, "dica")
+    vis = visual(v, HTML, (0, 0, largura, altura, 0), {"content": {"projections": [medida(medida_nome)]}}, {"compatibility": [{"properties": {"legacyRendering": lit("false")}}]}, container())
+    vis["visual"]["visualContainerObjects"]["padding"] = [{"properties": {k: lit("0D") for k in ("top", "bottom", "left", "right")}}]
+    return pagina, vis, v
