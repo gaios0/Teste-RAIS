@@ -114,33 +114,6 @@
           }
         }
       ],
-      "visualTooltip": [
-        {
-          "properties": {
-            "section": {
-              "expr": {
-                "Literal": {
-                  "Value": "'a3d1f2c4e6b8097a1c57'"
-                }
-              }
-            },
-            "type": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Canvas'"
-                }
-              }
-            },
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
       "padding": [
         {
           "properties": {
@@ -169,6 +142,19 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c61",
+  "displayName": "Tooltip (i) compartilhado · P",
+  "displayOption": "FitToPage",
+  "height": 370,
+  "width": 720,
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}
