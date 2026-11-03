@@ -29,6 +29,21 @@
               "queryRef": "D_UF.uf",
               "nativeQueryRef": "uf",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "F_rais"
+                    }
+                  },
+                  "Property": "municipio"
+                }
+              },
+              "queryRef": "F_rais.municipio",
+              "nativeQueryRef": "municipio",
+              "active": false
             }
           ]
         },
@@ -42,10 +57,10 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Ind_UF_Top"
+                  "Property": "Ind_UF_Geo"
                 }
               },
-              "queryRef": "_medidas.Ind_UF_Top",
+              "queryRef": "_medidas.Ind_UF_Geo",
               "nativeQueryRef": "Participação no AFL",
               "displayName": "Participação no AFL",
               "format": "0.0%"
@@ -63,7 +78,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Ind_UF_Top"
+                "Property": "Ind_UF_Geo"
               }
             },
             "direction": "Descending"
@@ -162,7 +177,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Ind_UF_Top"
+            "metadata": "_medidas.Ind_UF_Geo"
           }
         }
       ],

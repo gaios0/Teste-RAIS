@@ -29,6 +29,21 @@
               "queryRef": "D_UF.uf",
               "nativeQueryRef": "uf",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "F_rais"
+                    }
+                  },
+                  "Property": "municipio"
+                }
+              },
+              "queryRef": "F_rais.municipio",
+              "nativeQueryRef": "municipio",
+              "active": false
             }
           ]
         },
@@ -42,10 +57,10 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Emp_UF_Peso_Top"
+                  "Property": "Emp_UF_Peso_Geo"
                 }
               },
-              "queryRef": "_medidas.Emp_UF_Peso_Top",
+              "queryRef": "_medidas.Emp_UF_Peso_Geo",
               "nativeQueryRef": "Peso do AFL nos empregos comparáveis",
               "displayName": "Peso do AFL nos empregos comparáveis",
               "format": "0.0%"
@@ -83,7 +98,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Emp_UF_Peso_Top"
+                "Property": "Emp_UF_Peso_Geo"
               }
             },
             "direction": "Descending"
@@ -119,7 +134,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "10L"
                 }
               }
             },
@@ -182,7 +197,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Emp_UF_Peso_Top"
+            "metadata": "_medidas.Emp_UF_Peso_Geo"
           }
         }
       ],
@@ -311,7 +326,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }

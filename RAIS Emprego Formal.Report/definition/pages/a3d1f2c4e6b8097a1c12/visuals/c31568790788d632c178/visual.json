@@ -29,6 +29,21 @@
               "queryRef": "D_UF.uf",
               "nativeQueryRef": "uf",
               "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "F_rais"
+                    }
+                  },
+                  "Property": "municipio"
+                }
+              },
+              "queryRef": "F_rais.municipio",
+              "nativeQueryRef": "municipio",
+              "active": false
             }
           ]
         },
@@ -42,10 +57,10 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Emp_UF_Top"
+                  "Property": "Empregos_Ref"
                 }
               },
-              "queryRef": "_medidas.Emp_UF_Top",
+              "queryRef": "_medidas.Empregos_Ref",
               "nativeQueryRef": "Empregos do AFL",
               "displayName": "Empregos do AFL",
               "format": "#,0"
@@ -83,7 +98,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Emp_UF_Top"
+                "Property": "Empregos_Ref"
               }
             },
             "direction": "Descending"
@@ -119,7 +134,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "18L"
+                  "Value": "10L"
                 }
               }
             },
@@ -182,7 +197,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Emp_UF_Top"
+            "metadata": "_medidas.Empregos_Ref"
           }
         }
       ],
@@ -311,7 +326,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
