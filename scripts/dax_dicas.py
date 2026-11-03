@@ -75,7 +75,6 @@ def medidas():
 
 def medidas_info():
     m = []
-    m.append(("Info_Gatilho_Valor", "Valor constante do gatilho transparente dos (i).", "1", "HTML\\Notas compartilhadas", "0", True))
     m.append(("Info_Texto_HTML", "Cartão do (i): lê a linha da D_Info escolhida pela categoria do gatilho.",
               "VAR Chave = SELECTEDVALUE(D_Info[Chave])\nVAR Titulo = SELECTEDVALUE(D_Info[Titulo], \"\")\nVAR Extra = SELECTEDVALUE(D_Info[Extra], \"\")\n"
               "VAR Destaque = SELECTEDVALUE(D_Info[Destaque], \"\")\nVAR Borda = SELECTEDVALUE(D_Info[CorBorda], \"#1D1E21\")\nVAR Fundo = SELECTEDVALUE(D_Info[CorFundo], \"#F7F7F7\")\n"

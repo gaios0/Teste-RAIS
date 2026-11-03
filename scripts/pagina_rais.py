@@ -13,6 +13,7 @@ from pathlib import Path
 
 import config_paginas as cp
 import fundo_rais as fb
+import dax_tooltips
 import info_rais
 import seguranca
 import navegacao_rais
@@ -110,6 +111,13 @@ TIPS = {"Tip_RazaoSexo_HTML": "a3d1f2c4e6b8097a1c51", "Tip_RazaoRaca_HTML": "a3d
         "Tip_Contrata_Pos_HTML": "a3d1f2c4e6b8097a1c54", "Tip_Contrata_Dif_HTML": "a3d1f2c4e6b8097a1c55", "Tip_Contrata_Max_Total_HTML": "a3d1f2c4e6b8097a1c56",
         "Tip_Contrata_Max_AFL_HTML": "a3d1f2c4e6b8097a1c57"}
 CINZA_SEL = "#98A2B3"
+# gráficos nativos → medida da página de tooltip (a página vem de dax_tooltips.TOOLTIPS)
+TT_GRAFICO = {("Empregos", "serie", None): "Tip_Emp_Ano_HTML", ("Empregos", "rank", False): "Tip_Emp_Divisao_HTML", ("Empregos", "rank", True): "Tip_Emp_Atividade_HTML",
+              ("Empregos", "uf", None): "Tip_Emp_UF_HTML", ("Quem trabalha", "pir", None): "Tip_Pir_HTML", ("Quem trabalha", "cbo", None): "Tip_CBO_HTML",
+              ("Quanto ganha", "serie", None): "Tip_Rem_Ano_HTML", ("Quanto ganha", "esc", None): "Tip_Rem_Esc_HTML", ("Quanto ganha", "g_Sexo", None): "Tip_Rem_Gap_Sexo_HTML",
+              ("Quanto ganha", "g_Raca", None): "Tip_Rem_Gap_Raca_HTML", ("Quanto ganha", "uf", None): "Tip_Rem_UF_HTML",
+              ("Quem contrata", "rank", False): "Tip_Ind_Divisao_HTML", ("Quem contrata", "rank", True): "Tip_Ind_Atividade_HTML", ("Quem contrata", "serie", None): "Tip_Ind_Ano_HTML",
+              ("Quem contrata", "uf", None): "Tip_Ind_UF_HTML"}
 INFO_PAGINAS = {"P": "a3d1f2c4e6b8097a1c61", "M": "a3d1f2c4e6b8097a1c62", "G": "a3d1f2c4e6b8097a1c63"}
 INFO_TAMANHOS = {"P": (720, 370), "M": (760, 440), "G": (800, 580)}
 
@@ -250,6 +258,9 @@ def montar(tema, recorte, refazer=False):
     vis = {}
 
     def gravar(papel, v):
+        medida_tt = TT_GRAFICO.get((tema, papel, afl)) or TT_GRAFICO.get((tema, papel, None))
+        if medida_tt:
+            v["visual"]["visualContainerObjects"]["visualTooltip"] = [{"properties": {"section": pb.lit(f"'{dax_tooltips.TOOLTIPS[medida_tt][0]}'"), "type": pb.lit("'Canvas'"), "show": pb.lit("true")}}]
         pb.salvar(destino / "visuals" / v["name"] / "visual.json", v)
         vis[papel] = v["name"]
 
@@ -299,6 +310,13 @@ def main():
         imagens.append(fundo)
         ordem.append(pid)
     atualizar_report(imagens)
+    for medida_tt, (pid, larg, alt) in dax_tooltips.TOOLTIPS.items():
+        destino = pb.DEF / "pages" / pid
+        if destino.exists():
+            shutil.rmtree(destino)
+        pagina, vis, v = pb.pagina_tooltip(pid, "Tooltip · " + medida_tt.replace("Tip_", "").replace("_HTML", "").replace("_", " "), medida_tt, larg, alt)
+        pb.salvar(destino / "page.json", pagina)
+        pb.salvar(destino / "visuals" / v / "visual.json", vis)
     for classe, pid in INFO_PAGINAS.items():
         destino = pb.DEF / "pages" / pid
         if destino.exists():
@@ -318,7 +336,7 @@ def main():
     pj = pb.DEF / "pages" / "pages.json"
     d = json.loads(pj.read_text(encoding="utf-8"))
     antigas = [p for p in d["pageOrder"] if p not in ordem and p != BLANK_INICIAL and not p.startswith("a3d1f2c4e6b8097a1c")]
-    d["pageOrder"] = ordem + list(TIPS.values()) + list(INFO_PAGINAS.values()) + [p for p in antigas if p not in TIPS.values() and p not in INFO_PAGINAS.values()] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
+    d["pageOrder"] = ordem + list(TIPS.values()) + list(INFO_PAGINAS.values()) + [x[0] for x in dax_tooltips.TOOLTIPS.values()] + [p for p in antigas if p not in TIPS.values() and p not in INFO_PAGINAS.values() and p not in [x[0] for x in dax_tooltips.TOOLTIPS.values()]] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
     d["activePageName"] = ordem[0]
     pj.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
