@@ -1,0 +1,108 @@
+table D_Info
+	lineageTag: 868cd046-c9b0-452b-a262-802bee7bbb42
+
+	column Chave
+		dataType: string
+		lineageTag: 08d3203b-2ec8-45b4-b012-11e1c3be7b8f
+		summarizeBy: none
+		sourceColumn: Chave
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classe
+		dataType: string
+		lineageTag: 84b17a81-b3cc-4e96-a763-3ea68b313189
+		summarizeBy: none
+		sourceColumn: Classe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Titulo
+		dataType: string
+		lineageTag: b633f7c4-1f7c-45fd-aca6-2d37f324d4d1
+		summarizeBy: none
+		sourceColumn: Titulo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Extra
+		dataType: string
+		lineageTag: 793d84fd-8386-4458-8aed-cf819d04c07e
+		summarizeBy: none
+		sourceColumn: Extra
+
+		annotation SummarizationSetBy = Automatic
+
+	column Destaque
+		dataType: string
+		lineageTag: eaeca446-4a09-4bfc-b367-f341795e401e
+		summarizeBy: none
+		sourceColumn: Destaque
+
+		annotation SummarizationSetBy = Automatic
+
+	column CorBorda
+		dataType: string
+		lineageTag: d962417f-6081-4f7e-8751-52587e4e7af5
+		summarizeBy: none
+		sourceColumn: CorBorda
+
+		annotation SummarizationSetBy = Automatic
+
+	column CorFundo
+		dataType: string
+		lineageTag: 9981b6b8-e355-423a-91b8-0fef90b19f37
+		summarizeBy: none
+		sourceColumn: CorFundo
+
+		annotation SummarizationSetBy = Automatic
+
+	column P1
+		dataType: string
+		lineageTag: 071267c5-bf89-46b0-a1d4-ce39af1783fc
+		summarizeBy: none
+		sourceColumn: P1
+
+		annotation SummarizationSetBy = Automatic
+
+	column P2
+		dataType: string
+		lineageTag: 6775def4-3b59-4e8c-b232-2d521d7ae2cc
+		summarizeBy: none
+		sourceColumn: P2
+
+		annotation SummarizationSetBy = Automatic
+
+	column P3
+		dataType: string
+		lineageTag: 9960e69e-dc79-4e54-83e0-c6ad54ea072e
+		summarizeBy: none
+		sourceColumn: P3
+
+		annotation SummarizationSetBy = Automatic
+
+	column P4
+		dataType: string
+		lineageTag: d7da352a-3f34-413c-99c0-7dce2b2d88b4
+		summarizeBy: none
+		sourceColumn: P4
+
+		annotation SummarizationSetBy = Automatic
+
+	column P5
+		dataType: string
+		lineageTag: 97e15dd7-ff1f-4a8d-907a-1fa4f047db29
+		summarizeBy: none
+		sourceColumn: P5
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Info = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [Chave = text, Classe = text, Titulo = text, Extra = text, Destaque = text, CorBorda = text, CorFundo = text, P1 = text, P2 = text, P3 = text, P4 = text, P5 = text], {{"Empregos|Todos|K1", "M", "Empregos formais", "", "Vínculos de emprego ativos em 31 de dezembro do ano escolhido.", "#17B26A", "#ECFDF3", "RAIS (Relação Anual de Informações Sociais), estoque de vínculos em 31 de dezembro; desde 2022 os dados vêm do eSocial.", "Conta vínculos, não pessoas: quem tem dois empregos formais aparece duas vezes.", "Os filtros da página (setor, divisão, UF, sexo, escolaridade, raça/cor) recortam o número.", "", ""}, {"Empregos|AFL|K1", "M", "Empregos formais", "", "Vínculos de emprego ativos em 31 de dezembro do ano escolhido.", "#17B26A", "#ECFDF3", "RAIS (Relação Anual de Informações Sociais), estoque de vínculos em 31 de dezembro; desde 2022 os dados vêm do eSocial.", "Conta vínculos, não pessoas: quem tem dois empregos formais aparece duas vezes.", "Os filtros da página (setor, divisão, UF, sexo, escolaridade, raça/cor) recortam o número.", "", ""}, {"Empregos|Todos|K2", "P", "Peso do AFL", "", "Quanto o AFL representa no emprego formal.", "#F58220", "#FDF7F1", "Mostra o AFL como parte dos Comparáveis (AFL ÷ AFL + Comparáveis) e como parte de todo o emprego formal do país.", "Comparáveis são os setores usados como referência para o AFL; AFL é o conjunto de seis atividades de alimentação fora do lar.", "", "", ""}, {"Empregos|AFL|K2", "P", "Peso do AFL", "", "Quanto o AFL representa no emprego formal.", "#F58220", "#FDF7F1", "Mostra o AFL como parte dos Comparáveis (AFL ÷ AFL + Comparáveis) e como parte de todo o emprego formal do país.", "Comparáveis são os setores usados como referência para o AFL; AFL é o conjunto de seis atividades de alimentação fora do lar.", "", "", ""}, {"Empregos|Todos|K3", "M", "Crescimento médio ao ano", "", "Ritmo anual médio do emprego desde o início do período em análise.", "#434446", "#F2F4F7", "É a taxa composta: a taxa constante ao ano que levaria do emprego do início do trecho ao do ano escolhido.", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", "", ""}, {"Empregos|AFL|K3", "M", "Crescimento médio ao ano", "", "Ritmo anual médio do emprego desde o início do período em análise.", "#434446", "#F2F4F7", "É a taxa composta: a taxa constante ao ano que levaria do emprego do início do trecho ao do ano escolhido.", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", "", ""}, {"Empregos|Todos|L2A", "M", "Variação anual do emprego", "", "Cada coluna é a variação do emprego de 31/12 sobre 31/12 do ano anterior.", "#F58220", "#FDF7F1", "Passe o mouse sobre um ano para ver os empregos de cada grupo e a variação.", "2009 não tem ano anterior na série e 2022 não é comparável com 2021: essas colunas ficam vazias.", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", ""}, {"Empregos|AFL|L2A", "M", "Variação anual do emprego", "", "Cada coluna é a variação do emprego de 31/12 sobre 31/12 do ano anterior.", "#F58220", "#FDF7F1", "Passe o mouse sobre um ano para ver os empregos de cada grupo e a variação.", "2009 não tem ano anterior na série e 2022 não é comparável com 2021: essas colunas ficam vazias.", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", ""}, {"Empregos|Todos|L2B", "P", "Tipos de contrato", "", "Participação de cada tipo de contrato nos empregos de 31/12.", "#434446", "#F2F4F7", "As categorias não se sobrepõem: cada vínculo entra em uma só (intermitente, aprendiz, tempo parcial, CLT por prazo indeterminado e prazo determinado ou temporário).", "Compara o AFL com os Comparáveis.", "", "", ""}, {"Empregos|AFL|L2B", "P", "Tipos de contrato", "", "Participação de cada tipo de contrato nos empregos de 31/12.", "#434446", "#F2F4F7", "As categorias não se sobrepõem: cada vínculo entra em uma só (intermitente, aprendiz, tempo parcial, CLT por prazo indeterminado e prazo determinado ou temporário).", "Compara o AFL com os Comparáveis.", "", "", ""}, {"Empregos|Todos|L3A", "P", "Ranking de empregos", "", "Quem mais emprega: divisões da CNAE (todos os setores) ou atividades do AFL.", "#F58220", "#FDF7F1", "Divisão é o segundo nível da classificação CNAE (dois dígitos). O AFL aparece como um conjunto de seis atividades, em laranja.", "Use o modo foco (ícone no canto do gráfico) para ver todas as linhas.", "", "", ""}, {"Empregos|AFL|L3A", "P", "Ranking de empregos", "", "Quem mais emprega: divisões da CNAE (todos os setores) ou atividades do AFL.", "#F58220", "#FDF7F1", "Divisão é o segundo nível da classificação CNAE (dois dígitos). O AFL aparece como um conjunto de seis atividades, em laranja.", "Use o modo foco (ícone no canto do gráfico) para ver todas as linhas.", "", "", ""}, {"Empregos|Todos|L3B", "P", "Empregos por UF", "", "Distribuição geográfica do emprego.", "#434446", "#F2F4F7", "Na página Todos os setores, mostra onde o AFL pesa mais no emprego dos Comparáveis; na página AFL, quanto cada UF concentra do emprego do AFL.", "", "", "", ""}, {"Empregos|AFL|L3B", "P", "Empregos por UF", "", "Distribuição geográfica do emprego.", "#434446", "#F2F4F7", "Na página Todos os setores, mostra onde o AFL pesa mais no emprego dos Comparáveis; na página AFL, quanto cada UF concentra do emprego do AFL.", "", "", "", ""}, {"Quem trabalha|Todos|K1", "P", "Mulheres no emprego", "", "Percentual dos empregos de 31/12 ocupados por mulheres.", "#7F56D9", "#F4EBFF", "RAIS (Relação Anual de Informações Sociais), estoque de vínculos em 31 de dezembro; desde 2022 os dados vêm do eSocial.", "No AFL e nos Comparáveis aparecem como referência nos chips abaixo do número.", "", "", ""}, {"Quem trabalha|AFL|K1", "P", "Mulheres no emprego", "", "Percentual dos empregos de 31/12 ocupados por mulheres.", "#7F56D9", "#F4EBFF", "RAIS (Relação Anual de Informações Sociais), estoque de vínculos em 31 de dezembro; desde 2022 os dados vêm do eSocial.", "No AFL e nos Comparáveis aparecem como referência nos chips abaixo do número.", "", "", ""}, {"Quem trabalha|Todos|K2", "P", "Jovens e idade média", "", "Percentual de empregados com até 24 anos (14 a 24).", "#F58220", "#FDF7F1", "Abaixo do número, a idade média dos empregados no ano escolhido e no início do trecho.", "Idade registrada no vínculo em 31/12.", "", "", ""}, {"Quem trabalha|AFL|K2", "P", "Jovens e idade média", "", "Percentual de empregados com até 24 anos (14 a 24).", "#F58220", "#FDF7F1", "Abaixo do número, a idade média dos empregados no ano escolhido e no início do trecho.", "Idade registrada no vínculo em 31/12.", "", "", ""}, {"Quem trabalha|Todos|K3", "P", "Ensino médio ou mais", "", "Percentual dos empregados com ensino médio completo ou nível superior (completo ou não).", "#434446", "#F2F4F7", "Abaixo do número, a parcela com ensino superior (completo ou incompleto).", "Escolaridade declarada pelo empregador.", "", "", ""}, {"Quem trabalha|AFL|K3", "P", "Ensino médio ou mais", "", "Percentual dos empregados com ensino médio completo ou nível superior (completo ou não).", "#434446", "#F2F4F7", "Abaixo do número, a parcela com ensino superior (completo ou incompleto).", "Escolaridade declarada pelo empregador.", "", "", ""}, {"Quem trabalha|Todos|L2A", "P", "Pirâmide por sexo e idade", "", "Cada barra é o percentual do total de empregos em uma faixa de idade e sexo.", "#7F56D9", "#F4EBFF", "Mulheres à esquerda, homens à direita. As barras somam 100% do emprego do recorte.", "Passe o mouse para ver os Comparáveis como referência.", "", "", ""}, {"Quem trabalha|AFL|L2A", "P", "Pirâmide por sexo e idade", "", "Cada barra é o percentual do total de empregos em uma faixa de idade e sexo.", "#7F56D9", "#F4EBFF", "Mulheres à esquerda, homens à direita. As barras somam 100% do emprego do recorte.", "Passe o mouse para ver os Comparáveis como referência.", "", "", ""}, {"Quem trabalha|Todos|L2B", "P", "Escolaridade", "", "Distribuição dos empregos por nível de escolaridade, AFL × Comparáveis.", "#434446", "#F2F4F7", "Quatro níveis: até fundamental, médio incompleto, médio completo e superior (completo ou não).", "", "", "", ""}, {"Quem trabalha|AFL|L2B", "P", "Escolaridade", "", "Distribuição dos empregos por nível de escolaridade, AFL × Comparáveis.", "#434446", "#F2F4F7", "Quatro níveis: até fundamental, médio incompleto, médio completo e superior (completo ou não).", "", "", "", ""}, {"Quem trabalha|Todos|L3A", "P", "Ocupações (CBO)", "", "As ocupações com mais empregos, pela Classificação Brasileira de Ocupações.", "#F58220", "#FDF7F1", "Mostra as primeiras ocupações; use o modo foco (ícone no canto do gráfico) para ver todas as ocupações do recorte.", "Passe o mouse para ver a participação de mulheres e a remuneração média de dezembro.", "", "", ""}, {"Quem trabalha|AFL|L3A", "P", "Ocupações (CBO)", "", "As ocupações com mais empregos, pela Classificação Brasileira de Ocupações.", "#F58220", "#FDF7F1", "Mostra as primeiras ocupações; use o modo foco (ícone no canto do gráfico) para ver todas as ocupações do recorte.", "Passe o mouse para ver a participação de mulheres e a remuneração média de dezembro.", "", "", ""}, {"Quem trabalha|Todos|L3B", "P", "Cor ou raça", "", "Distribuição por cor ou raça entre os empregados que declararam.", "#434446", "#F2F4F7", "Até 2022, de 24% a 33% dos empregados não declaravam cor ou raça; os percentuais são calculados sobre quem declarou.", "Negros = pretos e pardos.", "", "", ""}, {"Quem trabalha|AFL|L3B", "P", "Cor ou raça", "", "Distribuição por cor ou raça entre os empregados que declararam.", "#434446", "#F2F4F7", "Até 2022, de 24% a 33% dos empregados não declaravam cor ou raça; os percentuais são calculados sobre quem declarou.", "Negros = pretos e pardos.", "", "", ""}, {"Quanto ganha|Todos|L2A", "M", "Remuneração ao longo dos anos", "", "Linha cheia: média. Linha tracejada: mediana.", "#F58220", "#FDF7F1", "Remuneração de dezembro em R$ nominais, sem correção pela inflação; a comparação entre anos distantes mistura inflação e ganho real.", "A média usa só salários válidos (de 0,3 a 150 salários mínimos).", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", ""}, {"Quanto ganha|AFL|L2A", "M", "Remuneração ao longo dos anos", "", "Linha cheia: média. Linha tracejada: mediana.", "#F58220", "#FDF7F1", "Remuneração de dezembro em R$ nominais, sem correção pela inflação; a comparação entre anos distantes mistura inflação e ganho real.", "A média usa só salários válidos (de 0,3 a 150 salários mínimos).", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", ""}, {"Quanto ganha|Todos|L2B", "P", "Média por escolaridade", "", "Remuneração média de dezembro por nível de escolaridade.", "#434446", "#F2F4F7", "Compara o AFL com os Comparáveis (e, na página Todos os setores, com a seleção atual).", "Escolaridades sem informação ficam de fora.", "", "", ""}, {"Quanto ganha|AFL|L2B", "P", "Média por escolaridade", "", "Remuneração média de dezembro por nível de escolaridade.", "#434446", "#F2F4F7", "Compara o AFL com os Comparáveis (e, na página Todos os setores, com a seleção atual).", "Escolaridades sem informação ficam de fora.", "", "", ""}, {"Quanto ganha|Todos|L3A", "P", "Diferenças por sexo e por cor", "", "Cada barra é a remuneração de um grupo como percentual da do outro, por escolaridade.", "#7F56D9", "#F4EBFF", "Esquerda: salário das mulheres como % do dos homens. Direita: salário dos negros como % do dos brancos.", "100% = salários iguais. Comparar dentro da mesma escolaridade tira o efeito de diferenças de instrução.", "", "", ""}, {"Quanto ganha|AFL|L3A", "P", "Diferenças por sexo e por cor", "", "Cada barra é a remuneração de um grupo como percentual da do outro, por escolaridade.", "#7F56D9", "#F4EBFF", "Esquerda: salário das mulheres como % do dos homens. Direita: salário dos negros como % do dos brancos.", "100% = salários iguais. Comparar dentro da mesma escolaridade tira o efeito de diferenças de instrução.", "", "", ""}, {"Quanto ganha|Todos|L3B", "P", "Remuneração por UF", "", "Remuneração média de dezembro nas 10 UFs com a maior média.", "#434446", "#F2F4F7", "Passe o mouse para ver quanto o AFL paga em relação aos Comparáveis na UF.", "Use o modo foco para ver todas as UFs.", "", "", ""}, {"Quanto ganha|AFL|L3B", "P", "Remuneração por UF", "", "Remuneração média de dezembro nas 10 UFs com a maior média.", "#434446", "#F2F4F7", "Passe o mouse para ver quanto o AFL paga em relação aos Comparáveis na UF.", "Use o modo foco para ver todas as UFs.", "", "", ""}, {"Quem contrata|AFL|K1", "P", "Posição no ranking", "", "Onde o AFL fica entre as divisões da CNAE no indicador escolhido.", "#F58220", "#FDF7F1", "Só entram divisões com 50 mil empregos ou mais. Troque o indicador nos botões acima do ranking.", "", "", "", ""}, {"Quem contrata|Todos|L2A", "M", "Ranking do indicador", "", "Participação do indicador escolhido em cada divisão, ou em cada atividade do AFL.", "#F58220", "#FDF7F1", "Os sete botões trocam o indicador de toda a página: primeiro emprego (só até 2021), mulheres, até 24 anos, 55 anos ou mais, superior, negros e intermitente (desde 2018).", "Mostra as 10 maiores divisões e sempre o AFL, em laranja. Use o modo foco para ver mais.", "", "", ""}, {"Quem contrata|AFL|L2A", "M", "Ranking do indicador", "", "Participação do indicador escolhido em cada divisão, ou em cada atividade do AFL.", "#F58220", "#FDF7F1", "Os sete botões trocam o indicador de toda a página: primeiro emprego (só até 2021), mulheres, até 24 anos, 55 anos ou mais, superior, negros e intermitente (desde 2018).", "Mostra as 10 maiores divisões e sempre o AFL, em laranja. Use o modo foco para ver mais.", "", "", ""}, {"Quem contrata|Todos|L2B", "M", "Indicador ao longo dos anos", "", "Evolução do indicador escolhido, AFL × Comparáveis.", "#434446", "#F2F4F7", "Primeiro emprego só existe até 2021 (o eSocial não registra o tipo de admissão) e intermitente, desde 2018 (reforma trabalhista).", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", "", ""}, {"Quem contrata|AFL|L2B", "M", "Indicador ao longo dos anos", "", "Evolução do indicador escolhido, AFL × Comparáveis.", "#434446", "#F2F4F7", "Primeiro emprego só existe até 2021 (o eSocial não registra o tipo de admissão) e intermitente, desde 2018 (reforma trabalhista).", "Em 2022 a fonte passou a ser o eSocial e incluiu empregos que a RAIS antiga não captava: 2022 em diante não se compara com os anos anteriores, por isso as linhas são interrompidas.", "", "", ""}, {"Quem contrata|Todos|L3A", "P", "Os sete indicadores", "", "Todos os indicadores lado a lado, no ano escolhido.", "#17B26A", "#ECFDF3", "Na página Todos os setores, a coluna Seleção atual mostra o recorte dos filtros (mercado inteiro, setores ou divisão).", "", "", "", ""}, {"Quem contrata|AFL|L3A", "P", "Os sete indicadores", "", "Todos os indicadores lado a lado, no ano escolhido.", "#17B26A", "#ECFDF3", "Na página Todos os setores, a coluna Seleção atual mostra o recorte dos filtros (mercado inteiro, setores ou divisão).", "", "", "", ""}, {"Quem contrata|Todos|L3B", "P", "Indicador por UF", "", "Onde o indicador escolhido é maior.", "#434446", "#F2F4F7", "Só UFs com 3 mil empregos ou mais no recorte. Na página Todos os setores, o tooltip mostra o valor do AFL na UF.", "", "", "", ""}, {"Quem contrata|AFL|L3B", "P", "Indicador por UF", "", "Onde o indicador escolhido é maior.", "#434446", "#F2F4F7", "Só UFs com 3 mil empregos ou mais no recorte. Na página Todos os setores, o tooltip mostra o valor do AFL na UF.", "", "", "", ""}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

@@ -3,7 +3,7 @@
 Cada medida alimenta uma página de tooltip (600 × 450) criada por pagina_rais.py; o contexto de filtros vem do visual sobre o qual o mouse passa.
 Retorna tuplas (nome, doc, dax, pasta, formato, oculta) como as demais; sempre começam com VAR (medida sem VAR não pode começar com RETURN).
 """
-from dax_rais import esc, num, pct
+from dax_rais import esc, num, pct, titulo_html
 
 P = "HTML\\Dicas"
 ESTILO = "font-family:Segoe UI,Arial,sans-serif;padding:20px 24px;box-sizing:border-box;width:100%;height:100%;color:#1D1E21;"
@@ -26,7 +26,7 @@ def r100(v):
 
 
 def medidas():
-    m = []
+    m = medidas_info()
 
     def add(nome, doc, dax):
         m.append((nome, doc, dax, P, None, False))
@@ -70,4 +70,32 @@ def medidas():
              '"É a atividade (CNAE) do AFL com a maior participação de " & Rot & " entre os seus empregados."',
              'IF(ISBLANK(Valor), "Sem dados para os filtros escolhidos.", "Em " & A & ", " & Lider & ": " & FORMAT(Valor, "0.0%", "pt-BR") & " " & Frase & ".")',
              '"O AFL reúne seis atividades: restaurantes, lanchonetes, bares com e sem entretenimento, padarias (revenda) e alimentos preparados para consumo domiciliar."'))
+    return m
+
+
+def medidas_info():
+    m = []
+    m.append(("Info_Gatilho_Valor", "Valor constante do gatilho transparente dos (i).", "1", "HTML\\Notas compartilhadas", "0", True))
+    m.append(("Info_Texto_HTML", "Cartão do (i): lê a linha da D_Info escolhida pela categoria do gatilho.",
+              "VAR Chave = SELECTEDVALUE(D_Info[Chave])\nVAR Titulo = SELECTEDVALUE(D_Info[Titulo], \"\")\nVAR Extra = SELECTEDVALUE(D_Info[Extra], \"\")\n"
+              "VAR Destaque = SELECTEDVALUE(D_Info[Destaque], \"\")\nVAR Borda = SELECTEDVALUE(D_Info[CorBorda], \"#1D1E21\")\nVAR Fundo = SELECTEDVALUE(D_Info[CorFundo], \"#F7F7F7\")\n"
+              "VAR P1 = SELECTEDVALUE(D_Info[P1], \"\")\nVAR P2 = SELECTEDVALUE(D_Info[P2], \"\")\nVAR P3 = SELECTEDVALUE(D_Info[P3], \"\")\nVAR P4 = SELECTEDVALUE(D_Info[P4], \"\")\nVAR P5 = SELECTEDVALUE(D_Info[P5], \"\")\n"
+              "VAR Corpo = IF(P1 = \"\", \"\", \"<div>\" & P1 & \"</div>\") & IF(P2 = \"\", \"\", \"<div style='margin-top:8px;'>\" & P2 & \"</div>\") & IF(P3 = \"\", \"\", \"<div style='margin-top:8px;'>\" & P3 & \"</div>\")"
+              " & IF(P4 = \"\", \"\", \"<div style='margin-top:8px;'>\" & P4 & \"</div>\") & IF(P5 = \"\", \"\", \"<div style='margin-top:8px;'>\" & P5 & \"</div>\")\n"
+              "RETURN IF(ISBLANK(Chave) || Titulo = \"\", \"<div role='note' style='font-family:Segoe UI,Arial,sans-serif;font-size:21px;color:#434446;padding:12px;'>Texto indisponível.</div>\",\n"
+              "    \"<div role='note' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:12px 14px;background:#FFFFFF;color:#1D1E21;font-family:Segoe UI,Arial,sans-serif;overflow:hidden;'>\"\n"
+              "    & \"<div style='font-size:24px;line-height:30px;font-weight:600;margin-bottom:8px;'>\" & Titulo & \"</div>\" & Extra\n"
+              "    & IF(Destaque = \"\", \"\", \"<div style='padding:7px 9px;border-left:4px solid \" & Borda & \";border-radius:0 6px 6px 0;background:\" & Fundo & \";font-size:21px;line-height:27px;margin-bottom:8px;'>\" & Destaque & \"</div>\")\n"
+              "    & \"<div style='font-size:21px;line-height:28px;color:#434446;'>\" & Corpo & \"</div></div>\")", "HTML\\Notas compartilhadas", None, False))
+    # título do gráfico de variação anual do emprego (substitui o índice base 100)
+    base = ("VAR A = [Ano_Ref]\nVAR VA = [Empregos_Var_Pct_AFL]\nVAR VC = [Empregos_Var_Pct_Comparavel]\nVAR VS = [Empregos_Var_Pct]\n"
+            "VAR Nome = IF([Setor_Emp_Total] = \"todos os setores\", \"o mercado formal\", [Setor_Emp_Total])\n")
+    sem = "IF(A = 2022, \"2022 não pode ser comparado com 2021 (nova fonte: eSocial)\", \"2009 é o primeiro ano da série: não há ano anterior\")"
+    l2 = ("VAR L2 = IF(ISBLANK(A), \"\", \"Variação do emprego em 31/12 sobre 31/12 do ano anterior. Escolha o ano no filtro Ano; 2022 não tem comparação (nova fonte: eSocial)\")\n")
+    m.append(("Titulo_Emp_Var_AFL_HTML", "Título da variação anual do emprego (página AFL).",
+              base + "VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(ISBLANK(VA), " + sem + ", \"Em \" & A & \", o emprego do AFL \" & IF(VA >= 0, \"subiu \", \"caiu \") & "
+              + pct("ABS(VA)") + " & IF(ISBLANK(VC), \"\", \" (Comparáveis: \" & " + pct("VC", True) + " & \")\")))\n" + l2 + titulo_html("L1", "L2", '"#F58220"'), "HTML\\Empregos\\Títulos", None, False))
+    m.append(("Titulo_Emp_Var_Total_HTML", "Título da variação anual do emprego (página Todos os setores).",
+              base + "VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(ISBLANK(VA), " + sem + ", \"Em \" & A & \": AFL \" & " + pct("VA", True) + " & \", Comparáveis \" & " + pct("VC", True)
+              + " & \", \" & Nome & \" \" & " + pct("VS", True) + "))\n" + l2 + titulo_html("L1", "L2", '"#F58220"'), "HTML\\Empregos\\Títulos", None, False))
     return m

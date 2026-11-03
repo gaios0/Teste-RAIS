@@ -2114,6 +2114,71 @@ table _medidas
 		displayFolder: HTML\Quem contrata\Títulos
 		lineageTag: 40d4fca7-fff7-4c35-839e-dcc8687444aa
 
+	/// Valor constante do gatilho transparente dos (i).
+	measure Info_Gatilho_Valor = 1
+		formatString: 0
+		isHidden
+		displayFolder: HTML\Notas compartilhadas
+		lineageTag: 4a522cbe-bb99-4f05-bfa4-2f74672fc973
+
+	/// Cartão do (i): lê a linha da D_Info escolhida pela categoria do gatilho.
+	measure Info_Texto_HTML =
+			VAR Chave = SELECTEDVALUE(D_Info[Chave])
+			VAR Titulo = SELECTEDVALUE(D_Info[Titulo], "")
+			VAR Extra = SELECTEDVALUE(D_Info[Extra], "")
+			VAR Destaque = SELECTEDVALUE(D_Info[Destaque], "")
+			VAR Borda = SELECTEDVALUE(D_Info[CorBorda], "#1D1E21")
+			VAR Fundo = SELECTEDVALUE(D_Info[CorFundo], "#F7F7F7")
+			VAR P1 = SELECTEDVALUE(D_Info[P1], "")
+			VAR P2 = SELECTEDVALUE(D_Info[P2], "")
+			VAR P3 = SELECTEDVALUE(D_Info[P3], "")
+			VAR P4 = SELECTEDVALUE(D_Info[P4], "")
+			VAR P5 = SELECTEDVALUE(D_Info[P5], "")
+			VAR Corpo = IF(P1 = "", "", "<div>" & P1 & "</div>") & IF(P2 = "", "", "<div style='margin-top:8px;'>" & P2 & "</div>") & IF(P3 = "", "", "<div style='margin-top:8px;'>" & P3 & "</div>") & IF(P4 = "", "", "<div style='margin-top:8px;'>" & P4 & "</div>") & IF(P5 = "", "", "<div style='margin-top:8px;'>" & P5 & "</div>")
+			RETURN IF(ISBLANK(Chave) || Titulo = "", "<div role='note' style='font-family:Segoe UI,Arial,sans-serif;font-size:21px;color:#434446;padding:12px;'>Texto indisponível.</div>",
+			    "<div role='note' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:12px 14px;background:#FFFFFF;color:#1D1E21;font-family:Segoe UI,Arial,sans-serif;overflow:hidden;'>"
+			    & "<div style='font-size:24px;line-height:30px;font-weight:600;margin-bottom:8px;'>" & Titulo & "</div>" & Extra
+			    & IF(Destaque = "", "", "<div style='padding:7px 9px;border-left:4px solid " & Borda & ";border-radius:0 6px 6px 0;background:" & Fundo & ";font-size:21px;line-height:27px;margin-bottom:8px;'>" & Destaque & "</div>")
+			    & "<div style='font-size:21px;line-height:28px;color:#434446;'>" & Corpo & "</div></div>")
+		displayFolder: HTML\Notas compartilhadas
+		lineageTag: ff70ad8d-5430-4132-a087-55a8ea8eb57c
+
+	/// Título da variação anual do emprego (página AFL).
+	measure Titulo_Emp_Var_AFL_HTML =
+			VAR A = [Ano_Ref]
+			VAR VA = [Empregos_Var_Pct_AFL]
+			VAR VC = [Empregos_Var_Pct_Comparavel]
+			VAR VS = [Empregos_Var_Pct]
+			VAR Nome = IF([Setor_Emp_Total] = "todos os setores", "o mercado formal", [Setor_Emp_Total])
+			VAR L1 = IF(ISBLANK(A), "Sem dados para os filtros escolhidos", IF(ISBLANK(VA), IF(A = 2022, "2022 não pode ser comparado com 2021 (nova fonte: eSocial)", "2009 é o primeiro ano da série: não há ano anterior"), "Em " & A & ", o emprego do AFL " & IF(VA >= 0, "subiu ", "caiu ") & IF(ISBLANK(ABS(VA)), "—", FORMAT(ABS(VA), "0.0%", "pt-BR")) & IF(ISBLANK(VC), "", " (Comparáveis: " & IF(ISBLANK(VC), "—", IF(VC > 0, "+", IF(VC < 0, "−", "")) & FORMAT(ABS(VC), "0.0%", "pt-BR")) & ")")))
+			VAR L2 = IF(ISBLANK(A), "", "Variação do emprego em 31/12 sobre 31/12 do ano anterior. Escolha o ano no filtro Ano; 2022 não tem comparação (nova fonte: eSocial)")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#F58220" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: 075cc1d5-e42b-410a-bb02-ecfe7b5a72ef
+
+	/// Título da variação anual do emprego (página Todos os setores).
+	measure Titulo_Emp_Var_Total_HTML =
+			VAR A = [Ano_Ref]
+			VAR VA = [Empregos_Var_Pct_AFL]
+			VAR VC = [Empregos_Var_Pct_Comparavel]
+			VAR VS = [Empregos_Var_Pct]
+			VAR Nome = IF([Setor_Emp_Total] = "todos os setores", "o mercado formal", [Setor_Emp_Total])
+			VAR L1 = IF(ISBLANK(A), "Sem dados para os filtros escolhidos", IF(ISBLANK(VA), IF(A = 2022, "2022 não pode ser comparado com 2021 (nova fonte: eSocial)", "2009 é o primeiro ano da série: não há ano anterior"), "Em " & A & ": AFL " & IF(ISBLANK(VA), "—", IF(VA > 0, "+", IF(VA < 0, "−", "")) & FORMAT(ABS(VA), "0.0%", "pt-BR")) & ", Comparáveis " & IF(ISBLANK(VC), "—", IF(VC > 0, "+", IF(VC < 0, "−", "")) & FORMAT(ABS(VC), "0.0%", "pt-BR")) & ", " & Nome & " " & IF(ISBLANK(VS), "—", IF(VS > 0, "+", IF(VS < 0, "−", "")) & FORMAT(ABS(VS), "0.0%", "pt-BR"))))
+			VAR L2 = IF(ISBLANK(A), "", "Variação do emprego em 31/12 sobre 31/12 do ano anterior. Escolha o ano no filtro Ano; 2022 não tem comparação (nova fonte: eSocial)")
+			RETURN
+			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
+			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#F58220" & ";'></span>"
+			        & "<span style='display:block;min-width:0;max-height:100%;overflow:hidden;font-variant-numeric:tabular-nums;'>"
+			        & "<span style='display:block;font-size:24px;line-height:28px;font-weight:600;color:#1D1E21;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L1, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>"
+			        & IF(L2 = "", "", "<span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(L2, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), UNICHAR(34), "&quot;"), UNICHAR(39), "&#39;") & "</span>") & "</span></div>"
+		displayFolder: HTML\Empregos\Títulos
+		lineageTag: f6d9142d-0569-4f2c-983a-cb08b6287347
+
 	/// Tooltip do KPI de razão salarial (mulheres ÷ homens).
 	measure Tip_RazaoSexo_HTML =
 			VAR R = [Rem_Razao_Sexo]
@@ -2199,6 +2264,7 @@ table _medidas
 	measure Tip_Contrata_Max_Total_HTML =
 			VAR Divisao = [Ind_Maior_Divisao]
 			VAR Valor = [Ind_Maior_Valor]
+			VAR Frase = [Ind_Frase]
 			VAR Rot = [Ind_Rotulo]
 			VAR A = [Ind_Ano]
 			RETURN
@@ -2215,6 +2281,7 @@ table _medidas
 	measure Tip_Contrata_Max_AFL_HTML =
 			VAR Lider = [Ind_Atividade_Lider]
 			VAR Valor = [Ind_Atividade_Lider_Valor]
+			VAR Frase = [Ind_Frase]
 			VAR Rot = [Ind_Rotulo]
 			VAR A = [Ind_Ano]
 			RETURN

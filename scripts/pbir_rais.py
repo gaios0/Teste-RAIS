@@ -224,3 +224,28 @@ def pagina_tooltip(pid, nome, medida_nome, largura=600, altura=450):
     vis = visual(v, HTML, (0, 0, largura, altura, 0), {"content": {"projections": [medida(medida_nome)]}}, {"compatibility": [{"properties": {"legacyRendering": lit("false")}}]}, container())
     vis["visual"]["visualContainerObjects"]["padding"] = [{"properties": {k: lit("0D") for k in ("top", "bottom", "left", "right")}}]
     return pagina, vis, v
+
+
+def gatilho_info(nome, pos, chave, pagina_tooltip):
+    """Mini-coluna nativa 100% transparente sobre o (i) do fundo; a chave da D_Info chega ao tooltip como categoria."""
+    obj = {"dataPoint": [{"properties": {"fill": cor("#FFFFFF"), "fillTransparency": lit("100D")}}],
+           "labels": [{"properties": {"show": lit("false")}}],
+           "categoryAxis": [{"properties": {"show": lit("false"), "innerPadding": lit("0D")}}],
+           "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"), "gridlineShow": lit("false")}}],
+           "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}
+    q = {"Y": {"projections": [medida("Info_Gatilho_Valor")]}, "Category": {"projections": [coluna("D_Info", "Chave")]}}
+    cont = container(tooltip=pagina_tooltip)
+    return visual(nome, "clusteredColumnChart", pos, q, obj, cont, filtros=[filtro_in("D_Info", "Chave", [chave])])
+
+
+def colunas_grupo(nome, pos, categoria, series, fmt, tooltips=None, tooltip_pagina=None):
+    """Colunas agrupadas por ano (série = [(medida, rótulo, cor)]), sem rótulos de dados; o detalhe vem no tooltip."""
+    q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, fmt) for m, r, c in series]}}
+    if tooltips:
+        q["Tooltips"] = {"projections": [medida(m, r, f) for m, r, f in tooltips]}
+    o = _eixos()
+    o["dataPoint"] = [{"properties": {"fill": cor(c)}, "selector": {"metadata": f"_medidas.{m}"}} for m, r, c in series]
+    o["labels"] = [{"properties": {"show": lit("false")}}]
+    o["categoryAxis"][0]["properties"]["axisType"] = lit("'Categorical'")
+    o["valueAxis"] = [{"properties": {"fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "gridlineColor": cor("#EEEEEF"), "showAxisTitle": lit("false"), "labelDisplayUnits": lit("1D")}}]
+    return visual(nome, "clusteredColumnChart", pos, q, o, container(tooltip=tooltip_pagina))

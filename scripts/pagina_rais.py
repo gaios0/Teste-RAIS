@@ -13,6 +13,8 @@ from pathlib import Path
 
 import config_paginas as cp
 import fundo_rais as fb
+import info_rais
+import seguranca
 import navegacao_rais
 import pbir_rais as pb
 
@@ -79,14 +81,11 @@ def corpo_empregos(c):
         gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 12, fb.cw(4) - 84, 172, prox()), m))
     # linha 2: série (índice) + contratos
     ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
-    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Serie_HTML" if afl else "Titulo_Emp_SerieTotal_HTML"))
-    series = [("Emp_Indice_AFL_Pre", "AFL (2009–2021)", cp.LARANJA, "0.0"), ("Emp_Indice_AFL_Pos", "AFL (2022 em diante)", cp.LARANJA, "0.0"),
-              ("Emp_Indice_Comp_Pre", "Comparáveis (2009–2021)", cp.CINZA, "0.0"), ("Emp_Indice_Comp_Pos", "Comparáveis (2022 em diante)", cp.CINZA, "0.0")]
+    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Var_AFL_HTML" if afl else "Titulo_Emp_Var_Total_HTML"))
+    series = [("Empregos_Var_Pct_AFL", "AFL", cp.LARANJA), ("Empregos_Var_Pct_Comparavel", "Comparáveis", cp.CINZA)]
     if not afl:
-        series += [("Emp_Indice_Sel_Pre", "Seleção atual (2009–2021)", "#98A2B3", "0.0"), ("Emp_Indice_Sel_Pos", "Seleção atual (2022 em diante)", "#98A2B3", "0.0")]
-    tips = [("Empregos_Ref_AFL", "Empregos do AFL", "#,0"), ("Empregos_Ref_Comparavel", "Empregos dos comparáveis", "#,0"),
-            ("Empregos_Var_Pct_AFL", "AFL sobre o ano anterior", "+0.0%;-0.0%;0.0%"), ("Empregos_Var_Pct_Comparavel", "Comparáveis sobre o ano anterior", "+0.0%;-0.0%;0.0%")]
-    gravar("serie", pb.linhas(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, tips))
+        series.append(("Empregos_Var_Pct", "Seleção atual", "#98A2B3"))
+    gravar("serie", pb.colunas_grupo(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, "+0%;-0%;0%"))
     gravar("t_contrato", pb.html(n("t_contrato"), (bx + 24, fb.L2_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_Contrato_HTML"))
     gravar("contrato", pb.html(n("contrato"), (bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, prox()), "Emp_Contratos_HTML"))
     # capítulo 2
@@ -111,13 +110,26 @@ TIPS = {"Tip_RazaoSexo_HTML": "a3d1f2c4e6b8097a1c51", "Tip_RazaoRaca_HTML": "a3d
         "Tip_Contrata_Pos_HTML": "a3d1f2c4e6b8097a1c54", "Tip_Contrata_Dif_HTML": "a3d1f2c4e6b8097a1c55", "Tip_Contrata_Max_Total_HTML": "a3d1f2c4e6b8097a1c56",
         "Tip_Contrata_Max_AFL_HTML": "a3d1f2c4e6b8097a1c57"}
 CINZA_SEL = "#98A2B3"
+INFO_PAGINAS = {"P": "a3d1f2c4e6b8097a1c61", "M": "a3d1f2c4e6b8097a1c62", "G": "a3d1f2c4e6b8097a1c63"}
+INFO_TAMANHOS = {"P": (720, 370), "M": (760, 440), "G": (800, 580)}
+
+
+def gatilhos_info(c, tema, recorte):
+    """Um gatilho transparente por cartão sobre o (i) do fundo: página de dica dedicada (números calculados) ou tooltip compartilhado da D_Info."""
+    classes = {l[0]: l[1] for l in info_rais.linhas()}
+    for cartao in info_rais.CARTOES:
+        dedic = info_rais.DEDICADOS.get((tema, recorte, cartao))
+        pagina = TIPS[dedic] if dedic else INFO_PAGINAS[classes[info_rais.chave(tema, recorte, cartao)]]
+        cxm, cym = fb.centro_info(cartao)
+        c.gravar("info_" + cartao, pb.gatilho_info(c.n("info_" + cartao), (cxm - 42, cym - 31, 84, 62, 40000 + info_rais.CARTOES.index(cartao)),
+                                                   info_rais.chave(tema, recorte, cartao), pagina))
 
 
 def cabecalho(c, manchete, kpis, tips=None):
     c.gravar("manchete", pb.html(c.n("manchete"), (40, 196, 1840, 118, c.prox()), manchete))
     kx = [fb.cx(0), fb.cx(4), fb.cx(8)]
     for i, m in enumerate(kpis):
-        tip = TIPS[tips[i]] if tips and tips[i] else None
+        tip = None
         c.gravar(f"kpi{i + 1}", pb.html(c.n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 12, fb.cw(4) - 84, 172, c.prox()), m, tooltip=tip))
 
 
@@ -255,6 +267,7 @@ def montar(tema, recorte, refazer=False):
                                                   inicial=ANO_PADRAO if rot == "Ano" else None, unico=rot == "Ano"))
     c = types.SimpleNamespace(pid=pid, afl=afl, u=u, n=n, gravar=gravar, prox=prox, vis=vis)
     {"Empregos": corpo_empregos, "Quem trabalha": corpo_perfil, "Quanto ganha": corpo_salario, "Quem contrata": corpo_contrata}[tema](c)
+    gatilhos_info(c, tema, recorte)
     # interações: o gráfico de série ignora o segmentador de ano e não filtra os demais; os botões de setor só filtram o ranking
     todos = [v for p, v in vis.items() if p not in ("limpar",) and not p.startswith("f_") and p != "setores"]
     inter = []
@@ -278,6 +291,7 @@ def montar(tema, recorte, refazer=False):
 
 def main():
     refazer = "--refazer" in sys.argv
+    seguranca.exigir_limpo(pb.DEF / "pages", pb.REPORT / "StaticResources")
     recursos_base()
     imagens, ordem = [], []
     for (tema, recorte) in sorted(cp.PAGINAS, key=lambda k: (fb.TEMAS.index(k[0]), fb.RECORTES.index(k[1]))):
@@ -285,6 +299,14 @@ def main():
         imagens.append(fundo)
         ordem.append(pid)
     atualizar_report(imagens)
+    for classe, pid in INFO_PAGINAS.items():
+        destino = pb.DEF / "pages" / pid
+        if destino.exists():
+            shutil.rmtree(destino)
+        larg, alt = INFO_TAMANHOS[classe]
+        pagina, vis, v = pb.pagina_tooltip(pid, f"Tooltip (i) compartilhado · {classe}", "Info_Texto_HTML", larg, alt)
+        pb.salvar(destino / "page.json", pagina)
+        pb.salvar(destino / "visuals" / v / "visual.json", vis)
     for medida_nome, pid in TIPS.items():
         destino = pb.DEF / "pages" / pid
         if destino.exists():
@@ -296,7 +318,7 @@ def main():
     pj = pb.DEF / "pages" / "pages.json"
     d = json.loads(pj.read_text(encoding="utf-8"))
     antigas = [p for p in d["pageOrder"] if p not in ordem and p != BLANK_INICIAL and not p.startswith("a3d1f2c4e6b8097a1c")]
-    d["pageOrder"] = ordem + list(TIPS.values()) + [p for p in antigas if p not in TIPS.values()] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
+    d["pageOrder"] = ordem + list(TIPS.values()) + list(INFO_PAGINAS.values()) + [p for p in antigas if p not in TIPS.values() and p not in INFO_PAGINAS.values()] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
     d["activePageName"] = ordem[0]
     pj.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 

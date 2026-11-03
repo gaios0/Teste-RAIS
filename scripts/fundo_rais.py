@@ -141,6 +141,25 @@ def nota(texto_nota):
     return s
 
 
+def posicoes_cartoes():
+    """(x, y, largura) de cada cartão; o (i) fica no canto superior direito."""
+    return {"K1": (cx(0), KPI_Y, cw(4)), "K2": (cx(4), KPI_Y, cw(4)), "K3": (cx(8), KPI_Y, cw(4)), "L2A": (cx(0), L2_Y, cw(8)), "L2B": (cx(8), L2_Y, cw(4)),
+            "L3A": (cx(0), L3_Y, cw(8)), "L3B": (cx(8), L3_Y, cw(4))}
+
+
+def centro_info(cartao):
+    x, y, w = posicoes_cartoes()[cartao]
+    return x + w - 38, y + 40
+
+
+def icones_info():
+    s = []
+    for c in posicoes_cartoes():
+        ix, iy = centro_info(c)
+        s.append(icone("info", ix - 12, iy - 12, 24, K["tinta2"]))
+    return s
+
+
 def montar(tema, recorte, cfg):
     """cfg: acentos (3 cores dos KPIs), legendas {'L2A': [...]}, trilho (bool), nota (texto). Devolve (svg, geometria dos filtros)."""
     s = [navegacao(tema, recorte)]
@@ -160,6 +179,7 @@ def montar(tema, recorte, cfg):
         s.append(trilho_setores(cx(0) + 24, L2_Y + 100, cw(8) - 48, 7))
     if cfg.get("trilho"):
         s.append(trilho_setores(cx(0) + 24, L3_Y + 100, cw(8) - 48))
+    s.append(icones_info())
     s.append(nota(cfg["nota"]))
     plano = [e for grupo in s for e in grupo]
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">\n{DEFS}\n<rect width="{W}" height="{H}" fill="#FFFFFF"/>\n'

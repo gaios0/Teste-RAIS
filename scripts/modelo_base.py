@@ -259,7 +259,7 @@ def _tabela_m(nome, colunas, linhas):
 AFL_ATIVIDADES = [("5611201", "Restaurantes e similares", "1"), ("5611203", "Lanchonetes, casas de chá, de sucos e similares", "2"),
                   ("4721102", "Padaria e confeitaria (revenda)", "3"), ("5620104", "Alimentos preparados p/ consumo domiciliar", "4"),
                   ("5611204", "Bares sem entretenimento", "5"), ("5611205", "Bares com entretenimento", "6")]
-LOCAIS = ["D_Comparavel", "D_AflAtividade", "D_Rank_Divisao", "D_Indicador"]
+LOCAIS = ["D_Comparavel", "D_AflAtividade", "D_Rank_Divisao", "D_Indicador", "D_Info"]
 INDICADORES = ["Primeiro emprego", "Mulheres", "Até 24 anos", "55 anos ou mais", "Superior", "Negros", "Intermitente"]
 
 
@@ -268,6 +268,8 @@ def tabelas_locais():
     divs = json.loads((RAIZ / "docs" / "previa" / "divisoes.json").read_text(encoding="utf-8"))
     _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Setores comparáveis ao AFL"), ("Não", "Demais setores")])
     _tabela_m("D_Indicador", ["indicador", "ordem"], [(n, str(i + 1)) for i, n in enumerate(INDICADORES)])
+    import info_rais
+    _tabela_m("D_Info", info_rais.COLUNAS, info_rais.linhas())
     _tabela_m("D_AflAtividade", ["cnae_fiscal", "nome", "ordem"], AFL_ATIVIDADES)
     _tabela_m("D_Rank_Divisao", ["nm_divisao", "setor_principal"], [(n, s) for n, s in divs] + [("AFL · conjunto de 6 CNAEs", "Serviços")])
 
@@ -296,11 +298,13 @@ def refs():
         if f"ref table {tab}{nl}" not in t:
             t = t.replace(f"ref table F_rais{nl}", f"ref table F_rais{nl}ref table {tab}{nl}", 1) if tab == "_medidas" else \
                 t.replace(f"ref table D_Ano{nl}", f"ref table D_Ano{nl}ref table {tab}{nl}", 1)
-    t = re.sub(r'annotation PBI_QueryOrder = \[.*?\]', 'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao","D_Indicador"]', t)
+    t = re.sub(r'annotation PBI_QueryOrder = \[.*?\]', 'annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao","D_Indicador","D_Info"]', t)
     arq.write_text(t, encoding="utf-8", newline="")
 
 
 def main():
+    import seguranca
+    seguranca.exigir_limpo(DEF, TAB)
     tabelas_locais()
     calendario()
     n = gravar_medidas()
