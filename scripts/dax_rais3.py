@@ -94,6 +94,12 @@ def medidas():
     add("Ind_UF_Top", "Indicador escolhido por UF, só do AFL (10 maiores UFs; só UFs com 3 mil empregos do AFL ou mais).",
         f"VAR IA = [Ind_Ano]\nVAR Den = CALCULATE([Empregos], {G_AFL}, {ANO_FIXO.format(a='IA')})\nVAR V = IF(Den >= 3000, CALCULATE([Ind_Valor_Ctx], {G_AFL}))\n"
         "VAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(D_UF[uf]), CALCULATE([Ind_Valor_Ctx], " + G_AFL + "), , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 10, V)", f"{P}\\UF", "0.0%")
+    add("Ind_UF_Geo", "Indicador escolhido no AFL para o gráfico geográfico (UF com 3 mil empregos do AFL ou mais; município com 100 ou mais).",
+        "VAR IA = [Ind_Ano]\nVAR Den = CALCULATE([Empregos], " + G_AFL + ", " + ANO_FIXO.format(a='IA') + ")\nVAR Min = IF(ISINSCOPE(F_rais[municipio]), 100, 3000)\n"
+        "RETURN IF(Den >= Min, CALCULATE([Ind_Valor_Ctx], " + G_AFL + "))", f"{P}\\UF", "0.0%")
+    add("Ind_UF_Todos_Geo", "Indicador escolhido no recorte da página para o gráfico geográfico (UF com 3 mil empregos ou mais; município com 100 ou mais).",
+        "VAR IA = [Ind_Ano]\nVAR Den = CALCULATE([Empregos], " + ANO_FIXO.format(a='IA') + ")\nVAR Min = IF(ISINSCOPE(F_rais[municipio]), 100, 3000)\n"
+        "RETURN IF(Den >= Min, [Ind_Valor_Ctx])", f"{P}\\UF", "0.0%")
     add("Ind_UF_Todos_Top", "Indicador escolhido por UF no mercado filtrado (10 maiores; só UFs com 3 mil empregos ou mais no recorte).",
         "VAR IA = [Ind_Ano]\nVAR Den = CALCULATE([Empregos], " + ANO_FIXO.format(a='IA') + ")\nVAR V = IF(Den >= 3000, [Ind_Valor_Ctx])\n"
         "VAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(D_UF[uf]), [Ind_Valor_Ctx], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 10, V)", f"{P}\\UF", "0.0%")

@@ -197,6 +197,8 @@ def salario(add):
         "IF(SELECTEDVALUE(D_Escolaridade[escolaridade_agrupada]) IN {" + ", ".join(ESC_FORA) + "}, BLANK(), [Remuneracao_Media_Ref])", f"{P2}\\Escolaridade", "#,0")
     add("Rem_UF_Top", "Remuneração média de dezembro por UF (10 maiores).",
         "VAR V = [Remuneracao_Media_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(D_UF[uf]), [Remuneracao_Media_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 10, V)", f"{P2}\\UF", "#,0")
+    add("Rem_UF_Geo", "Remuneração média de dezembro para o gráfico geográfico (UF e, ao descer, município; município só com 300 empregos ou mais).",
+        "IF(ISINSCOPE(F_rais[municipio]), IF([Empregos_Ref] >= 300, [Remuneracao_Media_Ref]), [Remuneracao_Media_Ref])", f"{P2}\\UF", "#,0")
     add("Rem_UF_Razao_Comp", "Remuneração média do AFL na UF ÷ média dos Comparáveis na UF.", "DIVIDE([Remuneracao_Media_Ref_AFL], [Remuneracao_Media_Ref_Comparavel])", f"{P2}\\UF", "0%")
     for nome, txt in (("Sexo", "Salário das mulheres como % do dos homens"), ("Raca", "Salário dos negros como % do dos brancos")):
         add(f"Rotulo_Gap_{nome}_HTML", f"Rótulo do gráfico de razão ({txt}).", f"\"<div style='font-family:Segoe UI,Arial,sans-serif;font-size:19px;font-weight:600;color:#1D1E21;white-space:nowrap;'>{txt}, por escolaridade</div>\"", f"HTML\\{P2}\\Títulos", None, True)

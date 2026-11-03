@@ -738,6 +738,12 @@ table _medidas
 		displayFolder: Empregos\UF
 		lineageTag: 1f1fb96e-85c4-4b98-a9db-7b0ae3d0fa32
 
+	/// Peso do AFL nos empregos comparáveis para o gráfico geográfico (UF e, ao descer, município; município só com 100 empregos do AFL ou mais).
+	measure Emp_UF_Peso_Geo = IF(ISINSCOPE(F_rais[municipio]), IF([Empregos_Ref_AFL] >= 100, [Emp_UF_Peso_AFL]), [Emp_UF_Peso_AFL])
+		formatString: 0.0%
+		displayFolder: Empregos\UF
+		lineageTag: 38745754-7da8-40b2-87a6-564de6552ba2
+
 	/// Título das UFs (página AFL): UF líder e participação nos empregos do AFL, com a UF onde o AFL mais pesa.
 	measure Titulo_Emp_UF_AFL_HTML =
 			VAR T = FILTER(ADDCOLUMNS(VALUES(D_UF[uf]), "@v", [Empregos_Ref], "@p", [Emp_UF_Peso_AFL]), NOT ISBLANK([@v]))
@@ -1408,6 +1414,12 @@ table _medidas
 		displayFolder: Quanto ganha\UF
 		lineageTag: fa02db0e-df82-42e0-b919-3048dc11de06
 
+	/// Remuneração média de dezembro para o gráfico geográfico (UF e, ao descer, município; município só com 300 empregos ou mais).
+	measure Rem_UF_Geo = IF(ISINSCOPE(F_rais[municipio]), IF([Empregos_Ref] >= 300, [Remuneracao_Media_Ref]), [Remuneracao_Media_Ref])
+		formatString: #,0
+		displayFolder: Quanto ganha\UF
+		lineageTag: c57a9860-ae4a-4dc9-9027-39c7783a28e5
+
 	/// Remuneração média do AFL na UF ÷ média dos Comparáveis na UF.
 	measure Rem_UF_Razao_Comp = DIVIDE([Remuneracao_Media_Ref_AFL], [Remuneracao_Media_Ref_Comparavel])
 		formatString: 0%
@@ -1837,6 +1849,26 @@ table _medidas
 		formatString: 0.0%
 		displayFolder: Quem contrata\UF
 		lineageTag: 106e0c89-fb86-4dc2-b69c-5c6fe7b7b051
+
+	/// Indicador escolhido no AFL para o gráfico geográfico (UF com 3 mil empregos do AFL ou mais; município com 100 ou mais).
+	measure Ind_UF_Geo =
+			VAR IA = [Ind_Ano]
+			VAR Den = CALCULATE([Empregos], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = IA)
+			VAR Min = IF(ISINSCOPE(F_rais[municipio]), 100, 3000)
+			RETURN IF(Den >= Min, CALCULATE([Ind_Valor_Ctx], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL"))
+		formatString: 0.0%
+		displayFolder: Quem contrata\UF
+		lineageTag: 57c7bd97-2283-48ab-9c93-a3e17c10f5a0
+
+	/// Indicador escolhido no recorte da página para o gráfico geográfico (UF com 3 mil empregos ou mais; município com 100 ou mais).
+	measure Ind_UF_Todos_Geo =
+			VAR IA = [Ind_Ano]
+			VAR Den = CALCULATE([Empregos], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = IA)
+			VAR Min = IF(ISINSCOPE(F_rais[municipio]), 100, 3000)
+			RETURN IF(Den >= Min, [Ind_Valor_Ctx])
+		formatString: 0.0%
+		displayFolder: Quem contrata\UF
+		lineageTag: c2031db8-a47c-437f-9b9f-2bcc24aa9db9
 
 	/// Indicador escolhido por UF no mercado filtrado (10 maiores; só UFs com 3 mil empregos ou mais no recorte).
 	measure Ind_UF_Todos_Top =
@@ -2333,7 +2365,9 @@ table _medidas
 
 	/// Tooltip da UF: empregos do AFL e dos Comparáveis, peso do AFL e parte do AFL do país.
 	measure Tip_Emp_UF_HTML =
-			VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR Mun = SELECTEDVALUE(F_rais[municipio])
+			VAR UF = IF(ISBLANK(Mun), UFNome, Mun & " · " & SELECTEDVALUE(D_UF[uf]))
 			VAR EA = [Empregos_Ref_AFL]
 			VAR EC = [Empregos_Ref_Comparavel]
 			VAR Peso = [Emp_UF_Peso_AFL]
@@ -2440,7 +2474,9 @@ table _medidas
 
 	/// Tooltip da UF na remuneração: média do recorte, do AFL e dos Comparáveis.
 	measure Tip_Rem_UF_HTML =
-			VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR Mun = SELECTEDVALUE(F_rais[municipio])
+			VAR UF = IF(ISBLANK(Mun), UFNome, Mun & " · " & SELECTEDVALUE(D_UF[uf]))
 			VAR M = [Remuneracao_Media_Ref]
 			VAR MA = [Remuneracao_Media_Ref_AFL]
 			VAR MC = [Remuneracao_Media_Ref_Comparavel]
@@ -2496,7 +2532,9 @@ table _medidas
 
 	/// Tooltip da UF na contratação: valor do indicador no recorte e no AFL da UF.
 	measure Tip_Ind_UF_HTML =
-			VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))
+			VAR Mun = SELECTEDVALUE(F_rais[municipio])
+			VAR UF = IF(ISBLANK(Mun), UFNome, Mun & " · " & SELECTEDVALUE(D_UF[uf]))
 			VAR V = [Ind_Valor_Ctx]
 			VAR VA = [Ind_UF_AFL_Dica]
 			VAR E = [Empregos_Ref]

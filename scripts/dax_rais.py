@@ -277,6 +277,8 @@ def medidas():
     add("Emp_UF_Peso_AFL", "Peso do AFL nos empregos comparáveis da UF: AFL ÷ (AFL + comparáveis).", "DIVIDE([Empregos_Ref_AFL], [Empregos_Ref_AFL] + [Empregos_Ref_Comparavel])", f"{P}\\UF", "0.0%")
     add("Emp_UF_Peso_Top", "Peso do AFL nos empregos comparáveis, só nas 10 UFs com mais empregos do AFL.",
         "VAR Valor = [Emp_UF_Peso_AFL]\nVAR Posicao = IF(NOT ISBLANK([Empregos_Ref_AFL]), RANKX(ALLSELECTED(D_UF[uf]), [Empregos_Ref_AFL], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(Valor) && Posicao <= 10, Valor)", f"{P}\\UF", "0.0%")
+    add("Emp_UF_Peso_Geo", "Peso do AFL nos empregos comparáveis para o gráfico geográfico (UF e, ao descer, município; município só com 100 empregos do AFL ou mais).",
+        "IF(ISINSCOPE(F_rais[municipio]), IF([Empregos_Ref_AFL] >= 100, [Emp_UF_Peso_AFL]), [Emp_UF_Peso_AFL])", f"{P}\\UF", "0.0%")
     add("Titulo_Emp_UF_AFL_HTML", "Título das UFs (página AFL): UF líder e participação nos empregos do AFL, com a UF onde o AFL mais pesa.",
         "VAR T = FILTER(ADDCOLUMNS(VALUES(D_UF[uf]), \"@v\", [Empregos_Ref], \"@p\", [Emp_UF_Peso_AFL]), NOT ISBLANK([@v]))\nVAR Tot = SUMX(T, [@v])\n"
         "VAR Lider = TOPN(1, T, [@v], DESC, D_UF[uf], ASC)\nVAR UF = CONCATENATEX(Lider, D_UF[uf], \"\")\nVAR Mais = TOPN(1, T, [@p], DESC, D_UF[uf], ASC)\nVAR UFMais = CONCATENATEX(Mais, D_UF[uf], \"\")\nVAR PMais = MAXX(Mais, [@p])\n"

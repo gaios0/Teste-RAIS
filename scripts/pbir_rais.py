@@ -25,10 +25,12 @@ def cor_medida(nome):
     return {"solid": {"color": {"expr": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": nome}}}}}
 
 
-def coluna(tabela, nome, ativa=True):
+def coluna(tabela, nome, ativa=True, explicito=False):
     p = {"field": {"Column": {"Expression": {"SourceRef": {"Entity": tabela}}, "Property": nome}}, "queryRef": f"{tabela}.{nome}", "nativeQueryRef": nome}
     if ativa:
         p["active"] = True
+    elif explicito:
+        p["active"] = False
     return p
 
 
@@ -111,7 +113,7 @@ def slicer_dropdown(nome, pos, tabela, col, sync, titulo, inicial=None, unico=Fa
     return visual(nome, "slicer", pos, {"Values": {"projections": [coluna(tabela, col)]}}, obj, cont, sync=sync, sort=sort)
 
 
-def slicer_comparavel(nome, pos, sync):
+def slicer_comparavel(nome, pos, sync, padrao_sim=True):
     obj = {"data": [{"properties": {"mode": lit("'Basic'")}}],
            "selection": [{"properties": {"selectAllCheckboxEnabled": lit("false"), "strictSingleSelect": lit("false")}}],
            "header": [{"properties": {"show": lit("false"), "textSize": lit("16D")}}],
@@ -119,7 +121,7 @@ def slicer_comparavel(nome, pos, sync):
     cont = container()
     cont["padding"] = [{"properties": {k: lit("0D") for k in ("top", "bottom", "left", "right")}}]
     return visual(nome, "slicer", pos, {"Values": {"projections": [coluna("D_Comparavel", "comparavel_AFL_rotulo")]}}, obj, cont, sync=sync,
-                  filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])])
+                  filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])] if padrao_sim else None)
 
 
 def botoes_setor(nome, pos, tabela, col, n=5, inicial=None, fonte=16):
@@ -178,9 +180,9 @@ def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=(), continuo=
     return visual(nome, "lineChart", pos, q, o, container())
 
 
-def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", cor_por_medida=None, tooltips=None, rotulos=True, foco=False, espaco=18, fonte=16):
+def barras(nome, pos, categoria, medida_valor, exibir, fmt, cor_fixa="#1D1E21", cor_por_medida=None, tooltips=None, rotulos=True, foco=False, espaco=18, fonte=16, categoria2=None):
     """Barras horizontais ordenadas pelo valor (decrescente), rótulo completo fora da barra."""
-    q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(medida_valor, exibir, fmt)]}}
+    q = {"Category": {"projections": [categoria] + ([categoria2] if categoria2 else [])}, "Y": {"projections": [medida(medida_valor, exibir, fmt)]}}
     if tooltips:
         q["Tooltips"] = {"projections": [medida(m, r, f) for m, r, f in tooltips]}
     o = _eixos()

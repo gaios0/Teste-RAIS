@@ -75,7 +75,7 @@ def medidas():
                [linha(LARANJA, '"Empregos"', num("E"), f'IF(ISBLANK(Var), BLANK(), {pct("Var", True)} & " sobre o ano anterior")'), linha(LARANJA, '"Peso nos empregos do AFL"', pct("Peso")),
                 linha(CINZA, '"Posição entre as atividades"', 'IF(ISBLANK(Pos), "—", Pos & "ª de 6")')]))
     # ---- Empregos: UF
-    v = ("VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR EA = [Empregos_Ref_AFL]\nVAR EC = [Empregos_Ref_Comparavel]\nVAR Peso = [Emp_UF_Peso_AFL]\n"
+    v = ("VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR Mun = SELECTEDVALUE(F_rais[municipio])\nVAR UF = IF(ISBLANK(Mun), UFNome, Mun & \" · \" & SELECTEDVALUE(D_UF[uf]))\nVAR EA = [Empregos_Ref_AFL]\nVAR EC = [Empregos_Ref_Comparavel]\nVAR Peso = [Emp_UF_Peso_AFL]\n"
          "VAR ParteBR = DIVIDE(EA, CALCULATE([Empregos_Ref_AFL], REMOVEFILTERS(D_UF)))\n")
     add("Tip_Emp_UF_HTML", "Tooltip da UF: empregos do AFL e dos Comparáveis, peso do AFL e parte do AFL do país.",
         montar(v, "UF", '"Empregos em 31/12/" & [Ano_Ref]',
@@ -130,7 +130,7 @@ def medidas():
                     linha(SEL, '"Seleção atual"', pct("RS"), None, "NOT PaginaAFL")],
                    'IF(ISBLANK(RA) || ISBLANK(RC), "", "A diferença no AFL é " & IF(RA >= RC, "menor", "maior") & " que nos Comparáveis (" & ' + pp("RA", "RC") + ' & "). 100% = salários iguais.")'))
     # ---- Quanto ganha: UF
-    v = ("VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR M = [Remuneracao_Media_Ref]\nVAR MA = [Remuneracao_Media_Ref_AFL]\nVAR MC = [Remuneracao_Media_Ref_Comparavel]\nVAR Razao = [Rem_UF_Razao_Comp]\n"
+    v = ("VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR Mun = SELECTEDVALUE(F_rais[municipio])\nVAR UF = IF(ISBLANK(Mun), UFNome, Mun & \" · \" & SELECTEDVALUE(D_UF[uf]))\nVAR M = [Remuneracao_Media_Ref]\nVAR MA = [Remuneracao_Media_Ref_AFL]\nVAR MC = [Remuneracao_Media_Ref_Comparavel]\nVAR Razao = [Rem_UF_Razao_Comp]\n"
          "VAR PaginaAFL = " + EH_AFL + "\n")
     add("Tip_Rem_UF_HTML", "Tooltip da UF na remuneração: média do recorte, do AFL e dos Comparáveis.",
         montar(v, "UF", '"Remuneração média de dezembro, R$ nominais"',
@@ -154,7 +154,7 @@ def medidas():
         montar(v, '"31/12/" & A', '"Participação de " & Rot',
                [linha(LARANJA, '"AFL"', pct("VA")), linha(CINZA, '"Comparáveis"', pct("VC")), linha(SEL, '"Seleção atual"', pct("VS"), None, "NOT PaginaAFL")],
                'IF(ISBLANK(VA) || ISBLANK(VC), "Sem dados para este indicador neste ano.", "O AFL está " & ' + pp("VA", "VC") + ' & " em relação aos Comparáveis.")'))
-    v = ("VAR UF = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR V = [Ind_Valor_Ctx]\nVAR VA = [Ind_UF_AFL_Dica]\nVAR E = [Empregos_Ref]\nVAR EA = [Empregos_Ref_AFL]\nVAR Rot = [Ind_Rotulo]\n"
+    v = ("VAR UFNome = SELECTEDVALUE(D_UF[estado], SELECTEDVALUE(D_UF[uf]))\nVAR Mun = SELECTEDVALUE(F_rais[municipio])\nVAR UF = IF(ISBLANK(Mun), UFNome, Mun & \" · \" & SELECTEDVALUE(D_UF[uf]))\nVAR V = [Ind_Valor_Ctx]\nVAR VA = [Ind_UF_AFL_Dica]\nVAR E = [Empregos_Ref]\nVAR EA = [Empregos_Ref_AFL]\nVAR Rot = [Ind_Rotulo]\n"
          "VAR PaginaAFL = " + EH_AFL + "\n")
     add("Tip_Ind_UF_HTML", "Tooltip da UF na contratação: valor do indicador no recorte e no AFL da UF.",
         montar(v, "UF", '"Participação de " & Rot & " em " & [Ind_Ano]',

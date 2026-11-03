@@ -95,7 +95,7 @@ def corpo_empregos(c):
         gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, prox()), pb.coluna("D_AflAtividade", "nome"), "Empregos_Ref", "Empregos", "#,0",
                                  tooltips=[("Emp_Atividade_Var", "Sobre o ano anterior", "+0.0%;-0.0%;0.0%")]))
         gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_AFL_HTML"))
-        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Top", "Empregos do AFL", "#,0",
+        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Empregos_Ref", "Empregos do AFL", "#,0", categoria2=pb.coluna("F_rais", "municipio", False, True), foco=True, espaco=10,
                                tooltips=[("Emp_UF_Peso_AFL", "Peso nos empregos comparáveis", "0.0%")]))
     else:
         gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Ranking_HTML"))
@@ -103,7 +103,7 @@ def corpo_empregos(c):
         gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 158, aw - 32, fb.L3_H - 174, prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Emp_Divisao_Top", "Empregos", "#,0",
                                  cor_por_medida="Cor_Emp_Divisao"))
         gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_Total_HTML"))
-        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Peso_Top", "Peso do AFL nos empregos comparáveis", "0.0%",
+        gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Peso_Geo", "Peso do AFL nos empregos comparáveis", "0.0%", categoria2=pb.coluna("F_rais", "municipio", False, True), foco=True, espaco=10,
                                tooltips=[("Empregos_Ref_AFL", "Empregos do AFL", "#,0")]))
 
 
@@ -198,7 +198,7 @@ def corpo_salario(c):
         c.gravar("g_" + nome, pb.barras_grupo(c.n("g_" + nome), (x - 8, fb.L3_Y + 184, meia + 16, fb.L3_H - 196, c.prox()), pb.coluna("D_Escolaridade", "escolaridade_agrupada"),
                                               ser, "0%", sort_cat=("D_Escolaridade", "escolaridade_agrupada", "Ascending"), espaco=8, fonte=14))
     titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Rem_UF_HTML")
-    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Rem_UF_Top", "Remuneração média (R$)", "#,0",
+    c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Rem_UF_Geo", "Remuneração média (R$)", "#,0", categoria2=pb.coluna("F_rais", "municipio", False, True),
                              cor_fixa=cp.LARANJA if c.afl else "#1D1E21", tooltips=[("Rem_UF_Razao_Comp", "AFL ÷ média dos Comparáveis", "0%")], foco=True, espaco=10))
 
 
@@ -226,11 +226,11 @@ def corpo_contrata(c):
     titulo(c, "tabela", ax + 24, fb.L3_Y + 108, aw - 48, fb.L3_H - 128, "Contrata_Tabela_HTML" if afl else "Contrata_Tabela_Total_HTML")
     if afl:
         titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_HTML")
-        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Top", "Participação no AFL", "0.0%", cor_fixa=cp.LARANJA,
+        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Geo", "Participação no AFL", "0.0%", cor_fixa=cp.LARANJA, categoria2=pb.coluna("F_rais", "municipio", False, True),
                                  foco=True, espaco=10))
     else:
         titulo(c, "t_uf", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Contrata_UF_Total_HTML")
-        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Todos_Top", "Participação", "0.0%", cor_fixa="#1D1E21",
+        c.gravar("uf", pb.barras(c.n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, c.prox()), pb.coluna("D_UF", "uf"), "Ind_UF_Todos_Geo", "Participação", "0.0%", cor_fixa="#1D1E21", categoria2=pb.coluna("F_rais", "municipio", False, True),
                                  tooltips=[("Ind_UF_AFL_Dica", "No AFL desta UF", "0.0%")], foco=True, espaco=10))
 
 
@@ -274,6 +274,9 @@ def montar(tema, recorte, refazer=False):
             gravar("limpar", pb.limpar(n("limpar"), (x, 136, w, 48, prox()), LIMPAR_ARQ))
         else:
             tab, col = campos[rot]
+            if rot == "Setores":      # como no RF: lista (Basic) com as duas opções, sem seleção inicial (todo o mercado)
+                gravar("f_Setores", pb.slicer_comparavel(n("f_Setores"), (x, 136, w, 48, prox()), sync[rot], padrao_sim=False))
+                continue
             gravar("f_" + rot, pb.slicer_dropdown(n("f_" + rot), (x - 4, 132, w + 8, 52, prox()), tab, col, sync[rot], rot,
                                                   inicial=ANO_PADRAO if rot == "Ano" else None, unico=rot == "Ano"))
     c = types.SimpleNamespace(pid=pid, afl=afl, u=u, n=n, gravar=gravar, prox=prox, vis=vis)
