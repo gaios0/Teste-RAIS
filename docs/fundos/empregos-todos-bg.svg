@@ -58,6 +58,27 @@
 <rect x="533.3" y="1130" width="1" height="28" fill="#DDDDDE"/>
 <rect x="768.0" y="1130" width="1" height="28" fill="#DDDDDE"/>
 <rect x="1002.7" y="1130" width="1" height="28" fill="#DDDDDE"/>
+<g transform="translate(592.7,352.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1211.3,352.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1830.0,352.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1211.3,568.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1830.0,568.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1211.3,1048.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
+<g transform="translate(1830.0,1048.0) scale(1)" fill="none" stroke="#434446" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4" />
+  <path d="M12 8h.01" /></g>
 <rect x="40" y="1572" width="1840" height="56" rx="8" fill="#FEF0C7"/>
 <g transform="translate(60.0,1588.0) scale(1)" fill="none" stroke="#B54708" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
   <path d="M12 9v4" />

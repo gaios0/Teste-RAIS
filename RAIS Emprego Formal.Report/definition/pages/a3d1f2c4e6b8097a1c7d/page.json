@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "a3d1f2c4e6b8097a1c7d",
+  "displayName": "Tooltip · Ind Atividade",
+  "displayOption": "FitToPage",
+  "height": 380,
+  "width": 600,
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}
