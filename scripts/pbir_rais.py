@@ -158,6 +158,42 @@ def limpar(nome, pos, recursos):
     return visual(nome, "image", pos, {}, obj, cont)
 
 
+def botao_info_leitura(nome, pos):
+    """Faixa superior de informações para leitura, no padrão do painel Receita Federal.
+
+    O tooltip não é ligado diretamente ao botão: um mini-gráfico transparente fica
+    sobre a faixa e abre a página Canvas ao passar o mouse.
+    """
+    def estado(cor_fundo, estado_nome):
+        return {"properties": {"fillColor": cor(cor_fundo), "transparency": lit("0D")}, "selector": {"id": estado_nome}}
+    texto = {"properties": {"show": lit("true"), "text": lit("'INFORMAÇÕES PARA LEITURA'"), "fontSize": lit("14D"),
+                            "bold": lit("true"), "fontColor": cor("#FFFFFF"), "horizontalAlignment": lit("'center'"),
+                            "verticalAlignment": lit("'middle'")}}
+    obj = {"icon": [{"properties": {"show": lit("false")}}],
+           "fill": [{"properties": {"show": lit("true")}}, estado("#25408F", "default"), estado("#25408F", "hover"), estado("#25408F", "press")],
+           "text": [{"properties": {"show": lit("true")}}, {**texto, "selector": {"id": "default"}}, {**texto, "selector": {"id": "hover"}}, {**texto, "selector": {"id": "press"}}],
+           "outline": [{"properties": {"show": lit("false")}}],
+           "shape": [{"properties": {"tileShape": lit("'rectangle'")}}, {"properties": {"roundEdge": lit("4L"), "tileShape": lit("'rectangle'")}, "selector": {"id": "default"}}]}
+    cont = container()
+    cont["general"] = [{"properties": {"altText": lit("'INFORMAÇÕES PARA LEITURA. Passe o mouse para abrir o guia do painel RAIS.'")}}]
+    cont["padding"] = [{"properties": {k: lit("0D") for k in ("top", "bottom", "left", "right")}}]
+    v = visual(nome, "actionButton", pos, {}, obj, cont)
+    v["howCreated"] = "InsertVisualButton"
+    return v
+
+
+def gatilho_info_leitura(nome, pos, pagina_tooltip):
+    """Área transparente que abre o guia de leitura compartilhado."""
+    obj = {"dataPoint": [{"properties": {"fill": cor("#FFFFFF"), "fillTransparency": lit("100D")}}],
+           "labels": [{"properties": {"show": lit("false")}}],
+           "categoryAxis": [{"properties": {"show": lit("false"), "innerPadding": lit("0D")}}],
+           "valueAxis": [{"properties": {"show": lit("false"), "start": lit("0D"), "end": lit("1D"), "gridlineShow": lit("false")}}],
+           "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}
+    cont = container(tooltip=pagina_tooltip)
+    cont["general"] = [{"properties": {"altText": lit("'INFORMAÇÕES PARA LEITURA. Passe o mouse para abrir o guia do painel RAIS.'")}}]
+    return visual(nome, "clusteredBarChart", pos, {"Y": {"projections": [medida("Info_Gatilho_Valor")]}}, obj, cont)
+
+
 def _eixos():
     return {"categoryAxis": [{"properties": {"fontSize": lit("16D"), "fontFamily": lit("'Segoe UI'"), "showAxisTitle": lit("false")}}],
             "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}

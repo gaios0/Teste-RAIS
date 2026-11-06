@@ -28,6 +28,8 @@ def r100(v):
 def medidas():
     m = medidas_info()
 
+    m.append(("Guia_Leitura_RAIS_HTML", "Guia de leitura e glossário compartilhado por todas as páginas do painel RAIS.", guia_leitura_rais(), "HTML\\Notas compartilhadas", None, False))
+
     def add(nome, doc, dax):
         m.append((nome, doc, dax, P, None, False))
 
@@ -71,6 +73,21 @@ def medidas():
              'IF(ISBLANK(Valor), "Sem dados para os filtros escolhidos.", "Em " & A & ", " & Lider & ": " & FORMAT(Valor, "0.0%", "pt-BR") & " " & Frase & ".")',
              '"O AFL reúne seis atividades: restaurantes, lanchonetes, bares com e sem entretenimento, padarias (revenda) e alimentos preparados para consumo domiciliar."'))
     return m
+
+
+def guia_leitura_rais():
+    """Texto fixo do guia superior; não depende dos filtros da página."""
+    return (
+        "VAR _A = 0\nRETURN\n"
+        "    \"<div role='note' aria-label='Guia de leitura e glossário do painel RAIS' style='width:1040px;height:900px;box-sizing:border-box;padding:22px 26px;background:#FFFFFF;border:1px solid #D9DDE5;border-top:6px solid #F58220;border-radius:8px;color:#434446;font-family:Segoe UI,Arial,sans-serif;font-size:17px;line-height:23px;overflow:hidden;'>\"\n"
+        "    & \"<div style='font-size:25px;line-height:31px;font-weight:700;color:#1D1E21;'>INFORMAÇÕES PARA LEITURA</div>\"\n"
+        "    & \"<div style='font-size:18px;line-height:25px;color:#667085;margin-top:3px;margin-bottom:16px;'>Um guia rápido para explorar o painel de emprego formal e interpretar os indicadores da RAIS.</div>\"\n"
+        "    & \"<div style='display:flex;gap:14px;margin-bottom:19px;'><div style='flex:1;min-width:0;padding:13px 16px;background:#FDF7F1;border-radius:6px;'><strong style='display:block;color:#B86218;margin-bottom:5px;'>Passe o mouse para descobrir mais</strong>Gráficos, números, manchetes e ícones ⓘ têm explicações adicionais. Mantenha o cursor sobre a informação; não é preciso clicar.</div><div style='flex:1;min-width:0;padding:13px 16px;background:#FDF7F1;border-radius:6px;'><strong style='display:block;color:#B86218;margin-bottom:5px;'>Explore os recortes</strong>Use os filtros, clique nas barras e consulte as abas para alternar tema e universo. Limpar filtros volta à leitura inicial da página.</div></div>\"\n"
+        "    & \"<div style='font-size:15px;line-height:21px;font-weight:700;letter-spacing:1px;color:#B86218;margin-bottom:12px;'>GLOSSÁRIO · MEDIDAS E CONCEITOS</div>\"\n"
+        "    & \"<div style='display:flex;gap:28px;'><div style='flex:1;min-width:0;'><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>RAIS / estoque de empregos</strong> — Retrato dos vínculos formais ativos em 31 de dezembro. Conta vínculos, não pessoas: quem tem dois empregos aparece duas vezes.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Ano de referência e defasagem</strong> — A RAIS é anual e divulgada com defasagem. O filtro Ano define o retrato de 31/12 usado nos indicadores.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Quebra da série em 2022</strong> — Desde 2022, a fonte é o eSocial, que ampliou a cobertura. Por isso, 2022 em diante não deve ser comparado diretamente com anos anteriores; as séries são interrompidas.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>AFL</strong> — Alimentação Fora do Lar: conjunto de seis CNAEs definidos no painel. Nos rankings, aparece como grupo próprio.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Comparáveis ao AFL</strong> — Atividades usadas como referência para comparar o AFL. A comparação-padrão é AFL × Comparáveis.</div></div>\"\n"
+        "    & \"<div style='flex:1;min-width:0;'><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Todos os setores / AFL</strong> — A primeira visão mostra o contexto de mercado e a seleção dos filtros; a aba AFL restringe o painel às seis atividades de alimentação fora do lar.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Remuneração</strong> — Salário de dezembro, em R$ nominais (sem correção pela inflação). A média considera salários válidos de 0,3 a 150 salários mínimos; a mediana só existe para alguns recortes.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Percentuais e p.p.</strong> — Todo percentual informa uma parcela do universo mostrado. Pontos percentuais (p.p.) são diferença entre percentuais: de 30% para 35% = 5 p.p.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>Cor ou raça</strong> — Os percentuais consideram somente quem declarou a informação. Pretos e pardos formam o grupo de negros.</div><div style='margin-bottom:10px;'><strong style='color:#1D1E21;'>CNAE / divisão</strong> — CNAE é a classificação da atividade econômica; divisão é um agrupamento de CNAEs. Os nomes dos rankings seguem essa classificação.</div></div></div>\"\n"
+        "    & \"<div style='margin-top:4px;padding-top:11px;border-top:1px solid #E6E8ED;font-size:16px;line-height:22px;color:#667085;'><strong>Antes de comparar:</strong> confira ano, localidade, filtros e a nota metodológica da página. Ela indica quando há quebra de série, universo restrito ou dado indisponível.</div></div>\""
+    )
 
 
 def medidas_info():

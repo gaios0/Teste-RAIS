@@ -16,3 +16,8 @@
 ## Operação
 - Tabelas locais importadas (calendário etc.) precisam de **Atualizar agora** na primeira abertura (o PBIP não guarda cache). Ano padrão do segmentador: 2025 (fixo no visual; atualizar quando entrar 2026).
 - Ao regenerar páginas com o Desktop aberto: feche sem salvar e reabra.
+
+## Ajuste visual — 06/11/2026
+- Os campos de filtro dos oito fundos ficaram sem contorno cinza (traço branco), mantendo o Power BI sem fundo e sem borda sobre o desenho estático.
+- Foi incluída, no topo de todas as páginas de conteúdo, a faixa **INFORMAÇÕES PARA LEITURA**. O mouse sobre a faixa abre o tooltip compartilhado `a3d1f2c4e6b8097a1c60`, com glossário RAIS: estoque de vínculos em 31/12, defasagem, quebra RAIS/eSocial em 2022, AFL × Comparáveis, remuneração nominal, p.p., cor/raça e CNAE.
+- Validação feita: JSONs do relatório desserializados e fundos PNG renderizados/inspecionados. **Ainda não testado no Power BI Desktop:** abertura do tooltip, renderização do HTML/DAX e comportamento do painel após recarregar o PBIP.

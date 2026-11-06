@@ -120,6 +120,7 @@ TT_GRAFICO = {("Empregos", "serie", None): "Tip_Emp_Ano_HTML", ("Empregos", "ran
               ("Quem contrata", "uf", None): "Tip_Ind_UF_HTML"}
 INFO_PAGINAS = {"P": "a3d1f2c4e6b8097a1c61", "M": "a3d1f2c4e6b8097a1c62", "G": "a3d1f2c4e6b8097a1c63"}
 INFO_TAMANHOS = {"P": (720, 370), "M": (760, 440), "G": (800, 580)}
+GUIA_LEITURA_PAGINA = "a3d1f2c4e6b8097a1c60"
 
 
 def gatilhos_info(c, tema, recorte):
@@ -279,11 +280,13 @@ def montar(tema, recorte, refazer=False):
                 continue
             gravar("f_" + rot, pb.slicer_dropdown(n("f_" + rot), (x - 4, 132, w + 8, 52, prox()), tab, col, sync[rot], rot,
                                                   inicial=ANO_PADRAO if rot == "Ano" else None, unico=rot == "Ano"))
+    gravar("info_leitura_botao", pb.botao_info_leitura(n("info_leitura_botao"), (0, 0, fb.W, 30, 33000)))
+    gravar("info_leitura_gatilho", pb.gatilho_info_leitura(n("info_leitura_gatilho"), (0, 0, fb.W, 30, 34000), GUIA_LEITURA_PAGINA))
     c = types.SimpleNamespace(pid=pid, afl=afl, u=u, n=n, gravar=gravar, prox=prox, vis=vis)
     {"Empregos": corpo_empregos, "Quem trabalha": corpo_perfil, "Quanto ganha": corpo_salario, "Quem contrata": corpo_contrata}[tema](c)
     gatilhos_info(c, tema, recorte)
     # interações: o gráfico de série ignora o segmentador de ano e não filtra os demais; os botões de setor só filtram o ranking
-    todos = [v for p, v in vis.items() if p not in ("limpar",) and not p.startswith("f_") and p != "setores"]
+    todos = [v for p, v in vis.items() if p not in ("limpar", "info_leitura_botao", "info_leitura_gatilho") and not p.startswith("f_") and p != "setores"]
     inter = []
     if "serie" in vis:
         inter = [{"source": vis["f_Ano"], "target": vis["serie"], "type": "NoFilter"}]
@@ -328,6 +331,13 @@ def main():
         pagina, vis, v = pb.pagina_tooltip(pid, f"Tooltip (i) compartilhado · {classe}", "Info_Texto_HTML", larg, alt)
         pb.salvar(destino / "page.json", pagina)
         pb.salvar(destino / "visuals" / v / "visual.json", vis)
+    destino = pb.DEF / "pages" / GUIA_LEITURA_PAGINA
+    if destino.exists():
+        shutil.rmtree(destino)
+    pagina, vis, v = pb.pagina_tooltip(GUIA_LEITURA_PAGINA, "Tooltip · Informações para leitura", "Guia_Leitura_RAIS_HTML", 1040, 900)
+    vis["visual"]["visualContainerObjects"]["general"] = [{"properties": {"altText": pb.lit("'Guia de leitura e glossário do painel RAIS.'")}}]
+    pb.salvar(destino / "page.json", pagina)
+    pb.salvar(destino / "visuals" / v / "visual.json", vis)
     for medida_nome, pid in TIPS.items():
         destino = pb.DEF / "pages" / pid
         if destino.exists():
@@ -339,7 +349,7 @@ def main():
     pj = pb.DEF / "pages" / "pages.json"
     d = json.loads(pj.read_text(encoding="utf-8"))
     antigas = [p for p in d["pageOrder"] if p not in ordem and p != BLANK_INICIAL and not p.startswith("a3d1f2c4e6b8097a1c")]
-    d["pageOrder"] = ordem + list(TIPS.values()) + list(INFO_PAGINAS.values()) + [x[0] for x in dax_tooltips.TOOLTIPS.values()] + [p for p in antigas if p not in TIPS.values() and p not in INFO_PAGINAS.values() and p not in [x[0] for x in dax_tooltips.TOOLTIPS.values()]] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
+    d["pageOrder"] = ordem + [GUIA_LEITURA_PAGINA] + list(TIPS.values()) + list(INFO_PAGINAS.values()) + [x[0] for x in dax_tooltips.TOOLTIPS.values()] + [p for p in antigas if p not in TIPS.values() and p not in INFO_PAGINAS.values() and p != GUIA_LEITURA_PAGINA and p not in [x[0] for x in dax_tooltips.TOOLTIPS.values()]] + ([BLANK_INICIAL] if BLANK_INICIAL in d["pageOrder"] else [])
     d["activePageName"] = ordem[0]
     pj.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
 
