@@ -1,0 +1,243 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 300
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1091.2235730091286,
+            "y": 662.0943330007226
+          },
+          "nodeIndex": "_medidas",
+          "nodeLineageTag": "028d1157-91ef-453d-85dd-746b03714cac",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 153.27701539919576,
+            "y": 1380.8137140735741
+          },
+          "nodeIndex": "D_AflAtividade",
+          "nodeLineageTag": "b59b006e-e9ce-4296-a322-d730ca8a2679",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 576.47935765492809,
+            "y": -50
+          },
+          "nodeIndex": "D_Ano",
+          "nodeLineageTag": "92dcca69-eb08-4847-95ff-0eda223c35eb",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 338.35718294389744
+          },
+          "nodeIndex": "D_Calendario",
+          "nodeLineageTag": "cd4e0d09-ee5d-4bd2-9e97-dbbc16370160",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 365.36093033489942,
+            "y": 1031.8436021068717
+          },
+          "nodeIndex": "D_Cnae",
+          "nodeLineageTag": "b82dffe9-39d5-4ad8-97b2-70efa22809f6",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 440.34888660963713,
+            "y": 1446.1886660014452
+          },
+          "nodeIndex": "D_Comparavel",
+          "nodeLineageTag": "657f9a02-fc76-4f0d-aa35-62fb81c97f74",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 854.96086762328036,
+            "y": 129.87434452550133
+          },
+          "nodeIndex": "D_Escolaridade",
+          "nodeLineageTag": "7c611bc7-714d-46da-b694-5ef6440231d4",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 158.39611643655468,
+            "y": 747.2439345686962
+          },
+          "nodeIndex": "D_FaixaIdade",
+          "nodeLineageTag": "d1874d80-d4ea-40cd-ba5e-9d9744881f0e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 571.454925793398,
+            "y": 852.47024097967756
+          },
+          "nodeIndex": "D_GrupoSetor",
+          "nodeLineageTag": "4c96ec5b-49e9-4bf7-855d-90e2b687cff5",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1375.2235730091286,
+            "y": 748.0943330007226
+          },
+          "nodeIndex": "D_Indicador",
+          "nodeLineageTag": "4e781ea8-ab8f-448c-a63b-9a9cd1968690",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1659.2235730091286,
+            "y": 662.0943330007226
+          },
+          "nodeIndex": "D_Info",
+          "nodeLineageTag": "868cd046-c9b0-452b-a262-802bee7bbb42",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 857.22357300912859,
+            "y": 726.72897391170932
+          },
+          "nodeIndex": "D_Raca",
+          "nodeLineageTag": "27604ca6-5af7-4827-8a96-fbbdcfc085b3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1943.2235730091286,
+            "y": 748.0943330007226
+          },
+          "nodeIndex": "D_Rank_Divisao",
+          "nodeLineageTag": "0b9ecc04-e820-438d-8a1d-d981786a1e4e",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 290.04731538257,
+            "y": 18.332712426682292
+          },
+          "nodeIndex": "D_Sexo",
+          "nodeLineageTag": "3f72654e-526c-495a-bd23-ab282bfb8945",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 854.99348324399125,
+            "y": 351.56123861005813
+          },
+          "nodeIndex": "D_UF",
+          "nodeLineageTag": "ff7288be-062a-4511-80ae-45c48be3a6c2",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 527.14896901366888,
+            "y": 198.8518088337712
+          },
+          "nodeIndex": "F_Mediana",
+          "nodeLineageTag": "40307923-5bb9-425c-9d55-528636b0771e",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 444.16477155895274,
+            "y": 500.22379886271574
+          },
+          "nodeIndex": "F_rais",
+          "nodeLineageTag": "6cd3c3a5-a157-4da9-a9b0-db51c8d3669c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

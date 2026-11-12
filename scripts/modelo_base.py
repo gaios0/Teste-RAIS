@@ -267,7 +267,7 @@ INDICADORES = ["Primeiro emprego", "Mulheres", "Até 24 anos", "55 anos ou mais"
 def tabelas_locais():
     import json
     divs = json.loads((RAIZ / "docs" / "previa" / "divisoes.json").read_text(encoding="utf-8"))
-    _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Setores comparáveis ao AFL"), ("Não", "Demais setores")])
+    _tabela_m("D_Comparavel", ["comparavel_AFL", "comparavel_AFL_rotulo"], [("Sim", "Só os comparáveis ao AFL"), ("Não", "Demais setores")])
     _tabela_m("D_Indicador", ["indicador", "ordem"], [(n, str(i + 1)) for i, n in enumerate(INDICADORES)])
     import info_rais
     _tabela_m("D_Info", info_rais.COLUNAS, info_rais.linhas())

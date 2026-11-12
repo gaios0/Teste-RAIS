@@ -4,10 +4,10 @@
   "position": {
     "x": 1293.3,
     "y": 1160,
-    "z": 2000,
+    "z": 18000,
     "height": 364,
     "width": 570.7,
-    "tabOrder": 2000
+    "tabOrder": 18000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -47,26 +47,6 @@
             }
           ]
         },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Empregos_Ref"
-                }
-              },
-              "queryRef": "_medidas.Empregos_Ref",
-              "nativeQueryRef": "Empregos do AFL",
-              "displayName": "Empregos do AFL",
-              "format": "#,0"
-            }
-          ]
-        },
         "Tooltips": {
           "projections": [
             {
@@ -84,6 +64,26 @@
               "nativeQueryRef": "Peso nos empregos comparáveis",
               "displayName": "Peso nos empregos comparáveis",
               "format": "0.0%"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Empregos_Ref"
+                }
+              },
+              "queryRef": "_medidas.Empregos_Ref",
+              "nativeQueryRef": "Empregos do AFL",
+              "displayName": "Empregos do AFL",
+              "format": "#,0"
             }
           ]
         }
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1D1E21'"
+                      "Value": "'#17B26A'"
                     }
                   }
                 }
@@ -197,7 +197,13 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Empregos_Ref"
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],

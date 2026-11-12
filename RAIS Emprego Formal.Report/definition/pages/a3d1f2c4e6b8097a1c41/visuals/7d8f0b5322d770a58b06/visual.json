@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "7d8f0b5322d770a58b06",
   "position": {
-    "x": 1293.3,
-    "y": 686,
-    "z": 1800,
-    "height": 298,
-    "width": 570.7,
-    "tabOrder": 1800
+    "x": 1049.9358517276482,
+    "y": 685.81207524843785,
+    "z": 15000,
+    "height": 298.41723034762367,
+    "width": 814.48739475612877,
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "lineChart",
@@ -163,13 +163,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Continuous'"
-                }
-              }
-            },
-            "labelAngle": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
                 }
               }
             }

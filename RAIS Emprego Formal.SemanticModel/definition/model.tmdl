@@ -23,13 +23,13 @@ ref table D_Escolaridade
 ref table D_FaixaIdade
 ref table D_Raca
 ref table D_Ano
-ref table D_Info
 ref table _medidas
 ref table D_Indicador
 ref table D_Rank_Divisao
 ref table D_AflAtividade
 ref table D_Comparavel
 ref table D_Calendario
+ref table D_Info
 
 ref cultureInfo pt-BR
 

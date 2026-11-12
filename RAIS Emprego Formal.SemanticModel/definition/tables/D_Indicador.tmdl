@@ -18,12 +18,22 @@ table D_Indicador
 
 		annotation SummarizationSetBy = Automatic
 
+	column indicador_exibicao
+		dataType: string
+		lineageTag: 5b7e64bb-65cf-4d8d-9aa9-dd2c6479674a
+		summarizeBy: none
+		sourceColumn: indicador_exibicao
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
 	partition D_Indicador = m
 		mode: import
 		source =
 				let
-				    Fonte = #table(type table [indicador = text, ordem = text], {{"Primeiro emprego", "1"}, {"Mulheres", "2"}, {"Até 24 anos", "3"}, {"55 anos ou mais", "4"}, {"Superior", "5"}, {"Negros", "6"}, {"Intermitente", "7"}})
+				    Fonte = #table(type table [indicador = text, indicador_exibicao = text, ordem = text], {{"Primeiro emprego", "Primeiro#(lf)emprego", "1"}, {"Mulheres", "Mulheres", "2"}, {"Até 24 anos", "Até 24 anos", "3"}, {"55 anos ou mais", "55 anos ou mais", "4"}, {"Superior", "Superior", "5"}, {"Negros", "Negros", "6"}, {"Intermitente", "Intermitente", "7"}})
 				in
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

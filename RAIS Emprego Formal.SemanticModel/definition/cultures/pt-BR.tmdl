@@ -12,19 +12,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_AFL_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_indice_afl_pos": {
 			      "Definition": {
@@ -33,19 +21,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_AFL_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_indice_comp_pre": {
 			      "Definition": {
@@ -54,19 +30,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_Comp_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_indice_comp_pos": {
 			      "Definition": {
@@ -75,19 +39,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_Comp_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_indice_sel_pre": {
 			      "Definition": {
@@ -96,19 +48,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_Sel_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Seleção atual (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_indice_sel_pos": {
 			      "Definition": {
@@ -117,19 +57,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_Indice_Sel_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Seleção atual (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.empregos_ref_afl": {
 			      "Definition": {
@@ -159,19 +87,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Empregos_Ref_Comparavel"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Empregos dos comparáveis": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.empregos_var_pct_afl": {
 			      "Definition": {
@@ -180,19 +96,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Empregos_Var_Pct_AFL"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL sobre o ano anterior": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.empregos_var_pct_comparavel": {
 			      "Definition": {
@@ -201,19 +105,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Empregos_Var_Pct_Comparavel"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis sobre o ano anterior": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_uf_peso_top": {
 			      "Definition": {
@@ -222,19 +114,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_UF_Peso_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Peso do AFL nos empregos comparáveis": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_divisao_top": {
 			      "Definition": {
@@ -275,6 +155,16 @@ cultureInfo pt-BR
 			            },
 			            "Weight": 0.9
 			          }
+			        },
+			        {
+			          "Empregos do AFL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -306,19 +196,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Emp_UF_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Empregos do AFL": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.emp_uf_peso_afl": {
 			      "Definition": {
@@ -516,19 +394,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Esc_Comp"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_media_afl_pre": {
 			      "Definition": {
@@ -579,19 +445,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Mediana_AFL_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL · mediana (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_mediana_afl_pos": {
 			      "Definition": {
@@ -600,19 +454,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Mediana_AFL_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL · mediana (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_media_comp_pre": {
 			      "Definition": {
@@ -624,7 +466,7 @@ cultureInfo pt-BR
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Comparáveis · média (2009–2021)": {
+			          "Referência · média (2009–2021)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -645,7 +487,7 @@ cultureInfo pt-BR
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Comparáveis · média (2022 em diante)": {
+			          "Referência · média (2022 em diante)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -663,19 +505,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Mediana_Comp_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis · mediana (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_mediana_comp_pos": {
 			      "Definition": {
@@ -684,19 +514,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Mediana_Comp_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis · mediana (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_razao_raca_afl": {
 			      "Definition": {
@@ -705,19 +523,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Razao_Raca_AFL"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_razao_raca_comp": {
 			      "Definition": {
@@ -726,19 +532,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Razao_Raca_Comp"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_uf_top": {
 			      "Definition": {
@@ -747,19 +541,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_UF_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Remuneração média do AFL (R$)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_uf_razao_comp": {
 			      "Definition": {
@@ -789,19 +571,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Razao_Sexo_AFL"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.rem_razao_sexo_comp": {
 			      "Definition": {
@@ -810,19 +580,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Razao_Sexo_Comp"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_divisao_top": {
 			      "Definition": {
@@ -961,6 +719,468 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Participação": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.empregos_var_pct": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Empregos_Var_Pct"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.emp_uf_peso_geo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Emp_UF_Peso_Geo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Peso do AFL nos empregos comparáveis": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.rem_esc_sel": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Esc_Sel"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.rem_media_sel_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Media_Sel_Pre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual · média (2009–2021)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.rem_media_sel_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Media_Sel_Pos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual · média (2022 em diante)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.rem_razao_raca": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Razao_Raca"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.rem_uf_geo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_UF_Geo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Remuneração média (R$)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.rem_razao_sexo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Razao_Sexo"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ind_serie_sel_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_Serie_Sel_Pre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual (2009–2021)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ind_serie_sel_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_Serie_Sel_Pos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual (2022 em diante)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ind_uf_todos_geo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_UF_Todos_Geo"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ind_uf_afl_dica": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_UF_AFL_Dica"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "No AFL desta UF": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ind_uf_geo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_UF_Geo"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.rem_mediana_sel_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Mediana_Sel_Pre"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.rem_mediana_sel_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Rem_Mediana_Sel_Pos"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_medidas.ind_uf_todos_top": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ind_UF_Todos_Top"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Participação no recorte": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.empregos_var_pct_sel_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Empregos_Var_Pct_Sel_Pre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.empregos_var_pct_sel_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Empregos_Var_Pct_Sel_Pos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual (2022 em diante)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.empregos_var_pct_afl_pre": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Empregos_Var_Pct_AFL_Pre"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "AFL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.empregos_var_pct_afl_pos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Empregos_Var_Pct_AFL_Pos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "AFL (2022 em diante)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_raca_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Raca_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "AFL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_raca": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Raca"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_sexo_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Sexo_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "AFL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_sexo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Sexo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Seleção atual": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_sexo_comp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Sexo_Comp"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Comparáveis": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.dif_salarial_raca_comp": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Dif_Salarial_Raca_Comp"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Comparáveis": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'empregos-afl-bg9411743255829482.png'"
+                    "Value": "'empregos-afl-bg202611097.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "empregos-afl-bg9411743255829482.png"
+                    "ItemName": "empregos-afl-bg202611097.png"
                   }
                 }
               },

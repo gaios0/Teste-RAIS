@@ -81,7 +81,7 @@ table D_Calendario
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Mês/Ano'
+	column Mês/Ano
 		dataType: string
 		lineageTag: 1b38e603-ed94-459e-8898-e371b7e69e1f
 		summarizeBy: none
@@ -259,3 +259,4 @@ table D_Calendario
 				    #"Trecho Adicionado"
 
 	annotation PBI_ResultType = Table
+

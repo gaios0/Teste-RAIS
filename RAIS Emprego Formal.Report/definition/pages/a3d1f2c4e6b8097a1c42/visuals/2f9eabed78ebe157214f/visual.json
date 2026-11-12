@@ -4,10 +4,10 @@
   "position": {
     "x": 1293.3,
     "y": 686,
-    "z": 1700,
+    "z": 15000,
     "height": 298,
     "width": 570.7,
-    "tabOrder": 1700
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "lineChart",
@@ -131,13 +131,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Continuous'"
-                }
-              }
-            },
-            "labelAngle": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
                 }
               }
             }

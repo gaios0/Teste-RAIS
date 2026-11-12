@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "0c09b41c27188492ebdb",
   "position": {
-    "x": 64.0,
-    "y": 1120,
-    "z": 1900,
+    "x": 64,
+    "y": 1122,
+    "z": 16000,
     "height": 48,
     "width": 1173.3,
-    "tabOrder": 1900
+    "tabOrder": 16000
   },
   "visual": {
     "visualType": "advancedSlicerVisual",
@@ -133,7 +133,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -144,6 +144,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -163,6 +170,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -182,6 +196,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -230,6 +251,11 @@
           "selector": {
             "id": "selection:selected"
           }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
         }
       ]
     },

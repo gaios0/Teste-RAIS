@@ -5,42 +5,6 @@
   "displayOption": "FitToWidth",
   "height": 1652,
   "width": 1920,
-  "objects": {
-    "background": [
-      {
-        "properties": {
-          "image": {
-            "image": {
-              "name": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'trabalha-afl-bg8584288722100861.png'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "trabalha-afl-bg8584288722100861.png"
-                  }
-                }
-              },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Fit'"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
-  "visualInteractions": [],
   "filterConfig": {
     "filters": [
       {
@@ -96,6 +60,41 @@
           ]
         },
         "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'trabalha-afl-bg202611101.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "trabalha-afl-bg202611101.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     ]
   }

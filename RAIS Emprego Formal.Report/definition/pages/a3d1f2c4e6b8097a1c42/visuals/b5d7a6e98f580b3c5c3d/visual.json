@@ -4,10 +4,10 @@
   "position": {
     "x": 36,
     "y": 132,
-    "z": 200,
+    "z": 0,
     "height": 52,
     "width": 148,
-    "tabOrder": 200
+    "tabOrder": 0
   },
   "visual": {
     "visualType": "slicer",
@@ -178,6 +178,30 @@
             }
           }
         }
+      ],
+      "dropdown": [
+        {
+          "properties": {
+            "accentBarShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -288,11 +312,11 @@
         }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "syncGroup": {
       "groupName": "rais_ano",
       "fieldChanges": false,
       "filterChanges": true
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

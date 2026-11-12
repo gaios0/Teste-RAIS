@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "fe37cae2c6348248eafa",
   "position": {
-    "x": 64.0,
-    "y": 640,
-    "z": 1500,
-    "height": 48,
-    "width": 1173.3,
-    "tabOrder": 1500
+    "x": 64.337659753845472,
+    "y": 635.16327927200632,
+    "z": 12000,
+    "height": 53.386568731914323,
+    "width": 960.95823717445785,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "advancedSlicerVisual",
@@ -23,11 +23,11 @@
                       "Entity": "D_Indicador"
                     }
                   },
-                  "Property": "indicador"
+                  "Property": "indicador_exibicao"
                 }
               },
-              "queryRef": "D_Indicador.indicador",
-              "nativeQueryRef": "indicador"
+              "queryRef": "D_Indicador.indicador_exibicao",
+              "nativeQueryRef": "indicador_exibicao"
             }
           ]
         }
@@ -101,6 +101,13 @@
                   "Value": "14D"
                 }
               }
+            },
+            "textWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           },
           "selector": {
@@ -133,7 +140,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -144,6 +151,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -163,6 +177,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -182,6 +203,13 @@
         },
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fillColor": {
               "solid": {
                 "color": {
@@ -234,49 +262,7 @@
       ],
       "general": [
         {
-          "properties": {
-            "filter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "d",
-                    "Entity": "D_Indicador",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "In": {
-                        "Expressions": [
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Source": "d"
-                                }
-                              },
-                              "Property": "indicador"
-                            }
-                          }
-                        ],
-                        "Values": [
-                          [
-                            {
-                              "Literal": {
-                                "Value": "'Mulheres'"
-                              }
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          "properties": {}
         }
       ]
     },

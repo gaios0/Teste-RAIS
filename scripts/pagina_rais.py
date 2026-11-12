@@ -82,27 +82,28 @@ def corpo_empregos(c):
         gravar(f"kpi{i + 1}", pb.html(n(f"kpi{i + 1}"), (kx[i] + 20, fb.KPI_Y + 12, fb.cw(4) - 84, 172, prox()), m))
     # linha 2: série (índice) + contratos
     ax, aw, bx, bw_ = fb.cx(0), fb.cw(8), fb.cx(8), fb.cw(4)
-    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 90, prox()), "Titulo_Emp_Var_AFL_HTML" if afl else "Titulo_Emp_Var_Total_HTML"))
-    series = [("Empregos_Var_Pct_AFL", "AFL", cp.LARANJA), ("Empregos_Var_Pct_Comparavel", "Comparáveis", cp.CINZA)]
+    gravar("t_serie", pb.html(n("t_serie"), (ax + 24, fb.L2_Y + 16, aw - 96, 92, prox()), "Titulo_Emp_Var_AFL_HTML" if afl else "Titulo_Emp_Var_Total_HTML"))
+    series = [("Empregos_Var_Pct_AFL", "AFL", cp.LARANJA)]
     if not afl:
         series.append(("Empregos_Var_Pct", "Seleção atual", "#98A2B3"))
-    gravar("serie", pb.colunas_grupo(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"), series, "+0%;-0%;0%"))
-    gravar("t_contrato", pb.html(n("t_contrato"), (bx + 24, fb.L2_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_Contrato_HTML"))
+    gravar("serie", pb.linhas(n("serie"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, prox()), pb.coluna("D_Calendario", "Ano"),
+                                [(m, r, cor, "+0%;-0%;0%") for m, r, cor in series], rotulos=not afl))
+    gravar("t_contrato", pb.html(n("t_contrato"), (bx + 24, fb.L2_Y + 16, bw_ - 48, 114, prox()), "Titulo_Emp_Contrato_HTML"))
     gravar("contrato", pb.html(n("contrato"), (bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, prox()), "Emp_Contratos_HTML"))
     # capítulo 2
     if afl:
-        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Atividades_HTML"))
+        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 86, prox()), "Titulo_Emp_Atividades_HTML"))
         gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, prox()), pb.coluna("D_AflAtividade", "nome"), "Empregos_Ref", "Empregos", "#,0",
                                  tooltips=[("Emp_Atividade_Var", "Sobre o ano anterior", "+0.0%;-0.0%;0.0%")]))
-        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_AFL_HTML"))
+        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 114, prox()), "Titulo_Emp_UF_AFL_HTML"))
         gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Empregos_Ref", "Empregos do AFL", "#,0", categoria2=pb.coluna("F_rais", "municipio", False, True), foco=True, espaco=10,
                                tooltips=[("Emp_UF_Peso_AFL", "Peso nos empregos comparáveis", "0.0%")]))
     else:
-        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 84, prox()), "Titulo_Emp_Ranking_HTML"))
-        gravar("setores", pb.botoes_setor(n("setores"), (ax + 24, fb.L3_Y + 100, aw - 48, 48, prox()), "D_Rank_Divisao", "setor_principal"))
-        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 158, aw - 32, fb.L3_H - 174, prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Emp_Divisao_Top", "Empregos", "#,0",
+        gravar("t_rank", pb.html(n("t_rank"), (ax + 24, fb.L3_Y + 16, aw - 48, 86, prox()), "Titulo_Emp_Ranking_HTML"))
+        gravar("setores", pb.botoes_setor(n("setores"), (ax + 24, fb.L3_Y + 102, aw - 48, 48, prox()), "D_Rank_Divisao", "setor_principal"))
+        gravar("rank", pb.barras(n("rank"), (ax + 16, fb.L3_Y + 160, aw - 32, fb.L3_H - 176, prox()), pb.coluna("D_Rank_Divisao", "nm_divisao"), "Emp_Divisao_Top", "Empregos", "#,0",
                                  cor_por_medida="Cor_Emp_Divisao"))
-        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 112, prox()), "Titulo_Emp_UF_Total_HTML"))
+        gravar("t_uf", pb.html(n("t_uf"), (bx + 24, fb.L3_Y + 16, bw_ - 48, 114, prox()), "Titulo_Emp_UF_Total_HTML"))
         gravar("uf", pb.barras(n("uf"), (bx + 16, fb.L3_Y + 140, bw_ - 32, fb.L3_H - 156, prox()), pb.coluna("D_UF", "uf"), "Emp_UF_Peso_Geo", "Peso do AFL nos empregos comparáveis", "0.0%", categoria2=pb.coluna("F_rais", "municipio", False, True), foco=True, espaco=10,
                                tooltips=[("Empregos_Ref_AFL", "Empregos do AFL", "#,0")]))
 
@@ -147,6 +148,17 @@ def geo():
 
 
 def titulo(c, papel, x, y, w, h, medida):
+    # Geometria aprovada em Empregos · Todos os setores: os títulos HTML recebem
+    # respiro extra para que o visual não exponha sua barra de rolagem interna.
+    if medida.startswith("Titulo_"):
+        if x < 100 and y == fb.L2_Y + 16:
+            x, y, h = 64.3376597538455, 548.923437474299, 98.5598191973803
+        elif x > 1000 and y == fb.L2_Y + 16:
+            x, y, h = 1301.81094523206, 555.767869363006, 116.355342108018
+        elif x < 100 and y == fb.L3_Y + 16:
+            x, y, h = 64.3376597538455, 1029.40255606153, 93.0842736864147
+        elif x > 1000 and y == fb.L3_Y + 16:
+            x, y, h = 1301.81094523206, 1036.24698795023, 123.199773996725
     c.gravar(papel, pb.html(c.n(papel), (x, y, w, h, c.prox()), medida))
 
 
@@ -156,7 +168,7 @@ def corpo_perfil(c):
     cabecalho(c, f"Manchete_Perfil_{u}_HTML", [f"KPI_Mulheres_{u}_HTML", f"KPI_Jovens_{u}_HTML", f"KPI_Escol_{u}_HTML"])
     # pirâmide etária (mulheres à esquerda, homens à direita)
     titulo(c, "t_pir", ax + 24, fb.L2_Y + 16, aw - 48, 84, "Titulo_Pir_HTML")
-    c.gravar("pir", pb.barras_grupo(c.n("pir"), (ax + 16, fb.L2_Y + 132, aw - 32, fb.L2_H - 148, c.prox()), pb.coluna("D_FaixaIdade", "faixa_idade"),
+    c.gravar("pir", pb.barras_grupo(c.n("pir"), (57.175792507204605, 634.46685878962535, 1189.6253602305474, 359.65417867435156, c.prox()), pb.coluna("D_FaixaIdade", "faixa_idade"),
                                     [("Pir_Mulheres", "Mulheres", cp.VIOLETA), ("Pir_Homens", "Homens", cp.CINZA_H)], "0.0%;0.0%;0.0%", empilhado=True,
                                     sort_cat=("D_FaixaIdade", "faixa_idade", "Descending"),
                                     tooltips=[("Pir_Mulheres_Comp", "Mulheres nos Comparáveis", "0.0%;0.0%;0.0%"), ("Pir_Homens_Comp", "Homens nos Comparáveis", "0.0%;0.0%;0.0%")]))
@@ -266,17 +278,17 @@ def montar(tema, recorte, refazer=False):
         vis[papel] = v["name"]
 
     # filtros
-    sync = {"Ano": "rais_ano", "Localização": "rais_uf", "Sexo": "rais_sexo", "Escolaridade": "rais_esc", "Raça/cor": "rais_raca", "Setores": "rais_setores", "CNAE AFL": "rais_cnae", "Divisão": "rais_divisao"}
+    sync = {"Ano": "rais_ano", "Localização": "rais_uf", "Sexo": "rais_sexo", "Escolaridade": "rais_esc", "Raça/cor": "rais_raca", "Setores": "rais_setores", "CNAE AFL": "rais_cnae"}
     campos = {"Ano": ("D_Calendario", "Ano"), "Localização": ("D_UF", "estado"), "Sexo": ("D_Sexo", "sexo"), "Escolaridade": ("D_Escolaridade", "escolaridade_agrupada"),
               "Raça/cor": ("D_Raca", "raca_cor"), "CNAE AFL": ("D_AflAtividade", "nome"),
-              "Setores": ("D_Comparavel", "comparavel_AFL_rotulo"), "Divisão": ("D_Cnae", "nm_divisao")}
+              "Setores": ("D_Comparavel", "comparavel_AFL_rotulo")}
     for rot, (x, w) in pos.items():
         if rot == "Limpar":
             gravar("limpar", pb.limpar(n("limpar"), (x, 136, w, 48, prox()), LIMPAR_ARQ))
         else:
             tab, col = campos[rot]
-            if rot == "Setores":      # como no RF: lista (Basic) com as duas opções, sem seleção inicial (todo o mercado)
-                gravar("f_Setores", pb.slicer_comparavel(n("f_Setores"), (x, 136, w, 48, prox()), sync[rot], padrao_sim=False))
+            if rot == "Setores":      # uma caixa: marcada = somente comparáveis; desmarcada = todos os setores não AFL
+                gravar("f_Setores", pb.slicer_comparavel(n("f_Setores"), (x, 136, w, 48, prox()), sync[rot]))
                 continue
             gravar("f_" + rot, pb.slicer_dropdown(n("f_" + rot), (x - 4, 132, w + 8, 52, prox()), tab, col, sync[rot], rot,
                                                   inicial=ANO_PADRAO if rot == "Ano" else None, unico=rot == "Ano"))
@@ -299,8 +311,7 @@ def montar(tema, recorte, refazer=False):
                                                                   "scaling": pb.lit("'Fit'")}}}}]}
     pagina = {"$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json", "name": pid,
               "displayName": f"{tema} · {recorte}", "displayOption": "FitToWidth", "height": fb.H, "width": fb.W, "objects": objetos, "visualInteractions": inter}
-    if afl:
-        pagina["filterConfig"] = {"filters": [pb.filtro_in("D_Cnae", "setor_afl", ["Sim"])]}
+    pagina["filterConfig"] = {"filters": [pb.filtro_in("D_Cnae", "setor_afl", ["Sim" if afl else "Não"])]}
     pb.salvar(destino / "page.json", pagina)
     print(tema, recorte, pid, len(vis), "visuais")
     return pid, fundo

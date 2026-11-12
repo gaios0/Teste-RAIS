@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "ca81dcf6383d242f8f20",
   "position": {
-    "x": 1293.3,
-    "y": 1160,
-    "z": 2300,
-    "height": 364,
-    "width": 570.7,
-    "tabOrder": 2300
+    "x": 1292.2287405878749,
+    "y": 1281.2776495659436,
+    "z": 21000,
+    "height": 284.72836657020974,
+    "width": 572.19450589590224,
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -47,26 +47,6 @@
             }
           ]
         },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_UF_Geo"
-                }
-              },
-              "queryRef": "_medidas.Rem_UF_Geo",
-              "nativeQueryRef": "Remuneração média (R$)",
-              "displayName": "Remuneração média (R$)",
-              "format": "#,0"
-            }
-          ]
-        },
         "Tooltips": {
           "projections": [
             {
@@ -84,6 +64,26 @@
               "nativeQueryRef": "AFL ÷ média dos Comparáveis",
               "displayName": "AFL ÷ média dos Comparáveis",
               "format": "0%"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Rem_UF_Geo"
+                }
+              },
+              "queryRef": "_medidas.Rem_UF_Geo",
+              "nativeQueryRef": "Remuneração média (R$)",
+              "displayName": "Remuneração média (R$)",
+              "format": "#,0"
             }
           ]
         }
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#17B26A'"
                     }
                   }
                 }
@@ -197,7 +197,13 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Rem_UF_Geo"
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],

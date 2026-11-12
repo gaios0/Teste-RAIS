@@ -112,6 +112,6 @@ def medidas_info():
               base + "VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(ISBLANK(VA), " + sem + ", \"Em \" & A & \", o emprego do AFL \" & IF(VA >= 0, \"subiu \", \"caiu \") & "
               + pct("ABS(VA)") + " & IF(ISBLANK(VC), \"\", \" (Comparáveis: \" & " + pct("VC", True) + " & \")\")))\n" + l2 + titulo_html("L1", "L2", '"#F58220"'), "HTML\\Empregos\\Títulos", None, False))
     m.append(("Titulo_Emp_Var_Total_HTML", "Título da variação anual do emprego (página Todos os setores).",
-              base + "VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(ISBLANK(VA), " + sem + ", \"Em \" & A & \": AFL \" & " + pct("VA", True) + " & \", Comparáveis \" & " + pct("VC", True)
+              base + "VAR L1 = IF(ISBLANK(A), \"Sem dados para os filtros escolhidos\", IF(ISBLANK(VA), " + sem + ", \"Em \" & A & \": AFL \" & " + pct("VA", True)
               + " & \", \" & Nome & \" \" & " + pct("VS", True) + "))\n" + l2 + titulo_html("L1", "L2", '"#F58220"'), "HTML\\Empregos\\Títulos", None, False))
     return m

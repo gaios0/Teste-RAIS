@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'ganha-afl-bg3939400058634832.png'"
+                    "Value": "'ganha-afl-bg202611121030.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "ganha-afl-bg3939400058634832.png"
+                    "ItemName": "ganha-afl-bg202611121030.png"
                   }
                 }
               },

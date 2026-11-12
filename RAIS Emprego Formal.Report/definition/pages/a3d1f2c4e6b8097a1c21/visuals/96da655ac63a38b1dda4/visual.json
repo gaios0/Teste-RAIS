@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "96da655ac63a38b1dda4",
   "position": {
-    "x": 56.0,
-    "y": 672,
-    "z": 1500,
-    "height": 308,
-    "width": 1189.3,
-    "tabOrder": 1500
+    "x": 57.175792507204605,
+    "y": 634.46685878962535,
+    "z": 12000,
+    "height": 359.65417867435156,
+    "width": 1189.6253602305474,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "barChart",
@@ -29,42 +29,6 @@
               "queryRef": "D_FaixaIdade.faixa_idade",
               "nativeQueryRef": "faixa_idade",
               "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Pir_Mulheres"
-                }
-              },
-              "queryRef": "_medidas.Pir_Mulheres",
-              "nativeQueryRef": "Mulheres",
-              "displayName": "Mulheres",
-              "format": "0.0%;0.0%;0.0%"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Pir_Homens"
-                }
-              },
-              "queryRef": "_medidas.Pir_Homens",
-              "nativeQueryRef": "Homens",
-              "displayName": "Homens",
-              "format": "0.0%;0.0%;0.0%"
             }
           ]
         },
@@ -100,6 +64,42 @@
               "queryRef": "_medidas.Pir_Homens_Comp",
               "nativeQueryRef": "Homens nos Comparáveis",
               "displayName": "Homens nos Comparáveis",
+              "format": "0.0%;0.0%;0.0%"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Pir_Mulheres"
+                }
+              },
+              "queryRef": "_medidas.Pir_Mulheres",
+              "nativeQueryRef": "Mulheres",
+              "displayName": "Mulheres",
+              "format": "0.0%;0.0%;0.0%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Pir_Homens"
+                }
+              },
+              "queryRef": "_medidas.Pir_Homens",
+              "nativeQueryRef": "Homens",
+              "displayName": "Homens",
               "format": "0.0%;0.0%;0.0%"
             }
           ]

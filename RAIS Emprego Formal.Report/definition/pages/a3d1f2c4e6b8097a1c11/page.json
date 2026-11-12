@@ -5,6 +5,64 @@
   "displayOption": "FitToWidth",
   "height": 1652,
   "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "1c11semAFL",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_Cnae"
+              }
+            },
+            "Property": "setor_afl"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_Cnae",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "setor_afl"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Não'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
   "objects": {
     "background": [
       {
@@ -14,7 +72,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'empregos-todos-bg8131814454486169.png'"
+                    "Value": "'empregos-todos-bg202611103.png'"
                   }
                 }
               },
@@ -23,7 +81,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "empregos-todos-bg8131814454486169.png"
+                    "ItemName": "empregos-todos-bg202611103.png"
                   }
                 }
               },
@@ -139,97 +197,102 @@
     {
       "source": "0c09b41c27188492ebdb",
       "target": "b84c62f21561d722b114",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "342c3c32fd5df2c45ad8",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "3444eac05a574fc52ad9",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "c8b71c40fefedb1420ac",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "69c2cbe6a7de479eb368",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "8e70fd7cbd9357a90106",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "f4cd5af8a27d660154e7",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "a43d9c783d12250ae791",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "a304d3c34c651d2182c2",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "a567a6b82ee6c411ad11",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "a58294544fdcae6b74f2",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "29fbc0ca58cf23bad702",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "be1941026b5468e0e27f",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "de47fb85fe6b2d364c16",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "2a73be9eec70bb5fd679",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "add01c25b28b44dd841f",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "5893ce750cc8168b354e",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "92d2a69791a816d03c5c",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "0c09b41c27188492ebdb",
       "target": "d66ab2d86d2d36813335",
       "type": "DataFilter"
+    },
+    {
+      "source": "d66ab2d86d2d36813335",
+      "target": "0c09b41c27188492ebdb",
+      "type": "NoFilter"
     }
   ]
 }

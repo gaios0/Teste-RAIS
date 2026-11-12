@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "8624fdc964defdebbf93",
   "position": {
-    "x": 56.0,
+    "x": 56,
     "y": 1128,
-    "z": 1900,
+    "z": 16000,
     "height": 396,
     "width": 1189.3,
-    "tabOrder": 1900
+    "tabOrder": 16000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -29,26 +29,6 @@
               "queryRef": "F_rais.cbo_2002",
               "nativeQueryRef": "cbo_2002",
               "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Emp_CBO_Top"
-                }
-              },
-              "queryRef": "_medidas.Emp_CBO_Top",
-              "nativeQueryRef": "Empregos",
-              "displayName": "Empregos",
-              "format": "#,0"
             }
           ]
         },
@@ -85,6 +65,26 @@
               "nativeQueryRef": "Remuneração média de dezembro (R$)",
               "displayName": "Remuneração média de dezembro (R$)",
               "format": "#,0.00"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Emp_CBO_Top"
+                }
+              },
+              "queryRef": "_medidas.Emp_CBO_Top",
+              "nativeQueryRef": "Empregos",
+              "displayName": "Empregos",
+              "format": "#,0"
             }
           ]
         }

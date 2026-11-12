@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "012e260903b4cf9fb900",
   "position": {
-    "x": 1293.3,
-    "y": 686,
-    "z": 1600,
-    "height": 298,
-    "width": 570.7,
-    "tabOrder": 1600
+    "x": 1293.5976269656162,
+    "y": 687.18096162617917,
+    "z": 14000,
+    "height": 483.21689134271168,
+    "width": 570.82561951816081,
+    "tabOrder": 14000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -58,12 +58,12 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Rem_Esc_Comp"
+                  "Property": "Rem_Esc_Sel"
                 }
               },
-              "queryRef": "_medidas.Rem_Esc_Comp",
-              "nativeQueryRef": "Comparáveis",
-              "displayName": "Comparáveis",
+              "queryRef": "_medidas.Rem_Esc_Sel",
+              "nativeQueryRef": "Seleção atual",
+              "displayName": "Seleção atual",
               "format": "#,0"
             }
           ]
@@ -115,7 +115,7 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "31L"
                 }
               }
             },
@@ -129,7 +129,7 @@
             "preferredCategoryWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "40D"
+                  "Value": "52D"
                 }
               }
             }
@@ -188,7 +188,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#434446'"
+                      "Value": "'#98A2B3'"
                     }
                   }
                 }
@@ -196,7 +196,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Rem_Esc_Comp"
+            "metadata": "_medidas.Rem_Esc_Sel"
           }
         }
       ],
@@ -213,7 +213,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "14D"
                 }
               }
             },
@@ -259,6 +259,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "layout": [
+        {
+          "properties": {
+            "clusteredGapSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }

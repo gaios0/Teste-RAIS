@@ -21,8 +21,9 @@ table D_Comparavel
 		mode: import
 		source =
 				let
-				    Fonte = #table(type table [comparavel_AFL = text, comparavel_AFL_rotulo = text], {{"Sim", "Setores comparáveis ao AFL"}, {"Não", "Demais setores"}})
-				in
-				    Fonte
+				    Fonte = #table(type table [comparavel_AFL = text, comparavel_AFL_rotulo = text], {{"Sim", "Só os comparáveis ao AFL"}, {"Não", "Demais setores"}})
+					in
+					    Fonte
 
 	annotation PBI_ResultType = Table
+

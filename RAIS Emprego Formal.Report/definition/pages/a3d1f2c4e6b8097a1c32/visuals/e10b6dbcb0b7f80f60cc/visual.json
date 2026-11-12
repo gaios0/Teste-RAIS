@@ -2,35 +2,17 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "e10b6dbcb0b7f80f60cc",
   "position": {
-    "x": 1800.0,
-    "y": 1029,
-    "z": 40006,
+    "x": 1795.9789275967075,
+    "y": 1204.6200124124257,
+    "z": 34000,
     "height": 62,
     "width": 84,
-    "tabOrder": 40006
+    "tabOrder": 34000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
     "query": {
       "queryState": {
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Info_Gatilho_Valor"
-                }
-              },
-              "queryRef": "_medidas.Info_Gatilho_Valor",
-              "nativeQueryRef": "Info_Gatilho_Valor"
-            }
-          ]
-        },
         "Category": {
           "projections": [
             {
@@ -47,6 +29,24 @@
               "queryRef": "D_Info.Chave",
               "nativeQueryRef": "Chave",
               "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Info_Gatilho_Valor"
+                }
+              },
+              "queryRef": "_medidas.Info_Gatilho_Valor",
+              "nativeQueryRef": "Info_Gatilho_Valor"
             }
           ]
         }

@@ -4,10 +4,10 @@
   "position": {
     "x": 1301.3,
     "y": 1160,
-    "z": 2000,
+    "z": 18000,
     "height": 360,
     "width": 554.7,
-    "tabOrder": 2000
+    "tabOrder": 18000
   },
   "visual": {
     "visualType": "htmlContent443BE3AD55E043BF878BED274D3A6865",
@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Raca_HTML"
+                  "Property": "Raca_RF_HTML"
                 }
               },
-              "queryRef": "_medidas.Raca_HTML",
-              "nativeQueryRef": "Raca_HTML"
+              "queryRef": "_medidas.Raca_RF_HTML",
+              "nativeQueryRef": "Raca_RF_HTML"
             }
           ]
         }

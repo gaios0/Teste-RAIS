@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "8e70fd7cbd9357a90106",
   "position": {
-    "x": 56.0,
-    "y": 672,
-    "z": 1500,
-    "height": 308,
-    "width": 1189.3,
-    "tabOrder": 1500
+    "x": 56.57226815983158,
+    "y": 672.58141034466439,
+    "z": 12000,
+    "height": 323.71909002570294,
+    "width": 1188.0176313564632,
+    "tabOrder": 12000
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "lineChart",
     "query": {
       "queryState": {
         "Category": {
@@ -42,48 +42,49 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Empregos_Var_Pct_AFL"
+                  "Property": "Empregos_Var_Pct_Sel_Pre"
                 }
               },
-              "queryRef": "_medidas.Empregos_Var_Pct_AFL",
-              "nativeQueryRef": "AFL",
-              "displayName": "AFL",
-              "format": "+0%;-0%;0%"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Empregos_Var_Pct_Comparavel"
-                }
-              },
-              "queryRef": "_medidas.Empregos_Var_Pct_Comparavel",
-              "nativeQueryRef": "Comparáveis",
-              "displayName": "Comparáveis",
-              "format": "+0%;-0%;0%"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Empregos_Var_Pct"
-                }
-              },
-              "queryRef": "_medidas.Empregos_Var_Pct",
+              "queryRef": "_medidas.Empregos_Var_Pct_Sel_Pre",
               "nativeQueryRef": "Seleção atual",
               "displayName": "Seleção atual",
+              "format": "+0%;-0%;0%"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Empregos_Var_Pct_Sel_Pos"
+                }
+              },
+              "queryRef": "_medidas.Empregos_Var_Pct_Sel_Pos",
+              "nativeQueryRef": "Seleção atual (2022 em diante)",
+              "displayName": "Seleção atual (2022 em diante)",
               "format": "+0%;-0%;0%"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "D_Calendario"
+                  }
+                },
+                "Property": "Ano"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -155,7 +156,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#98A2B3'"
                     }
                   }
                 }
@@ -163,25 +164,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Empregos_Var_Pct_AFL"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#434446'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_medidas.Empregos_Var_Pct_Comparavel"
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pre"
           }
         },
         {
@@ -199,7 +182,87 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Empregos_Var_Pct"
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pos"
+          }
+        }
+      ],
+      "lineStyles": [
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3L"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#98A2B3'"
+                    }
+                  }
+                }
+              }
+            },
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'straight'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pre"
+          }
+        },
+        {
+          "properties": {
+            "strokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "3L"
+                }
+              }
+            },
+            "showMarker": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "markerColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#98A2B3'"
+                    }
+                  }
+                }
+              }
+            },
+            "lineChartType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'straight'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pos"
           }
         }
       ],
@@ -209,10 +272,38 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
+          }
+        },
+        {
+          "properties": {
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auto'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pre"
+          }
+        },
+        {
+          "properties": {
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Auto'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_medidas.Empregos_Var_Pct_Sel_Pos"
           }
         }
       ],
@@ -255,6 +346,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

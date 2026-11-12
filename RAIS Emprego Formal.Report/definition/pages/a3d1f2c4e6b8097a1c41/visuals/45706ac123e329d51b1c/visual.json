@@ -4,33 +4,15 @@
   "position": {
     "x": 1181.3,
     "y": 333,
-    "z": 40001,
+    "z": 27000,
     "height": 62,
     "width": 84,
-    "tabOrder": 40001
+    "tabOrder": 27000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
     "query": {
       "queryState": {
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Info_Gatilho_Valor"
-                }
-              },
-              "queryRef": "_medidas.Info_Gatilho_Valor",
-              "nativeQueryRef": "Info_Gatilho_Valor"
-            }
-          ]
-        },
         "Category": {
           "projections": [
             {
@@ -47,6 +29,24 @@
               "queryRef": "D_Info.Chave",
               "nativeQueryRef": "Chave",
               "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Info_Gatilho_Valor"
+                }
+              },
+              "queryRef": "_medidas.Info_Gatilho_Valor",
+              "nativeQueryRef": "Info_Gatilho_Valor"
             }
           ]
         }

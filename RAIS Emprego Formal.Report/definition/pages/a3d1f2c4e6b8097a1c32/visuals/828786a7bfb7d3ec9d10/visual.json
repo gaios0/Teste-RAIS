@@ -4,10 +4,10 @@
   "position": {
     "x": 192,
     "y": 132,
-    "z": 300,
+    "z": 1000,
     "height": 52,
     "width": 308,
-    "tabOrder": 300
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "slicer",
@@ -131,6 +131,30 @@
             }
           }
         }
+      ],
+      "dropdown": [
+        {
+          "properties": {
+            "accentBarShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -241,11 +265,11 @@
         }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "syncGroup": {
       "groupName": "rais_cnae",
       "fieldChanges": false,
       "filterChanges": true
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }

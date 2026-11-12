@@ -4,10 +4,10 @@
   "position": {
     "x": 1293.3,
     "y": 1160,
-    "z": 2100,
+    "z": 19000,
     "height": 364,
     "width": 570.7,
-    "tabOrder": 2100
+    "tabOrder": 19000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -57,10 +57,10 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Ind_UF_Geo"
+                  "Property": "Ind_UF_Top"
                 }
               },
-              "queryRef": "_medidas.Ind_UF_Geo",
+              "queryRef": "_medidas.Ind_UF_Top",
               "nativeQueryRef": "Participação no AFL",
               "displayName": "Participação no AFL",
               "format": "0.0%"
@@ -78,7 +78,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Ind_UF_Geo"
+                "Property": "Ind_UF_Top"
               }
             },
             "direction": "Descending"
@@ -169,7 +169,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#17B26A'"
                     }
                   }
                 }
@@ -177,7 +177,13 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Ind_UF_Geo"
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],

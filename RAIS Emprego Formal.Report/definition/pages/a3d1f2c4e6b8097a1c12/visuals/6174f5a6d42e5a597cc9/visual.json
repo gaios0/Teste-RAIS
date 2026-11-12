@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "6174f5a6d42e5a597cc9",
   "position": {
-    "x": 56.0,
+    "x": 56,
     "y": 1128,
-    "z": 1800,
+    "z": 16000,
     "height": 396,
     "width": 1189.3,
-    "tabOrder": 1800
+    "tabOrder": 16000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -32,26 +32,6 @@
             }
           ]
         },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Empregos_Ref"
-                }
-              },
-              "queryRef": "_medidas.Empregos_Ref",
-              "nativeQueryRef": "Empregos",
-              "displayName": "Empregos",
-              "format": "#,0"
-            }
-          ]
-        },
         "Tooltips": {
           "projections": [
             {
@@ -69,6 +49,26 @@
               "nativeQueryRef": "Sobre o ano anterior",
               "displayName": "Sobre o ano anterior",
               "format": "+0.0%;-0.0%;0.0%"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Empregos_Ref"
+                }
+              },
+              "queryRef": "_medidas.Empregos_Ref",
+              "nativeQueryRef": "Empregos",
+              "displayName": "Empregos",
+              "format": "#,0"
             }
           ]
         }

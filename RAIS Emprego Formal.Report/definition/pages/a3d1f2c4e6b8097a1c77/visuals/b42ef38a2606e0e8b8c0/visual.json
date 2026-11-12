@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Tip_Rem_Ano_HTML"
+                  "Property": "Tip_Rem_Ano_Total_HTML"
                 }
               },
-              "queryRef": "_medidas.Tip_Rem_Ano_HTML",
-              "nativeQueryRef": "Tip_Rem_Ano_HTML"
+              "queryRef": "_medidas.Tip_Rem_Ano_Total_HTML",
+              "nativeQueryRef": "Tip_Rem_Ano_Total_HTML"
             }
           ]
         }

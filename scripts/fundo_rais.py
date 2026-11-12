@@ -40,7 +40,7 @@ DEFS = """<defs><filter id="md" x="-5%" y="-5%" width="110%" height="115%" color
 
 # filtros por recorte: (rótulo, largura fixa ou None = divide o resto)
 FILTROS = {
-    "Todos os setores": [("Ano", 140), ("Setores", 250), ("Divisão", 300), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
+    "Todos os setores": [("Ano", 140), ("Setores", 360), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
     "AFL": [("Ano", 140), ("CNAE AFL", 300), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None)],
 }
 
@@ -90,8 +90,8 @@ def filtros(recorte):
         sw = w or resto
         s.append(texto(nome, sx, FL_ROT, PT(18), K["tinta2"], 600))
         # A moldura do campo fica no fundo; o segmentador sobreposto não tem borda.
-        # Branco preserva o campo visual sem criar uma linha cinza entre filtros.
-        s.append(f'<rect x="{R(sx) + .5}" y="{FL_Y + .5}" width="{R(sw) - 1}" height="{FL_H - 1}" rx="4" fill="{K["card"]}" stroke="#FFFFFF"/>')
+        # A moldura pertence ao fundo; o segmentador sobreposto permanece sem borda.
+        s.append(f'<rect x="{R(sx) + .5}" y="{FL_Y + .5}" width="{R(sw) - 1}" height="{FL_H - 1}" rx="4" fill="{K["card"]}" stroke="{K["borda"]}"/>')
         pos[nome] = (R(sx), R(sw))
         sx += sw + G
     pos["Limpar"] = (lx, LIMPAR_W)

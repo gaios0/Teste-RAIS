@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'contrata-afl-bg2039164430053242.png'"
+                    "Value": "'contrata-afl-bg202611095.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "contrata-afl-bg2039164430053242.png"
+                    "ItemName": "contrata-afl-bg202611095.png"
                   }
                 }
               },

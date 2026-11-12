@@ -53,13 +53,13 @@ def medidas():
         m.append((nome, doc, dax, P, None, False))
 
     # ---- Empregos: ano
-    v = ("VAR A = SELECTEDVALUE(D_Calendario[Ano])\nVAR EA = [Empregos_Ref_AFL]\nVAR VA = [Empregos_Var_Pct_AFL]\nVAR EC = [Empregos_Ref_Comparavel]\nVAR VC = [Empregos_Var_Pct_Comparavel]\n"
+    v = ("VAR A = SELECTEDVALUE(D_Calendario[Ano])\nVAR EA = [Empregos_Ref_AFL]\nVAR VA = [Empregos_Var_Pct_AFL]\n"
          "VAR ES = [Empregos_Ref]\nVAR VS = [Empregos_Var_Pct]\nVAR PaginaAFL = " + EH_AFL + "\n")
-    add("Tip_Emp_Ano_HTML", "Tooltip do ano na variação anual do emprego: empregos e variação do AFL, Comparáveis e seleção atual.",
+    add("Tip_Emp_Ano_HTML", "Tooltip do ano na variação anual do emprego: empregos e variação do AFL e da seleção atual.",
         montar(v, '"31/12/" & A', 'IF(ISBLANK(VA), IF(A = 2022, "Sem comparação com 2021: nova fonte (eSocial)", "Primeiro ano da série"), "Variação sobre 31/12/" & (A - 1))',
-               [linha(LARANJA, '"AFL"', num("EA"), f'IF(ISBLANK(VA), BLANK(), {pct("VA", True)})'), linha(CINZA, '"Comparáveis"', num("EC"), f'IF(ISBLANK(VC), BLANK(), {pct("VC", True)})'),
+               [linha(LARANJA, '"AFL"', num("EA"), f'IF(ISBLANK(VA), BLANK(), {pct("VA", True)})'),
                 linha(SEL, '"Seleção atual"', num("ES"), f'IF(ISBLANK(VS), BLANK(), {pct("VS", True)})', "NOT PaginaAFL")],
-               'IF(ISBLANK(VA) || ISBLANK(VC), "", "Em " & A & ", o emprego do AFL " & IF(VA >= VC, "cresceu mais", "cresceu menos") & " que o dos Comparáveis (" & ' + pp("VA", "VC") + ' & ").")'))
+               'IF(ISBLANK(VA), "", "Em " & A & ", a variação do AFL foi " & ' + pct("VA", True) + ' & ".")'))
     # ---- Empregos: divisão (Todos os setores)
     v = ("VAR N = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])\nVAR E = [Emp_Divisao]\nVAR Tot = [Empregos_Ref_Todos]\nVAR Pos = IF(NOT ISBLANK(E), RANKX(ALL(D_Rank_Divisao[nm_divisao]), [Emp_Divisao], , DESC, DENSE))\n"
          "VAR NDiv = [Emp_Total_Divisoes]\nVAR Peso = DIVIDE(E, Tot)\n")

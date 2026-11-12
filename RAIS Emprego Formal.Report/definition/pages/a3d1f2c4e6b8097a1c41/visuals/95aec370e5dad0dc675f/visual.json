@@ -4,10 +4,10 @@
   "position": {
     "x": 1293.3,
     "y": 1160,
-    "z": 2200,
+    "z": 19000,
     "height": 364,
     "width": 570.7,
-    "tabOrder": 2200
+    "tabOrder": 19000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -47,26 +47,6 @@
             }
           ]
         },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Ind_UF_Todos_Geo"
-                }
-              },
-              "queryRef": "_medidas.Ind_UF_Todos_Geo",
-              "nativeQueryRef": "Participação",
-              "displayName": "Participação",
-              "format": "0.0%"
-            }
-          ]
-        },
         "Tooltips": {
           "projections": [
             {
@@ -86,6 +66,26 @@
               "format": "0.0%"
             }
           ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Ind_UF_Todos_Top"
+                }
+              },
+              "queryRef": "_medidas.Ind_UF_Todos_Top",
+              "nativeQueryRef": "Participação no recorte",
+              "displayName": "Participação no recorte",
+              "format": "0.0%"
+            }
+          ]
         }
       },
       "sortDefinition": {
@@ -98,12 +98,13 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Ind_UF_Todos_Geo"
+                "Property": "Ind_UF_Todos_Top"
               }
             },
             "direction": "Descending"
           }
-        ]
+        ],
+        "isDefaultSort": true
       }
     },
     "objects": {
@@ -189,7 +190,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1D1E21'"
+                      "Value": "'#17B26A'"
                     }
                   }
                 }
@@ -197,7 +198,13 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Ind_UF_Todos_Geo"
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],

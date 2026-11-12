@@ -35,3 +35,4 @@ table D_AflAtividade
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

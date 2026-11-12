@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "6400ccd7fd9d91d54add",
   "position": {
-    "x": 56.0,
+    "x": 56,
     "y": 672,
-    "z": 1500,
+    "z": 12000,
     "height": 308,
     "width": 1189.3,
-    "tabOrder": 1500
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "lineChart",
@@ -74,102 +74,6 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Rem_Mediana_AFL_Pre"
-                }
-              },
-              "queryRef": "_medidas.Rem_Mediana_AFL_Pre",
-              "nativeQueryRef": "AFL · mediana (2009–2021)",
-              "displayName": "AFL · mediana (2009–2021)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_Mediana_AFL_Pos"
-                }
-              },
-              "queryRef": "_medidas.Rem_Mediana_AFL_Pos",
-              "nativeQueryRef": "AFL · mediana (2022 em diante)",
-              "displayName": "AFL · mediana (2022 em diante)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_Media_Comp_Pre"
-                }
-              },
-              "queryRef": "_medidas.Rem_Media_Comp_Pre",
-              "nativeQueryRef": "Comparáveis · média (2009–2021)",
-              "displayName": "Comparáveis · média (2009–2021)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_Media_Comp_Pos"
-                }
-              },
-              "queryRef": "_medidas.Rem_Media_Comp_Pos",
-              "nativeQueryRef": "Comparáveis · média (2022 em diante)",
-              "displayName": "Comparáveis · média (2022 em diante)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_Mediana_Comp_Pre"
-                }
-              },
-              "queryRef": "_medidas.Rem_Mediana_Comp_Pre",
-              "nativeQueryRef": "Comparáveis · mediana (2009–2021)",
-              "displayName": "Comparáveis · mediana (2009–2021)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
-                  "Property": "Rem_Mediana_Comp_Pos"
-                }
-              },
-              "queryRef": "_medidas.Rem_Mediana_Comp_Pos",
-              "nativeQueryRef": "Comparáveis · mediana (2022 em diante)",
-              "displayName": "Comparáveis · mediana (2022 em diante)",
-              "format": "#,0"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_medidas"
-                    }
-                  },
                   "Property": "Rem_Media_Sel_Pre"
                 }
               },
@@ -196,6 +100,23 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "D_Calendario"
+                  }
+                },
+                "Property": "Ano"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -294,42 +215,6 @@
           },
           "selector": {
             "metadata": "_medidas.Rem_Media_AFL_Pos"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F58220'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_medidas.Rem_Mediana_AFL_Pre"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F58220'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_medidas.Rem_Mediana_AFL_Pos"
           }
         },
         {
@@ -475,6 +360,13 @@
                   "Value": "'straight'"
                 }
               }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
+                }
+              }
             }
           },
           "selector": {
@@ -514,102 +406,17 @@
                   "Value": "'straight'"
                 }
               }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
+                }
+              }
             }
           },
           "selector": {
             "metadata": "_medidas.Rem_Media_AFL_Pos"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "3L"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "markerColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F58220'"
-                    }
-                  }
-                }
-              }
-            },
-            "lineChartType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'straight'"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_medidas.Rem_Mediana_AFL_Pre"
-          }
-        },
-        {
-          "properties": {
-            "strokeWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "3L"
-                }
-              }
-            },
-            "showMarker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "markerColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F58220'"
-                    }
-                  }
-                }
-              }
-            },
-            "lineChartType": {
-              "expr": {
-                "Literal": {
-                  "Value": "'straight'"
-                }
-              }
-            },
-            "lineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'dashed'"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_medidas.Rem_Mediana_AFL_Pos"
           }
         },
         {
@@ -815,6 +622,13 @@
                   "Value": "'straight'"
                 }
               }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
+                }
+              }
             }
           },
           "selector": {
@@ -852,6 +666,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'straight'"
+                }
+              }
+            },
+            "lineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'dashed'"
                 }
               }
             }

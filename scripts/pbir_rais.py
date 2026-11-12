@@ -102,7 +102,8 @@ def slicer_dropdown(nome, pos, tabela, col, sync, titulo, inicial=None, unico=Fa
     obj = {"data": [{"properties": {"mode": lit("'Dropdown'")}}],
            "selection": [{"properties": {"selectAllCheckboxEnabled": lit("false" if unico else "true"), "strictSingleSelect": lit("true" if unico else "false")}}],
            "header": [{"properties": {"textSize": lit("16D"), "show": lit("false")}}],
-           "pendingChangesIcon": [{"properties": {"show": lit("false")}}], "items": [{"properties": {"textSize": lit("18D")}}]}
+           "pendingChangesIcon": [{"properties": {"show": lit("false")}}], "items": [{"properties": {"textSize": lit("18D")}}],
+           "dropdown": [{"properties": {"accentBarShow": lit("false"), "borderColor": cor("#FFFFFF")}}]}
     if inicial is not None:
         obj["general"] = [{"properties": {"filter": {"filter": {"Version": 2, "From": [{"Name": "d", "Entity": tabela, "Type": 0}], "Where": [{"Condition": {"In": {
             "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": col}}], "Values": [[{"Literal": {"Value": f"{inicial}L"}}]]}}}]}}}}]
@@ -121,7 +122,7 @@ def slicer_comparavel(nome, pos, sync, padrao_sim=True):
     cont = container()
     cont["padding"] = [{"properties": {k: lit("0D") for k in ("top", "bottom", "left", "right")}}]
     return visual(nome, "slicer", pos, {"Values": {"projections": [coluna("D_Comparavel", "comparavel_AFL_rotulo")]}}, obj, cont, sync=sync,
-                  filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])] if padrao_sim else None)
+                  filtros=[filtro_in("D_Comparavel", "comparavel_AFL", ["Sim"])])
 
 
 def botoes_setor(nome, pos, tabela, col, n=5, inicial=None, fonte=16):
@@ -131,8 +132,8 @@ def botoes_setor(nome, pos, tabela, col, n=5, inicial=None, fonte=16):
            "overFlow": [{"properties": {"overFlowDirection": lit("1D")}}],
            "value": [{"properties": {"show": lit("true")}}, {"properties": {"fontSize": lit(f"{fonte}D")}, "selector": {"id": "default"}},
                      {"properties": {"fontColor": tema(0)}, "selector": {"id": "selection:selected"}}],
-           "fillCustom": [{"properties": {"show": lit("true")}, "selector": {"id": "default"}}] +
-                         [{"properties": {"fillColor": tema(5)}, "selector": {"id": s}} for s in ("interaction:hover", "interaction:press", "selection:selected")],
+           "fillCustom": [{"properties": {"show": lit("false")}, "selector": {"id": "default"}}] +
+                         [{"properties": {"show": lit("true"), "fillColor": tema(5)}, "selector": {"id": s}} for s in ("interaction:hover", "interaction:press", "selection:selected")],
            "outline": [{"properties": {"show": lit("false")}, "selector": {"id": "default"}}],
            "background": [{"properties": {"show": lit("false")}, "selector": {"id": "selection:selected"}}]}
     if inicial is not None:
@@ -168,7 +169,7 @@ def botao_info_leitura(nome, pos):
         return {"properties": {"fillColor": cor(cor_fundo), "transparency": lit("0D")}, "selector": {"id": estado_nome}}
     texto = {"properties": {"show": lit("true"), "text": lit("'INFORMAÇÕES PARA LEITURA'"), "fontSize": lit("14D"),
                             "bold": lit("true"), "fontColor": cor("#FFFFFF"), "horizontalAlignment": lit("'center'"),
-                            "verticalAlignment": lit("'middle'")}}
+                            "verticalAlignment": lit("'middle'"), "topMargin": lit("0L"), "bottomMargin": lit("0L")}}
     obj = {"icon": [{"properties": {"show": lit("false")}}],
            "fill": [{"properties": {"show": lit("true")}}, estado("#25408F", "default"), estado("#25408F", "hover"), estado("#25408F", "press")],
            "text": [{"properties": {"show": lit("true")}}, {**texto, "selector": {"id": "default"}}, {**texto, "selector": {"id": "hover"}}, {**texto, "selector": {"id": "press"}}],
@@ -199,8 +200,8 @@ def _eixos():
             "legend": [{"properties": {"show": lit("false")}}], "general": [{"properties": {"responsive": lit("false")}}]}
 
 
-def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=(), continuo=False):
-    """Gráfico de linhas; series = [(medida, rótulo, cor, formato)]; cada série com marcador e linha de 3 px; sem rótulos de dados."""
+def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=(), continuo=False, rotulos=False):
+    """Gráfico de linhas; cada série tem marcador e linha de 3 px."""
     q = {"Category": {"projections": [categoria]}, "Y": {"projections": [medida(m, r, f) for m, r, c, f in series]}}
     if tooltips:
         q["Tooltips"] = {"projections": [medida(m, r, f) for m, r, f in tooltips]}
@@ -208,7 +209,7 @@ def linhas(nome, pos, categoria, series, tooltips=None, tracejadas=(), continuo=
     o["dataPoint"] = [{"properties": {"fill": cor(c)}, "selector": {"metadata": f"_medidas.{m}"}} for m, r, c, f in series]
     o["lineStyles"] = [{"properties": {"strokeWidth": lit("3L"), "showMarker": lit("true"), "markerColor": cor(c), "lineChartType": lit("'straight'"), **({"lineStyle": lit("'dashed'")} if m in tracejadas else {})},
                         "selector": {"metadata": f"_medidas.{m}"}} for m, r, c, f in series]
-    o["labels"] = [{"properties": {"show": lit("false")}}]
+    o["labels"] = [{"properties": {"show": lit("true" if rotulos else "false")}}]
     o["categoryAxis"][0]["properties"]["axisType"] = lit("'Continuous'" if continuo else "'Categorical'")
     if continuo:
         o["categoryAxis"][0]["properties"].update({"labelAngle": lit("0L")})
