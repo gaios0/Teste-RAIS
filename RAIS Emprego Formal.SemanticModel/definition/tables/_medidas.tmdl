@@ -358,7 +358,7 @@ table _medidas
 			VAR PesoTodos = DIVIDE(Afl, Todos)
 			RETURN
 			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:172px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
-			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Peso nos empregos comparáveis" & "</div>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Presença nos empregos comparáveis" & "</div>"
 			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
 			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;color:" & "#434446" & ";overflow:hidden;'>" & "dos empregos do AFL + comparáveis" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='font-size:21px;color:#434446;'>" & IF(ISBLANK(PesoTodos), "—", FORMAT(PesoTodos, "0.0%", "pt-BR")) & " de todo o emprego formal</span>" & "</div>"
 			        & "</div>"
@@ -374,7 +374,7 @@ table _medidas
 			VAR PesoComp = DIVIDE(Afl, Afl + Comp)
 			RETURN
 			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:172px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
-			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Peso do AFL" & "</div>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Presença do AFL nos empregos" & "</div>"
 			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
 			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;color:" & "#434446" & ";overflow:hidden;'>" & "de todo o emprego formal" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>" & IF(ISBLANK(PesoComp), "—", FORMAT(PesoComp, "0.0%", "pt-BR")) & " do AFL + comparáveis <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
 			        & "</div>"
@@ -1545,8 +1545,8 @@ table _medidas
 			VAR I = [Ano_Inicio_Trecho]
 			VAR R0 = DIVIDE(CALCULATE([Remuneracao_Mediana_Ref_AFL], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I), CALCULATE([Remuneracao_Mediana_Ref_Comparavel], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = I))
 			VAR R1 = DIVIDE(CALCULATE([Remuneracao_Mediana_Ref_AFL], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A), CALCULATE([Remuneracao_Mediana_Ref_Comparavel], REMOVEFILTERS(D_Calendario), REMOVEFILTERS(D_Ano), D_Ano[ano] = A))
-			VAR L1 = IF(ISBLANK(A), "Sem dados para os filtros escolhidos", IF(A <= I, I & " é o primeiro ano do trecho", "Evolução da remuneração mediana do AFL entre " & I & " e " & A))
-			VAR L2 = IF(ISBLANK(A), "", "Remuneração mediana de dezembro em R$ nominais. 2021 e 2022 não se comparam (eSocial)")
+			VAR L1 = IF(ISBLANK(A), "Sem dados para os filtros escolhidos", IF(A <= I, I & " é o primeiro ano do trecho", "Evolução da remuneração media do AFL entre " & I & " e " & A))
+			VAR L2 = IF(ISBLANK(A), "", "Remuneração media de dezembro em R$ nominais. 2021 e 2022 não se comparam (eSocial)")
 			RETURN
 			    "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;margin:0;padding:4px 56px 4px 0;display:flex;align-items:flex-start;gap:10px;background:transparent;overflow:hidden;font-family:Segoe UI,Arial,sans-serif;'>"
 			        & "<span aria-hidden='true' style='flex:none;width:4px;align-self:stretch;min-height:28px;border-radius:2px;background:" & "#F58220" & ";'></span>"
