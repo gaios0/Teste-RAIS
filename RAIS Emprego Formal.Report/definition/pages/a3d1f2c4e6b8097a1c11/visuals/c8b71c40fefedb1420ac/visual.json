@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "KPI_Cresc_Total_HTML"
+                  "Property": "KPI_Primeiro_Emprego_HTML"
                 }
               },
-              "queryRef": "_medidas.KPI_Cresc_Total_HTML",
-              "nativeQueryRef": "KPI_Cresc_Total_HTML"
+              "queryRef": "_medidas.KPI_Primeiro_Emprego_HTML",
+              "nativeQueryRef": "KPI_Primeiro_Emprego_HTML"
             }
           ]
         }

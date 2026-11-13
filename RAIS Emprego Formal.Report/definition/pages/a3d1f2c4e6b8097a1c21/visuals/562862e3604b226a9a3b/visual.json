@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Titulo_Esc_Total_HTML"
+                  "Property": "Titulo_Esc_Pagina_HTML"
                 }
               },
-              "queryRef": "_medidas.Titulo_Esc_Total_HTML",
-              "nativeQueryRef": "Titulo_Esc_Total_HTML"
+              "queryRef": "_medidas.Titulo_Esc_Pagina_HTML",
+              "nativeQueryRef": "Titulo_Esc_Pagina_HTML"
             }
           ]
         }

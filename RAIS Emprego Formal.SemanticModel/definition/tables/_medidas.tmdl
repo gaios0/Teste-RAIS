@@ -2769,6 +2769,139 @@ table _medidas
 		displayFolder: Quanto ganha\Razões
 		lineageTag: 8df1c281-2df6-4c96-936a-bf8e4cc234b0
 
+	/// Composição de escolaridade: a barra superior resume a página e as linhas comparam página e AFL.
+	measure Esc_Comparacao_Pagina_HTML =
+			VAR TP = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade))
+			VAR TA = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade))
+			VAR PaginaAFL = SELECTEDVALUE(D_Cnae[setor_afl]) = "Sim"
+			VAR TC = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Escolaridade))
+			VAR P0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"< 1 ano de estudo", "Fundamental Incompleto", "Fundamental Completo"}), TP)
+			VAR P1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Incompleto"), TP)
+			VAR P2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Completo"), TP)
+			VAR P3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"Superior Incompleto", "Superior Completo"}), TP)
+			VAR A0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"< 1 ano de estudo", "Fundamental Incompleto", "Fundamental Completo"}), TA)
+			VAR A1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Incompleto"), TA)
+			VAR A2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Completo"), TA)
+			VAR A3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"Superior Incompleto", "Superior Completo"}), TA)
+			VAR C0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"< 1 ano de estudo", "Fundamental Incompleto", "Fundamental Completo"}), TC)
+			VAR C1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Incompleto"), TC)
+			VAR C2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Completo"), TC)
+			VAR C3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"Superior Incompleto", "Superior Completo"}), TC)
+			VAR V0 = IF(PaginaAFL, C0, P0)
+			VAR V1 = IF(PaginaAFL, C1, P1)
+			VAR V2 = IF(PaginaAFL, C2, P2)
+			VAR V3 = IF(PaginaAFL, C3, P3)
+			VAR Rotulo = IF(PaginaAFL, "Comparáveis", "Página")
+			VAR Base = IF(PaginaAFL, TC, TP)
+			VAR Dica0 = "Até fundamental · " & Rotulo & ": " & FORMAT(V0, "0.0%", "pt-BR") & " (" & FORMAT(V0 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica1 = "Médio incompleto · " & Rotulo & ": " & FORMAT(V1, "0.0%", "pt-BR") & " (" & FORMAT(V1 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica2 = "Médio completo · " & Rotulo & ": " & FORMAT(V2, "0.0%", "pt-BR") & " (" & FORMAT(V2 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica3 = "Superior · " & Rotulo & ": " & FORMAT(V3, "0.0%", "pt-BR") & " (" & FORMAT(V3 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA0 = "Até fundamental · AFL: " & FORMAT(A0, "0.0%", "pt-BR") & " (" & FORMAT(A0 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA1 = "Médio incompleto · AFL: " & FORMAT(A1, "0.0%", "pt-BR") & " (" & FORMAT(A1 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA2 = "Médio completo · AFL: " & FORMAT(A2, "0.0%", "pt-BR") & " (" & FORMAT(A2 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA3 = "Superior · AFL: " & FORMAT(A3, "0.0%", "pt-BR") & " (" & FORMAT(A3 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR Stack = "<div style='height:14px;display:flex;overflow:hidden;border-radius:3px;background:#EEF0F4;margin:2px 0 4px;'><i title='" & IF(PaginaAFL, DicaA0, Dica0) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A0, V0) * 100, "0.00", "en-US") & "%;background:#DFE6FF;'></i><i title='" & IF(PaginaAFL, DicaA1, Dica1) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A1, V1) * 100, "0.00", "en-US") & "%;background:#A9B8FF;'></i><i title='" & IF(PaginaAFL, DicaA2, Dica2) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A2, V2) * 100, "0.00", "en-US") & "%;background:#6267EC;'></i><i title='" & IF(PaginaAFL, DicaA3, Dica3) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A3, V3) * 100, "0.00", "en-US") & "%;background:#312E81;'></i></div>"
+			VAR Cab = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;color:#667085;font-size:12px;padding:4px 0;'><span>Escolaridade</span><span style='text-align:right;'>" & Rotulo & "</span><span style='text-align:right;'>AFL</span></div>"
+			VAR Linha0 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#DFE6FF;border-radius:2px;margin-right:7px;'></i>Até fundamental</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V0, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A0, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha1 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#A9B8FF;border-radius:2px;margin-right:7px;'></i>Médio incompleto</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V1, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A1, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha2 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#6267EC;border-radius:2px;margin-right:7px;'></i>Médio completo</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V2, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A2, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha3 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#312E81;border-radius:2px;margin-right:7px;'></i>Superior</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V3, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A3, "0.0%", "pt-BR") & "</span></div>"
+			RETURN "<style>div[style*='font-size:11px']{font-size:13px!important}div[style*='font-size:12px']{font-size:14px!important}div[style*='font-size:15px']{font-size:17px!important}</style><div style='font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;padding:0 10px 0 0;box-sizing:border-box;'>" & Stack & "<div style='display:flex;justify-content:space-between;color:#667085;font-size:11px;margin-bottom:8px;'><span>Composição dos " & IF(PaginaAFL, "AFL", LOWER(Rotulo)) & "</span><span>100%</span></div>" & Cab & SUBSTITUTE(SUBSTITUTE(Linha0, "<b style=", "<b title='" & Dica0 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA0 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha1, "<b style=", "<b title='" & Dica1 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA1 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha2, "<b style=", "<b title='" & Dica2 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA2 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha3, "<b style=", "<b title='" & Dica3 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA3 & "' style='text-align:right;color:#B86218") & "</div>"
+		displayFolder: HTML\Quem trabalha
+		lineageTag: 8f1e7dd0-78d8-4f6b-8569-9bdcc208be01
+
+	/// Composição de cor ou raça: a barra superior resume a página e as linhas comparam página e AFL.
+	measure Raca_Comparacao_Pagina_HTML =
+			VAR TP = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[declarada] = "Sim")
+			VAR TA = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[declarada] = "Sim")
+			VAR PaginaAFL = SELECTEDVALUE(D_Cnae[setor_afl]) = "Sim"
+			VAR TC = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Raca), D_Raca[declarada] = "Sim")
+			VAR P0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Branca", D_Raca[declarada] = "Sim"), TP)
+			VAR P1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Negra", D_Raca[declarada] = "Sim"), TP)
+			VAR P2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Amarela", D_Raca[declarada] = "Sim"), TP)
+			VAR P3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Indígena", D_Raca[declarada] = "Sim"), TP)
+			VAR A0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Branca", D_Raca[declarada] = "Sim"), TA)
+			VAR A1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Negra", D_Raca[declarada] = "Sim"), TA)
+			VAR A2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Amarela", D_Raca[declarada] = "Sim"), TA)
+			VAR A3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Indígena", D_Raca[declarada] = "Sim"), TA)
+			VAR C0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Branca", D_Raca[declarada] = "Sim"), TC)
+			VAR C1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Negra", D_Raca[declarada] = "Sim"), TC)
+			VAR C2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Amarela", D_Raca[declarada] = "Sim"), TC)
+			VAR C3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "Comparável", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Indígena", D_Raca[declarada] = "Sim"), TC)
+			VAR V0 = IF(PaginaAFL, C0, P0)
+			VAR V1 = IF(PaginaAFL, C1, P1)
+			VAR V2 = IF(PaginaAFL, C2, P2)
+			VAR V3 = IF(PaginaAFL, C3, P3)
+			VAR Rotulo = IF(PaginaAFL, "Comparáveis", "Página")
+			VAR Base = IF(PaginaAFL, TC, TP)
+			VAR Dica0 = "Branca · " & Rotulo & ": " & FORMAT(V0, "0.0%", "pt-BR") & " (" & FORMAT(V0 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica1 = "Negra (preta + parda) · " & Rotulo & ": " & FORMAT(V1, "0.0%", "pt-BR") & " (" & FORMAT(V1 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica2 = "Amarela · " & Rotulo & ": " & FORMAT(V2, "0.0%", "pt-BR") & " (" & FORMAT(V2 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR Dica3 = "Indígena · " & Rotulo & ": " & FORMAT(V3, "0.0%", "pt-BR") & " (" & FORMAT(V3 * Base, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA0 = "Branca · AFL: " & FORMAT(A0, "0.0%", "pt-BR") & " (" & FORMAT(A0 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA1 = "Negra (preta + parda) · AFL: " & FORMAT(A1, "0.0%", "pt-BR") & " (" & FORMAT(A1 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA2 = "Amarela · AFL: " & FORMAT(A2, "0.0%", "pt-BR") & " (" & FORMAT(A2 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR DicaA3 = "Indígena · AFL: " & FORMAT(A3, "0.0%", "pt-BR") & " (" & FORMAT(A3 * TA, "#,0", "pt-BR") & " empregos)"
+			VAR Stack = "<div style='height:14px;display:flex;overflow:hidden;border-radius:3px;background:#EEF0F4;margin:2px 0 4px;'><i title='" & IF(PaginaAFL, DicaA0, Dica0) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A0, V0) * 100, "0.00", "en-US") & "%;background:#CBD2DD;'></i><i title='" & IF(PaginaAFL, DicaA1, Dica1) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A1, V1) * 100, "0.00", "en-US") & "%;background:#536176;'></i><i title='" & IF(PaginaAFL, DicaA2, Dica2) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A2, V2) * 100, "0.00", "en-US") & "%;background:#9CA7B7;'></i><i title='" & IF(PaginaAFL, DicaA3, Dica3) & "' style='display:block;min-width:2px;width:" & FORMAT(IF(PaginaAFL, A3, V3) * 100, "0.00", "en-US") & "%;background:#282A2E;'></i></div>"
+			VAR Cab = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;color:#667085;font-size:12px;padding:4px 0;'><span>Cor ou raça</span><span style='text-align:right;'>" & Rotulo & "</span><span style='text-align:right;'>AFL</span></div>"
+			VAR Linha0 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#CBD2DD;border-radius:2px;margin-right:7px;'></i>Branca</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V0, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A0, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha1 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#536176;border-radius:2px;margin-right:7px;'></i>Negra (preta + parda)</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V1, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A1, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha2 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#9CA7B7;border-radius:2px;margin-right:7px;'></i>Amarela</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V2, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A2, "0.0%", "pt-BR") & "</span></div>"
+			VAR Linha3 = "<div style='display:grid;grid-template-columns:1fr 68px 80px;gap:8px;align-items:center;min-height:37px;border-top:1px solid #EDF0F2;font-size:15px;'><span><i style='display:inline-block;width:10px;height:10px;background:#282A2E;border-radius:2px;margin-right:7px;'></i>Indígena</span><b style='text-align:right;font-weight:600;'>" & FORMAT(V3, "0.0%", "pt-BR") & "</b><span style='text-align:right;color:#B86218;border:1px solid #F5A05C;border-radius:4px;padding:3px 6px;font-weight:600;'>" & FORMAT(A3, "0.0%", "pt-BR") & "</span></div>"
+			RETURN "<style>div[style*='font-size:11px']{font-size:13px!important}div[style*='font-size:12px']{font-size:14px!important}div[style*='font-size:15px']{font-size:17px!important}</style><div style='font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;padding:0 10px 0 0;box-sizing:border-box;'>" & Stack & "<div style='display:flex;justify-content:space-between;color:#667085;font-size:11px;margin-bottom:8px;'><span>Composição dos " & IF(PaginaAFL, "AFL", LOWER(Rotulo)) & "</span><span>100%</span></div>" & Cab & SUBSTITUTE(SUBSTITUTE(Linha0, "<b style=", "<b title='" & Dica0 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA0 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha1, "<b style=", "<b title='" & Dica1 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA1 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha2, "<b style=", "<b title='" & Dica2 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA2 & "' style='text-align:right;color:#B86218") & SUBSTITUTE(SUBSTITUTE(Linha3, "<b style=", "<b title='" & Dica3 & "' style="), "<span style='text-align:right;color:#B86218", "<span title='" & DicaA3 & "' style='text-align:right;color:#B86218") & "</div>"
+		displayFolder: HTML\Quem trabalha
+		lineageTag: 53f4a1bb-282f-4f7e-ae7c-c72cc0613102
+
+	/// Manchete de escolaridade da visão geral: identifica a categoria predominante na página e a contrasta com o AFL.
+	measure Titulo_Esc_Pagina_HTML =
+			VAR TP = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade))
+			VAR TA = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade))
+			VAR P0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"< 1 ano de estudo", "Fundamental Incompleto", "Fundamental Completo"}), TP)
+			VAR P1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Incompleto"), TP)
+			VAR P2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Completo"), TP)
+			VAR P3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"Superior Incompleto", "Superior Completo"}), TP)
+			VAR A0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"< 1 ano de estudo", "Fundamental Incompleto", "Fundamental Completo"}), TA)
+			VAR A1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Incompleto"), TA)
+			VAR A2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] = "Médio Completo"), TA)
+			VAR A3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Escolaridade), D_Escolaridade[escolaridade_agrupada] IN {"Superior Incompleto", "Superior Completo"}), TA)
+			VAR Maior = MAX(P0, MAX(P1, MAX(P2, P3)))
+			VAR Cat = SWITCH(TRUE(), Maior = P0, "até fundamental", Maior = P1, "médio incompleto", Maior = P2, "médio completo", "superior")
+			VAR AFL = SWITCH(TRUE(), Maior = P0, A0, Maior = P1, A1, Maior = P2, A2, A3)
+			VAR T1 = "O ensino com maior presença de empregados é o " & Cat & " com " & FORMAT(Maior, "0.0%", "pt-BR") & " dos empregados"
+			VAR T2 = "No AFL, " & Cat & " representa " & FORMAT(AFL, "0.0%", "pt-BR")
+			RETURN "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;padding:4px 56px 4px 0;display:flex;gap:10px;font-family:Segoe UI,Arial,sans-serif;overflow:hidden;'><span style='width:4px;align-self:stretch;background:#312E81;border-radius:2px;'></span><span><span style='display:block;font-size:24px;line-height:28px;font-weight:600;'>" & T1 & "</span><span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & T2 & "</span></span></div>"
+		displayFolder: HTML\Quem trabalha\Títulos
+		lineageTag: 4daf1519-819c-478e-ad6f-b9609250f5d9
+
+	/// Manchete de cor ou raça da visão geral: identifica a categoria predominante na página e a contrasta com o AFL.
+	measure Titulo_Raca_Pagina_HTML =
+			VAR TP = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[declarada] = "Sim")
+			VAR TA = CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[declarada] = "Sim")
+			VAR P0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Branca", D_Raca[declarada] = "Sim"), TP)
+			VAR P1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Negra", D_Raca[declarada] = "Sim"), TP)
+			VAR P2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Amarela", D_Raca[declarada] = "Sim"), TP)
+			VAR P3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Indígena", D_Raca[declarada] = "Sim"), TP)
+			VAR A0 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Branca", D_Raca[declarada] = "Sim"), TA)
+			VAR A1 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Negra", D_Raca[declarada] = "Sim"), TA)
+			VAR A2 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Amarela", D_Raca[declarada] = "Sim"), TA)
+			VAR A3 = DIVIDE(CALCULATE([Empregos_Ref], REMOVEFILTERS(D_GrupoSetor), REMOVEFILTERS(D_Cnae), D_GrupoSetor[grupo_setor] = "AFL", REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = "Indígena", D_Raca[declarada] = "Sim"), TA)
+			VAR Maior = MAX(P0, MAX(P1, MAX(P2, P3)))
+			VAR Cat = SWITCH(TRUE(), Maior = P0, "branca", Maior = P1, "negra (preta + parda)", Maior = P2, "amarela", "indígena")
+			VAR AFL = SWITCH(TRUE(), Maior = P0, A0, Maior = P1, A1, Maior = P2, A2, A3)
+			VAR T1 = "A raça com maior presença de empregados é a " & Cat & " com " & FORMAT(Maior, "0.0%", "pt-BR") & " dos empregados"
+			VAR T2 = "No AFL, a raça " & Cat & " representa " & FORMAT(AFL, "0.0%", "pt-BR")
+			RETURN "<div role='heading' aria-level='3' style='width:100%;height:100%;box-sizing:border-box;padding:4px 56px 4px 0;display:flex;gap:10px;font-family:Segoe UI,Arial,sans-serif;overflow:hidden;'><span style='width:4px;align-self:stretch;background:#475467;border-radius:2px;'></span><span><span style='display:block;font-size:24px;line-height:28px;font-weight:600;'>" & T1 & "</span><span style='display:block;font-size:20px;line-height:26px;color:#434446;'>" & T2 & "</span></span></div>"
+		displayFolder: HTML\Quem trabalha\Títulos
+		lineageTag: c7ec1bb1-d03a-44e4-b418-43a4031a67dd
+
+	measure KPI_Primeiro_Emprego_HTML =
+			VAR A = [Ano_Ref]
+			VAR P = [Perf_Primeiro]
+			RETURN "<div style='width:100%;height:172px;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;overflow:hidden;'><div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;'>Primeiro emprego</div><div style='margin-top:8px;font-size:53px;line-height:58px;font-weight:600;'>" & IF(ISBLANK(P), "—", FORMAT(P,"0.0%","pt-BR")) & "</div><div style='margin-top:4px;font-size:21px;line-height:26px;color:#434446;'>" & IF(A > 2021, "Sem dados em " & A & " · disponível até 2021", "dos empregos no ano selecionado") & "</div></div>"
+		displayFolder: HTML\Empregos\KPIs
+		lineageTag: 91a0cd11-384f-42f4-9d5a-20dc4a0f7f3e
+
 	column Coluna
 		dataType: string
 		isHidden

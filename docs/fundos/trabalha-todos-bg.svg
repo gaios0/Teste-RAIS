@@ -85,4 +85,6 @@
 <g fill="#FFFFFF" stroke="#DDDDDE">
   <rect x="40.5" y="136.5" width="139" height="47" rx="4"/><rect x="196.5" y="136.5" width="359" height="47" rx="4"/><rect x="572.5" y="136.5" width="255" height="47" rx="4"/><rect x="844.5" y="136.5" width="255" height="47" rx="4"/><rect x="1116.5" y="136.5" width="255" height="47" rx="4"/><rect x="1388.5" y="136.5" width="255" height="47" rx="4"/>
 </g>
-</svg>
+<rect x="1350" y="96" width="530" height="96" fill="#FFFFFF"/><g fill="#FFFFFF" stroke="#DDDDDE"><rect x="1368" y="136" width="232" height="48" rx="4"/><rect x="1608" y="136" width="272" height="48" rx="4"/></g><g font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="600" fill="#434446"><text x="1368" y="124">Raça/cor</text><text x="1608" y="124">Contrato</text></g></svg>
+
+

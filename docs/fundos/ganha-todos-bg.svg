@@ -121,4 +121,6 @@
 <text x="86" y="1157" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#434446">AFL</text>
 <rect x="164" y="1144" width="14" height="14" rx="3" fill="#98A2B3"/>
 <text x="186" y="1157" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#434446">Seleção atual</text>
-</svg>
+<rect x="1350" y="96" width="530" height="96" fill="#FFFFFF"/><g fill="#FFFFFF" stroke="#DDDDDE"><rect x="1368" y="136" width="232" height="48" rx="4"/><rect x="1608" y="136" width="272" height="48" rx="4"/></g><g font-family="Segoe UI,Arial,sans-serif" font-size="24" font-weight="600" fill="#434446"><text x="1368" y="124">Raça/cor</text><text x="1608" y="124">Contrato</text></g></svg>
+
+

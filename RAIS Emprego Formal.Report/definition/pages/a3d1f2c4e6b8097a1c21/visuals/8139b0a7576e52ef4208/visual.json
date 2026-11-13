@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Esc_Barras_RF_Total_Layout_Final_HTML"
+                  "Property": "Esc_Comparacao_Pagina_HTML"
                 }
               },
-              "queryRef": "_medidas.Esc_Barras_RF_Total_Layout_Final_HTML",
-              "nativeQueryRef": "Esc_Barras_RF_Total_Layout_Final_HTML"
+              "queryRef": "_medidas.Esc_Comparacao_Pagina_HTML",
+              "nativeQueryRef": "Esc_Comparacao_Pagina_HTML"
             }
           ]
         }
