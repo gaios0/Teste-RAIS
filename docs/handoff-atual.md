@@ -77,3 +77,33 @@
 - O gráfico de salário médio por escolaridade de **Todos os setores** recebeu a mesma geometria e espaçamento ajustados manualmente na aba **AFL**.
 - Para acomodar o gráfico ampliado sem alterar a altura da página, o card de escolaridade foi ampliado e o card inferior direito (UF) foi deslocado e reduzido para caber acima da nota metodológica.
 - Os fundos foram renderizados e registrados novamente como `ganha-afl-bg202611112.png` e `ganha-todos-bg202611113.png`, evitando o cache do Desktop.
+
+## Quem contrata v2 — protótipo "Ranking de quem mais contrata por perfil dos empregados" (16/11/2026)
+
+- As duas páginas da aba (`a3d1f2c4e6b8097a1c41` Todos os setores e `...c42` AFL) foram refeitas no desenho do protótipo: manchete, três KPIs (mulheres, negros, escolaridade), dois rankings por perfil e um ranking por escolaridade. Abas, faixa de leitura, Limpar filtros e segmentadores de filtro foram mantidos (só reposicionados, com Contrato incluído e sem sobreposição).
+- **Todos os setores:** botões "10 melhores / 10 piores setores" e "Setor selecionado" (padrão: Serviços); o AFL fica fora do ranking e aparece sempre como último item em laranja. **AFL:** sem esses dois filtros; os gráficos mostram os seis CNAEs do AFL.
+- **Único desvio do protótipo (pedido):** cada gráfico mostra um valor por vez, escolhido por botão no próprio card: Representatividade (participação) ou Salário médio. O rótulo muda de % para R$ pelo formato condicional `[<=1]0.0%;"R$ "#,0` aplicado no visual.
+- Texto: "empregados/empregos" no lugar de "contratadas/contratações", porque a RAIS é estoque de vínculos em 31/12 (não fluxo de admissões). Negros = pretos + pardos sobre quem declarou cor. Piso de 50 mil empregos por divisão (igual ao da versão anterior).
+- Gerador novo e isolado: `scripts/contrata_v2.py` (+ `dax_contrata2.py`, `verificar_contrata_v2.py`). **Não rode `pagina_rais.py --refazer` nem `modelo_base.py`**: eles estão defasados em relação às páginas e ao modelo salvos (Contrato, D_Indicador, medidas RF) e apagariam ajustes manuais. `contrata_v2.py` só acrescenta as medidas `Ct_*`, `KPI_Ct_*`, `Titulo_Ct_*`, `Manchete_Ct_*`, `Tip_Ct_*` ao `_medidas.tmdl`, cria as tabelas locais `D_Ct_*` (botões), refaz as duas páginas e cria três páginas de tooltip (`c81` mulheres, `c82` negros, `c83` escolaridade).
+- As medidas e páginas antigas de Quem contrata (indicador, série, UF, tabela e tooltips `c54`–`c57`) continuam no projeto, sem uso.
+- Validação feita: JSONs desserializados e todas as medidas/colunas/tabelas dos visuais conferidas contra o TMDL (`scripts/verificar_contrata_v2.py`); fundos renderizados e inspecionados.
+- **Não testado no Power BI Desktop:** o DAX (ranking com RANKX, formato condicional, ordenação por medida no campo Tooltips), os botões, o tooltip e a renderização. Ao abrir o PBIP é preciso **Atualizar agora** para carregar as seis tabelas `D_Ct_*`. Nada foi commitado nem enviado ao GitHub.
+
+### Quem contrata v2 — correções (16/11/2026)
+- Rótulos dos rankings: o formato condicional `[<=1]…` não funciona no Power BI (aparecia literal). As medidas `Ct_*_Valor` e `Ct_*_Valor_AFL` agora usam **formato dinâmico** (`formatStringDefinition`): `0.0%` em Representatividade e `\R$ #,0` em Salário médio. Nos gráficos não há mais formato fixo.
+- No TMDL, `formatStringDefinition` é objeto filho e tem de vir **depois** de `displayFolder`/`lineageTag`; antes disso o Desktop recusou o projeto ("Invalid indentation", `_medidas`, linha 3200).
+- `scripts/validar_tmdl.ps1` carrega o modelo com o parser oficial (biblioteca baixada do NuGet para a pasta temporária) e pega erro de TMDL sem abrir o Desktop. Rode depois de qualquer alteração em `.tmdl`. Ele **não** valida DAX.
+- Fluxo depois de ajustes manuais no Desktop: `python contrata_v2.py` (só medidas, réplica das posições no AFL e fundos); `--so-medidas` regrava apenas as medidas; `--recriar` refaz tudo e descarta os ajustes.
+
+- (17/11/2026) O Desktop recusou o projeto com "TMDL objects cannot be merged… FormatStringDefinition": sobraram seis linhas `formatStringDefinition` soltas no meio do `_medidas.tmdl` (restos da regravação das medidas), todas atribuídas à mesma medida. O arquivo foi restaurado da versão do Git e as medidas novas regravadas; `contrata_v2.py` agora remove os blocos antigos por linha e **aborta** se houver mais de um `formatStringDefinition` por medida ou fora das medidas `Ct_*`. `scripts/reparar_medidas.py` compara o arquivo atual com o Git (ignorando as medidas `Ct_*`) e, com `--reparar`, restaura a base do Git.
+
+### Quem contrata v2 — textos adaptáveis e KPIs (17/11/2026)
+- Manchete da página: fala em "salário médio" quando os três gráficos estão nesse valor; o subtítulo resume o que está na tela (salário médio, representatividade ou "conforme o botão de cada gráfico").
+- Títulos dos cards de ranking: o 1º texto também muda com o botão (ex.: "Divisões com maior representatividade de mulheres" / "…maior salário médio entre as mulheres"; "menor" nas 10 piores). Card de escolaridade: "Salário médio por divisão — escolaridade" / "Representatividade por divisão — escolaridade".
+- KPIs de mulheres e negros: o valor grande vem com o rótulo "salário médio" ao lado e a linha de baixo começa com "Representatividade:". KPI de escolaridade: fontes maiores (níveis 20 px, valores 26 px) e legenda "participação (%) · salário médio (R$)". O gráfico do card de escolaridade passou a 18 px nos eixos e rótulos.
+- Causa dos `formatStringDefinition` soltos (erro do Desktop): o Desktop grava o objeto filho depois de uma linha em branco; o removedor antigo parava na linha em branco e deixava o filho para trás. O removedor agora trata essa linha em branco como parte do bloco, e a regravação é idempotente.
+
+### Aba "Ranking" (17/11/2026)
+- A aba "Quem contrata" passou a se chamar **Ranking** nas 8 páginas: a faixa de abas (96 px do topo) dos fundos de Empregos, Quem trabalha e Quanto ganha foi redesenhada e colada nos PNGs já ajustados à mão (fundos novos registrados: *-bg202611171414.png); texto dos botões de navegação (hover/press) e alt text também. Script: scripts/nav_ranking.py (--testar compara a faixa desenhada com a dos PNGs atuais). Os displayName das páginas c41/c42 e dos tooltips viraram "Ranking · …".
+- Botões de navegação: o estado pressionado deixou de ser #B86218 (marrom escuro) e passou a #F58220, igual ao hover; o estado padrão ganhou texto explicitamente desligado.
+- Manchetes: "Ranking dos setores: quem mais contrata por perfil dos empregados" e "Ranking do AFL: …"; com os três gráficos em salário médio, "…: salário médio por perfil dos empregados".

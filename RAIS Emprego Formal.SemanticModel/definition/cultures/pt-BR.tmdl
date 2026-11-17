@@ -589,19 +589,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Divisao_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Participação": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_serie_afl_pre": {
 			      "Definition": {
@@ -610,19 +598,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_AFL_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_serie_afl_pos": {
 			      "Definition": {
@@ -631,19 +607,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_AFL_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "AFL (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_serie_comp_pre": {
 			      "Definition": {
@@ -652,19 +616,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_Comp_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_serie_comp_pos": {
 			      "Definition": {
@@ -673,19 +625,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_Comp_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Comparáveis (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_uf_top": {
 			      "Definition": {
@@ -694,19 +634,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_UF_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Participação no AFL": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_valor_ctx": {
 			      "Definition": {
@@ -715,19 +643,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Valor_Ctx"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Participação": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.empregos_var_pct": {
 			      "Definition": {
@@ -868,19 +784,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_Sel_Pre"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Seleção atual (2009–2021)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_serie_sel_pos": {
 			      "Definition": {
@@ -889,19 +793,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_Serie_Sel_Pos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Seleção atual (2022 em diante)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_uf_todos_geo": {
 			      "Definition": {
@@ -919,19 +811,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_UF_AFL_Dica"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "No AFL desta UF": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.ind_uf_geo": {
 			      "Definition": {
@@ -967,19 +847,7 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Ind_UF_Todos_Top"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Participação no recorte": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_medidas.empregos_var_pct_sel_pre": {
 			      "Definition": {
@@ -1181,6 +1049,195 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Comparáveis": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_neg_valor": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Neg_Valor"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_neg_ord": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Neg_Ord"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ordem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_mul_valor": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Mul_Valor"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_mul_ord": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Mul_Ord"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ordem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_esc_valor": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Esc_Valor"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_esc_ord": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Esc_Ord"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ordem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_neg_valor_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Neg_Valor_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_esc_valor_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Esc_Valor_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_mul_valor_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Mul_Valor_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

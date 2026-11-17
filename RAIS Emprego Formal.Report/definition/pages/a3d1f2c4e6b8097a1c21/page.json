@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'trabalha-todos-bg202611102.png'"
+                    "Value": "'trabalha-todos-bg202611171414.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "trabalha-todos-bg202611102.png"
+                    "ItemName": "trabalha-todos-bg202611171414.png"
                   }
                 }
               },

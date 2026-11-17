@@ -1,0 +1,30 @@
+table D_Ct_MetNeg
+	lineageTag: 73f850d9-eb25-4062-941b-4256dd253397
+
+	column metrica
+		dataType: string
+		lineageTag: ce36bdcd-5a18-476b-a331-2297f7788163
+		summarizeBy: none
+		sourceColumn: metrica
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: 75a5b417-e37c-4857-999f-e279474b1be5
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_MetNeg = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [metrica = text, ordem = text], {{"Representatividade", "1"}, {"Salário médio", "2"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

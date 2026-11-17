@@ -1,0 +1,30 @@
+table D_Ct_Modo
+	lineageTag: 6c184d0f-b8f5-47af-a76c-414389cd9f3a
+
+	column modo
+		dataType: string
+		lineageTag: 51b0023c-ad2f-4d51-a969-8a088a337b0e
+		summarizeBy: none
+		sourceColumn: modo
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: cb84d18f-e420-4154-89b8-7acbd6e9c973
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_Modo = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [modo = text, ordem = text], {{"10 melhores setores", "1"}, {"10 piores setores", "2"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

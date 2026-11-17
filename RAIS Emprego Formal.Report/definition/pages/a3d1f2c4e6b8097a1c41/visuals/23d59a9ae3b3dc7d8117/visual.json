@@ -4,10 +4,10 @@
   "position": {
     "x": 488,
     "y": 24,
-    "z": 22000,
+    "z": 26000,
     "height": 56,
     "width": 224,
-    "tabOrder": 22000
+    "tabOrder": 26000
   },
   "visual": {
     "visualType": "actionButton",
@@ -94,7 +94,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B86218'"
+                      "Value": "'#F58220'"
                     }
                   }
                 }
@@ -215,6 +215,20 @@
           },
           "selector": {
             "id": "press"
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],

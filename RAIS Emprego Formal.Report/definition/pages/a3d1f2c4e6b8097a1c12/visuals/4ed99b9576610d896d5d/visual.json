@@ -94,7 +94,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#B86218'"
+                      "Value": "'#F58220'"
                     }
                   }
                 }
@@ -137,7 +137,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Quem contrata'"
+                  "Value": "'Ranking'"
                 }
               }
             },
@@ -183,7 +183,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Quem contrata'"
+                  "Value": "'Ranking'"
                 }
               }
             },
@@ -215,6 +215,20 @@
           },
           "selector": {
             "id": "press"
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
           }
         }
       ],
@@ -318,7 +332,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Ir para Quem contrata'"
+                  "Value": "'Ir para Ranking'"
                 }
               }
             }

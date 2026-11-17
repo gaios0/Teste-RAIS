@@ -1,0 +1,30 @@
+table D_Ct_MetEsc
+	lineageTag: 30a608cf-0e0f-427e-89bb-917a3071716e
+
+	column metrica
+		dataType: string
+		lineageTag: b0f70bbf-9f6d-4b68-86f6-fdf9f8890c66
+		summarizeBy: none
+		sourceColumn: metrica
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: f8994f03-0a48-4ee0-8216-cebd8ccdc88f
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_MetEsc = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [metrica = text, ordem = text], {{"Representatividade", "1"}, {"Salário médio", "2"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

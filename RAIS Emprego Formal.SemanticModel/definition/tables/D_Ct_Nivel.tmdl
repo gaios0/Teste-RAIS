@@ -1,0 +1,30 @@
+table D_Ct_Nivel
+	lineageTag: 7edb40f6-c56e-4f46-abf0-f3c779af2343
+
+	column nivel
+		dataType: string
+		lineageTag: b2bc6eb2-c0b5-4cfd-a0b0-256ab07d5733
+		summarizeBy: none
+		sourceColumn: nivel
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: f2f25cfd-548f-4f92-9746-732f1d830197
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_Nivel = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [nivel = text, ordem = text], {{"Até fundamental", "1"}, {"Médio incompleto", "2"}, {"Médio completo", "3"}, {"Superior", "4"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

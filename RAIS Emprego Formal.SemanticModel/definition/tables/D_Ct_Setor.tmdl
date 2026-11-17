@@ -1,0 +1,30 @@
+table D_Ct_Setor
+	lineageTag: 5e5eb5a7-2403-4fbc-bcd1-5c6da87469ab
+
+	column setor
+		dataType: string
+		lineageTag: f3270e70-d230-4d13-9bb1-6e79302e1fb5
+		summarizeBy: none
+		sourceColumn: setor
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		lineageTag: 07dc7da7-e9b3-4a00-add0-67ac26f9b3e2
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_Setor = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [setor = text, ordem = text], {{"Agropecuária", "1"}, {"Comércio", "2"}, {"Construção", "3"}, {"Indústria", "4"}, {"Serviços", "5"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+
