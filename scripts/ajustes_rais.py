@@ -83,6 +83,10 @@ def medidas():
                '\t\t\tVAR Texto = IF(ISBLANK(MediaAFL), Prep & ", sem dados de remuneração do AFL para os filtros escolhidos", '
                'Prep & ", os trabalhadores do AFL ganhavam, em média, R$ " & FORMAT(MediaAFL, "#,0", "pt-BR") & " em dez/" & A & '
                'IF(ISBLANK(MediaComp), "", ": " & FORMAT(DIVIDE(MediaAFL, MediaComp), "0%", "pt-BR") & " da média dos Comparáveis"))')
+    # 5b. KPIs de razão (AFL): o chip dos Comparáveis mostra a DIFERENÇA (1 - razão), como o valor principal (antes mostrava a razão: 79%)
+    for nome, razao in (("KPI_RazaoSexo_AFL_HTML", "Rem_Razao_Sexo_Comp"), ("KPI_RazaoRaca_AFL_HTML", "Rem_Razao_Raca_Comp")):
+        t = trocar(t, nome, f'FORMAT([{razao}], "0%", "pt-BR"))',
+                   f'FORMAT(ABS(1 - [{razao}]), "0%", "pt-BR") & IF([{razao}] <= 1, " a menos", " a mais"))')
     # 6. tooltip da série de média: no AFL usa o tooltip completo (AFL × Comparáveis)
     ini, fim = bloco(t, "Tip_Rem_Ano_Total_HTML")
     corpo = t[ini:fim]
