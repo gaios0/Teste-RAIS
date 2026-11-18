@@ -78,8 +78,8 @@
                 }
               },
               "queryRef": "_medidas.Rem_Media_Comp_Pre",
-              "nativeQueryRef": "Referência · média (2009–2021)",
-              "displayName": "Referência · média (2009–2021)",
+              "nativeQueryRef": "Comparáveis · média (2009–2021)",
+              "displayName": "Comparáveis · média (2009–2021)",
               "format": "#,0"
             },
             {
@@ -94,8 +94,8 @@
                 }
               },
               "queryRef": "_medidas.Rem_Media_Comp_Pos",
-              "nativeQueryRef": "Referência · média (2022 em diante)",
-              "displayName": "Referência · média (2022 em diante)",
+              "nativeQueryRef": "Comparáveis · média (2022 em diante)",
+              "displayName": "Comparáveis · média (2022 em diante)",
               "format": "#,0"
             }
           ]
@@ -171,7 +171,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -207,7 +207,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -225,7 +225,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -331,7 +331,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -370,7 +370,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -409,7 +409,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -455,7 +455,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }

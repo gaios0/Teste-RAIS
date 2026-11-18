@@ -107,3 +107,36 @@
 - A aba "Quem contrata" passou a se chamar **Ranking** nas 8 páginas: a faixa de abas (96 px do topo) dos fundos de Empregos, Quem trabalha e Quanto ganha foi redesenhada e colada nos PNGs já ajustados à mão (fundos novos registrados: *-bg202611171414.png); texto dos botões de navegação (hover/press) e alt text também. Script: scripts/nav_ranking.py (--testar compara a faixa desenhada com a dos PNGs atuais). Os displayName das páginas c41/c42 e dos tooltips viraram "Ranking · …".
 - Botões de navegação: o estado pressionado deixou de ser #B86218 (marrom escuro) e passou a #F58220, igual ao hover; o estado padrão ganhou texto explicitamente desligado.
 - Manchetes: "Ranking dos setores: quem mais contrata por perfil dos empregados" e "Ranking do AFL: …"; com os três gráficos em salário médio, "…: salário médio por perfil dos empregados".
+
+- (17/11/2026) Botões de navegação: faltava o estado **selected** (o botão fica selecionado no instante do clique, antes da troca de página; sem estilo, o Power BI usa o padrão escuro). 
+av_ranking.py botoes() agora define fill e texto do estado selected em laranja/branco, como nos botões do RF, e voltou a deixar o estado padrão sem a regra de texto extra.
+
+### AFL na ordem do ranking e laranja do AFL mais escuro (17/11/2026)
+- Ranking por divisão: o AFL deixou de ser fixado no fim; Ct_*_Ord ordena só pelo valor (ou o oposto nas 10 piores), então o AFL aparece na posição do seu valor. Ele continua fora do cálculo das 10 melhores/piores (não ocupa vaga).
+- Laranja do valor do AFL: #F58220 -> #D95F02 em barras e linhas do AFL (c12, c31, c32, c42), nas medidas de cor do ranking (Cor_Emp_Divisao, Cor_Ind_Divisao), nos marcadores/chips AFL dos tooltips e nas legendas desenhadas nos fundos (só os marcadores; ver scripts/afl_cor.py). O laranja de interface (abas, botões, acentos de KPI e de títulos, destaque da frase de leitura) continua #F58220.
+- Fundos novos registrados: *-bg202611171450.png (Empregos e Quanto ganha); Quem trabalha não tem marcador laranja e ficou como estava.
+
+- (17/11/2026) O tom escuro do AFL passou de `#D95F02` (recusado) para `#D97706` (âmbar escuro). Para trocar de novo: mudar `AFL_ESCURO` em `scripts/afl_cor.py` (e a mesma constante em `contrata_v2.py` e `dax_contrata2.py`), listar o tom antigo em `TENTATIVAS_ANTERIORES` e rodar `python contrata_v2.py` e `python afl_cor.py --origem 202611171414`.
+
+### Legendas e "Comparáveis" (17/11/2026)
+- Empregos (Todos e AFL): a legenda desenhada no fundo do card da série foi removida (fundos novos empregos-*-bg202611171709.png; nada mais mudou). Script: `scripts/ajuste_legendas.py`.
+- Quanto ganha · AFL: a legenda do fundo (`ganha-afl-bg202611171709.png`) passou de "Referência · média" para "Comparáveis · média" (texto refeito em Segoe UI 20 px, mesma fonte e cor do original). Os tooltips `Tip_Rem_Esc/Gap_Sexo/Gap_Raca/UF_Total_HTML` dizem "Comparáveis" quando a página de origem é AFL (`D_Cnae[setor_afl] = "Sim"`) e continuam com "Referência" em Todos os setores, que usa os mesmos tooltips. Nomes das séries do gráfico (c32) também. Script: `scripts/comparaveis_ganha_afl.py`.
+- Não testado no Desktop: o tooltip depender do filtro de página da página de origem (padrão já usado nos demais tooltips).
+
+- (17/11/2026) Manchetes dos cards de estado com o nome completo (`D_UF[estado]`, por `LOOKUPVALUE` a partir da sigla; sem correspondência, mantém a sigla): `Titulo_Emp_UF_AFL_HTML`, `Titulo_Emp_UF_Total_HTML` e `Titulo_Rem_UF_HTML` (esta atende Todos e AFL de Quanto ganha). Script: `scripts/titulos_estado.py`. Os eixos dos gráficos continuam com a sigla. Não testado no Desktop (nomes longos podem quebrar em 2 linhas no título).
+
+### Ajustes de Empregos e Quanto ganha (18/11/2026) — `scripts/ajustes_rais.py`
+- Empregos · KPI de peso (AFL): título "Representatividade de empregos do setor AFL em setores comparáveis" (2 linhas, 20 px). Manchete da variação (AFL): "Em 2025, a quantidade de empregos subiu x% (Comparáveis: …)".
+- Empregos · gráfico de estados (AFL): valor = % do total analisado (`Emp_UF_Pct_AFL`: estado ÷ total dos estados do filtro; município ÷ total do estado). Tooltip igual. O gráfico de Todos os setores já era % (peso do AFL nos comparáveis).
+- Empregos · tooltip dos CNAEs (AFL): erro "Something's wrong with one or more fields" vinha da variável `Var` (palavra reservada do DAX, ver 08-armadilhas); renomeada para `VarAno` em `Tip_Emp_Atividade_HTML`. Não testado no Desktop.
+- Quanto ganha · manchete AFL: "…os trabalhadores do AFL ganhavam, em média, R$ X em dez/A: Y% da média dos Comparáveis" (sem mediana; "metade … ganha até" só vale para a mediana).
+- Quanto ganha · tooltip da série de média (c77, `Tip_Rem_Ano_Total_HTML`): na página AFL passa a usar `Tip_Rem_Ano_HTML` (AFL × Comparáveis); antes mostrava a "Seleção atual", que no AFL é igual ao AFL. Todos os setores continua como estava.
+- Quanto ganha · salário médio por escolaridade (AFL): a 2ª série era `Rem_Esc_Sel` (= AFL no recorte AFL); agora `Rem_Esc_Comp` (cinza `#434446`), e a legenda do fundo ganhou o item "Comparáveis" (`ganha-afl-bg202611181324.png`).
+
+- (18/11/2026) Tooltip dos CNAEs (AFL): o peso aparecia sempre 100,0% porque o total `Empregos_Ref_AFL` ainda levava o filtro do CNAE sobrevoado (`REMOVEFILTERS(D_Cnae)` não limpa `D_AflAtividade`). Agora `Tot = CALCULATE([Empregos_Ref_AFL], REMOVEFILTERS(D_AflAtividade))` (total dos 6 CNAEs, ignorando também o filtro CNAE AFL).
+
+- (18/11/2026) O filtro **Contrato** (`F_rais[modalidade_contrato]`) foi trocado pelo filtro **Intermitente** (`F_rais[trabalho_intermitente]`, coluna que já existe na F_rais; sem tabela nova) nas 8 páginas: mesmo segmentador, nova coluna, grupo de sincronização `rais_intermitente`. O rótulo do fundo foi redesenhado como "Intermitente", com a mesma espessura do rótulo antigo. Scripts: `scripts/filtro_intermitente.py` (Empregos, Quem trabalha e Quanto ganha) e `contrata_v2.py` (Ranking). Não testado no Desktop.
+
+- (18/11/2026) Tipos de contrato (Empregos · AFL) com o filtro Intermitente: `Emp_Contratos_HTML` e `Titulo_Emp_Contrato_HTML` usavam filtros booleanos soltos no CALCULATE, que SUBSTITUEM o filtro do segmentador na mesma coluna; o total (denominador) respeitava "Intermitente = Sim" e os numeradores não (CLT ÷ total = 9060,6%). As 28 condições de cada medida agora estão em `KEEPFILTERS`: com Sim só "Intermitente" aparece (100%); com Não as demais categorias somam 100%; sem filtro os números não mudam. Script: `scripts/ajustes_contratos.py`. Não testado no Desktop. Regra para novas medidas: filtro de coluna que também é segmentador vai sempre dentro de `KEEPFILTERS`.
+
+- (18/11/2026) Empregos (Todos e AFL): os três cards de KPI estavam sem o ícone (i) no fundo (os gatilhos transparentes existiam). Ícones redesenhados no centro de cada gatilho, com o mesmo desenho das outras páginas (`empregos-*-bg202611181407.png`). Script: `scripts/icones_empregos.py` (`scripts/ver_icones.py` conta os ícones de todos os fundos). Observação: em Quanto ganha · Todos os setores o card inferior direito (UF) também está sem ícone no fundo.

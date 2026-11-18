@@ -104,9 +104,14 @@ def botoes():
             for item in obj.get("fill", []):
                 if item.get("selector", {}).get("id") == "press":
                     item["properties"]["fillColor"] = laranja               # antes #B86218 (marrom escuro)
-            # estado padrão explícito: transparente, sem texto próprio (nada escuro pode aparecer depois do clique)
-            if not any(i.get("selector", {}).get("id") == "default" for i in obj.get("text", [])):
-                obj["text"].append({"properties": {"show": pb.lit("false")}, "selector": {"id": "default"}})
+            # Estado "selected": o botão fica selecionado no instante do clique, antes de a página trocar. Sem estilo para ele o Power BI
+            # usa o padrão escuro (era o "preto" depois do clique). Os botões do RF já definem esse estado em laranja.
+            obj["text"] = [i for i in obj["text"] if not (i.get("selector", {}).get("id") == "default" and i["properties"].get("show", {}).get("expr", {}).get("Literal", {}).get("Value") == "false")]
+            obj["fill"] = [i for i in obj["fill"] if i.get("selector", {}).get("id") != "selected"]
+            obj["fill"].append({"properties": {"fillColor": laranja, "transparency": pb.lit("0D")}, "selector": {"id": "selected"}})
+            hover_txt = next(i for i in obj["text"] if i.get("selector", {}).get("id") == "hover")
+            obj["text"] = [i for i in obj["text"] if i.get("selector", {}).get("id") != "selected"]
+            obj["text"].append({"properties": json.loads(json.dumps(hover_txt["properties"])), "selector": {"id": "selected"}})
             pb.salvar(arq, v)
             alterados += 1
     print(alterados, "botões de navegação ajustados")

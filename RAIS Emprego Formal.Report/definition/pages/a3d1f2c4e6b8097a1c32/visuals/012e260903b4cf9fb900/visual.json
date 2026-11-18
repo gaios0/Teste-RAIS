@@ -58,12 +58,12 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Rem_Esc_Sel"
+                  "Property": "Rem_Esc_Comp"
                 }
               },
-              "queryRef": "_medidas.Rem_Esc_Sel",
-              "nativeQueryRef": "Seleção atual",
-              "displayName": "Seleção atual",
+              "queryRef": "_medidas.Rem_Esc_Comp",
+              "nativeQueryRef": "Comparáveis",
+              "displayName": "Comparáveis",
               "format": "#,0"
             }
           ]
@@ -170,7 +170,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F58220'"
+                      "Value": "'#D97706'"
                     }
                   }
                 }
@@ -188,7 +188,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#98A2B3'"
+                      "Value": "'#434446'"
                     }
                   }
                 }
@@ -196,7 +196,7 @@
             }
           },
           "selector": {
-            "metadata": "_medidas.Rem_Esc_Sel"
+            "metadata": "_medidas.Rem_Esc_Comp"
           }
         }
       ],

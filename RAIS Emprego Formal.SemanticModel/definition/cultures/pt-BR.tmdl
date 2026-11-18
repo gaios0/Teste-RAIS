@@ -155,16 +155,6 @@ cultureInfo pt-BR
 			            },
 			            "Weight": 0.9
 			          }
-			        },
-			        {
-			          "Empregos do AFL": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -394,7 +384,19 @@ cultureInfo pt-BR
 			          "ConceptualProperty": "Rem_Esc_Comp"
 			        }
 			      },
-			      "State": "Generated"
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Comparáveis": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    },
 			    "table_medidas.rem_media_afl_pre": {
 			      "Definition": {
@@ -466,7 +468,7 @@ cultureInfo pt-BR
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Referência · média (2009–2021)": {
+			          "Comparáveis · média (2009–2021)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -487,7 +489,7 @@ cultureInfo pt-BR
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Referência · média (2022 em diante)": {
+			          "Comparáveis · média (2022 em diante)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -1238,6 +1240,27 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.emp_uf_pct_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Emp_UF_Pct_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Participação no total de empregos do AFL": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

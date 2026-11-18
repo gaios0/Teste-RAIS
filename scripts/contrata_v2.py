@@ -27,6 +27,7 @@ DEF_MODELO = RAIZ / "RAIS Emprego Formal.SemanticModel" / "definition"
 TAB = DEF_MODELO / "tables"
 RECURSOS = pb.REPORT / "StaticResources" / "RegisteredResources"
 LARANJA, ROXO, GRAFITE = "#F58220", "#7F56D9", "#434446"
+AFL_ESCURO = "#D97706"      # barras do AFL (valor do AFL separado dos demais)
 FMT_VALOR = '[<=1]0.0%;"R$ "#,0'
 ID = {"Todos os setores": "a3d1f2c4e6b8097a1c41", "AFL": "a3d1f2c4e6b8097a1c42"}
 TIP = {"Mul": "a3d1f2c4e6b8097a1c81", "Neg": "a3d1f2c4e6b8097a1c82", "Esc": "a3d1f2c4e6b8097a1c83"}
@@ -193,7 +194,7 @@ def layout(todos):
 
 
 def caixas_filtro(todos):
-    itens = [("Ano", 140), ("Setores" if todos else "CNAE AFL", 360), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None), ("Contrato", None)]
+    itens = [("Ano", 140), ("Setores" if todos else "CNAE AFL", 360), ("Localização", None), ("Sexo", None), ("Escolaridade", None), ("Raça/cor", None), ("Intermitente", None)]
     resto = (fb.W - 2 * fb.M - (len(itens) - 1) * fb.G - sum(w for _, w in itens if w)) / sum(1 for _, w in itens if not w)
     x, pos = fb.M, {}
     for nome, w in itens:
@@ -306,7 +307,7 @@ def preservados(pasta):
 
 
 FILTROS = {"D_Calendario.Ano": "Ano", "D_Comparavel.comparavel_AFL_rotulo": "Setores", "D_AflAtividade.nome": "CNAE AFL", "D_UF.estado": "Localização",
-           "D_Sexo.sexo": "Sexo", "D_Escolaridade.escolaridade_agrupada": "Escolaridade", "D_Raca.raca_cor": "Raça/cor", "F_rais.modalidade_contrato": "Contrato"}
+           "D_Sexo.sexo": "Sexo", "D_Escolaridade.escolaridade_agrupada": "Escolaridade", "D_Raca.raca_cor": "Raça/cor", "F_rais.trabalho_intermitente": "Intermitente"}
 
 
 def montar_pagina(recorte):
@@ -371,7 +372,7 @@ def montar_pagina(recorte):
             v["visual"]["query"]["sortDefinition"] = {"sort": [{"field": {"Measure": {"Expression": {"SourceRef": {"Entity": "_medidas"}}, "Property": f"Ct_{p}_Ord"}},
                                                                  "direction": "Descending"}]}
         else:
-            v = pb.barras(n("ch_" + p), pos, pb.coluna("D_AflAtividade", "nome"), f"Ct_{p}_Valor_AFL", "Valor", None, cor_fixa=LARANJA, espaco=14, fonte=16)
+            v = pb.barras(n("ch_" + p), pos, pb.coluna("D_AflAtividade", "nome"), f"Ct_{p}_Valor_AFL", "Valor", None, cor_fixa=AFL_ESCURO, espaco=14, fonte=16)
         v["visual"]["visualContainerObjects"]["visualTooltip"] = [{"properties": {"section": pb.lit(f"'{TIP[p]}'"), "type": pb.lit("'Canvas'"), "show": pb.lit("true")}}]
         gravar("ch_" + p, v)
     # página
@@ -444,7 +445,7 @@ def barras_laranja_afl():
     for papel in ("ch_Mul", "ch_Neg", "ch_Esc"):
         arq = _arq_visual(ID["AFL"], papel)
         v = json.loads(arq.read_text(encoding="utf-8"))
-        v["visual"]["objects"]["dataPoint"] = [{"properties": {"fill": pb.cor(LARANJA)}, "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}}]
+        v["visual"]["objects"]["dataPoint"] = [{"properties": {"fill": pb.cor(AFL_ESCURO)}, "selector": {"data": [{"dataViewWildcard": {"matchingOption": 1}}]}}]
         pb.salvar(arq, v)
 
 

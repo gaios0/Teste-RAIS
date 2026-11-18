@@ -77,13 +77,13 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Empregos_Ref"
+                  "Property": "Emp_UF_Pct_AFL"
                 }
               },
-              "queryRef": "_medidas.Empregos_Ref",
-              "nativeQueryRef": "Empregos do AFL",
-              "displayName": "Empregos do AFL",
-              "format": "#,0"
+              "queryRef": "_medidas.Emp_UF_Pct_AFL",
+              "nativeQueryRef": "Participação no total de empregos do AFL",
+              "displayName": "Participação no total de empregos do AFL",
+              "format": "0.0%"
             }
           ]
         }
@@ -98,7 +98,7 @@
                     "Entity": "_medidas"
                   }
                 },
-                "Property": "Empregos_Ref"
+                "Property": "Emp_UF_Pct_AFL"
               }
             },
             "direction": "Descending"

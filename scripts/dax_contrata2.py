@@ -15,6 +15,7 @@ from dax_tooltips import CINZA, LARANJA, ROXO, linha, moeda, montar, pp
 
 P = "Quem contrata"
 PISO = 50000
+AFL_COR = "#D97706"          # laranja do valor do AFL separado dos demais (mais escuro que o laranja de interface, #F58220)
 PISO_TXT = "50.000"
 A_ = ANO_FIXO.format(a="A")
 PASTA_DADOS = f"{P}\\Perfil"
@@ -117,10 +118,9 @@ def medidas():
             f"    IF(Piores, RANKX(Tab, IF(Sal, [Ct_{p}_Div_Sal], [Ct_{p}_Div_Rep]), , ASC, DENSE),\n"
             f"        RANKX(Tab, IF(Sal, [Ct_{p}_Div_Sal], [Ct_{p}_Div_Rep]), , DESC, DENSE)))\n"
             "RETURN IF(EhAFL, Meu, IF(NOT ISBLANK(Pos) && Pos <= 10, Meu))", f"{P}\\Ranking", None, False, formato_botao(met))
-        add(f"Ct_{p}_Ord", "Chave de ordenação do ranking por divisão: valor (ou o oposto nas 10 piores); o AFL sempre por último.",
-            f"VAR V = [Ct_{p}_Valor]\n"
-            f"VAR EhAFL = SELECTEDVALUE(D_Rank_Divisao[nm_divisao]) = \"{AFL_ROTULO}\"\n" + PIORES_VAR +
-            "RETURN IF(ISBLANK(V), BLANK(), IF(EhAFL, -1000000000, IF(Piores, -V, V)))", f"{P}\\Ranking", "0.0000", True)
+        add(f"Ct_{p}_Ord", "Chave de ordenação do ranking por divisão: o valor (ou o oposto nas 10 piores). O AFL fica na posição do seu valor, junto das demais divisões.",
+            f"VAR V = [Ct_{p}_Valor]\n" + PIORES_VAR +
+            "RETURN IF(ISBLANK(V), BLANK(), IF(Piores, -V, V))", f"{P}\\Ranking", "0.0000", True)
         # AFL: a categoria são os seis CNAEs (D_AflAtividade); o contexto já é o AFL
         add(f"Ct_{p}_Valor_AFL", f"Valor do ranking por CNAE do AFL ({NOME_PERFIL[p]}): representatividade OU salário médio, conforme o botão do gráfico.",
             SAL_VAR.format(met=met) + f"RETURN IF(Sal, [Ct_{p}_Sal], [Ct_{p}_Rep])", f"{P}\\Ranking", None, False, formato_botao(met))
@@ -232,6 +232,6 @@ def medidas():
             montar(vars_, "Nome", sub,
                    [linha(ROXO if p == "Mul" else CINZA, f'"{rotulo_rep}"', pct("Rep"), num("Qtd") + ' & " de " & ' + num("Tot") + ' & " empregos"'),
                     linha(CINZA, '"Salário médio (dezembro, R$ nominais)"', moeda("Sal")),
-                    linha(LARANJA, '"AFL (referência)"', pct("RepAfl") + ' & " · " & ' + moeda("SalAfl"), None, "NOT ISBLANK(RepAfl)")],
+                    linha(AFL_COR, '"AFL (referência)"', pct("RepAfl") + ' & " · " & ' + moeda("SalAfl"), None, "NOT ISBLANK(RepAfl)")],
                    'IF(ISBLANK(RepAfl) || ISBLANK(Rep), "", "Participação em relação ao AFL: " & ' + pp("Rep", "RepAfl") + ' & ".")'), "HTML\\Tooltips de gráficos")
     return m

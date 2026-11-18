@@ -23,11 +23,11 @@
                       "Entity": "F_rais"
                     }
                   },
-                  "Property": "modalidade_contrato"
+                  "Property": "trabalho_intermitente"
                 }
               },
-              "queryRef": "F_rais.modalidade_contrato",
-              "nativeQueryRef": "modalidade_contrato",
+              "queryRef": "F_rais.trabalho_intermitente",
+              "nativeQueryRef": "trabalho_intermitente",
               "active": true
             }
           ]
@@ -43,7 +43,7 @@
                     "Entity": "F_rais"
                   }
                 },
-                "Property": "modalidade_contrato"
+                "Property": "trabalho_intermitente"
               }
             },
             "direction": "Ascending"
@@ -155,6 +155,11 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
       ]
     },
     "visualContainerObjects": {
@@ -171,7 +176,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Contrato'"
+                  "Value": "'Intermitente'"
                 }
               }
             }
@@ -266,7 +271,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "rais_contrato",
+      "groupName": "rais_intermitente",
       "fieldChanges": false,
       "filterChanges": true
     },
