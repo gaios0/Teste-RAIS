@@ -3,43 +3,8 @@
   "name": "a3d1f2c4e6b8097a1c41",
   "displayName": "Ranking · Todos os setores",
   "displayOption": "FitToWidth",
-  "height": 1898,
+  "height": 2501,
   "width": 1920,
-  "objects": {
-    "background": [
-      {
-        "properties": {
-          "image": {
-            "image": {
-              "name": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'contrata-todos-bg202611181340.png'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "contrata-todos-bg202611181340.png"
-                  }
-                }
-              },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Fit'"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
   "filterConfig": {
     "filters": [
       {
@@ -95,6 +60,41 @@
           ]
         },
         "howCreated": "User"
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'contrata-todos-bg20261119151532.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "contrata-todos-bg20261119151532.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     ]
   }

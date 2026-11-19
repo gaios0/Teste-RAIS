@@ -175,7 +175,7 @@ def corpo_perfil(c):
     titulo(c, "t_esc", bx + 24, fb.L2_Y + 16, bw_ - 48, 112, "Titulo_Esc_HTML")
     titulo(c, "esc", bx + 24, fb.L2_Y + 140, bw_ - 48, fb.L2_H - 160, "Esc_Barras_HTML")
     titulo(c, "t_cbo", ax + 24, fb.L3_Y + 16, aw - 48, 84, "Titulo_CBO_HTML")
-    c.gravar("cbo", pb.barras(c.n("cbo"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, c.prox()), pb.coluna("F_rais", "cbo_2002"), "Emp_CBO_Top", "Empregos", "#,0",
+    c.gravar("cbo", pb.barras(c.n("cbo"), (ax + 16, fb.L3_Y + 108, aw - 32, fb.L3_H - 124, c.prox()), pb.coluna("D_Cbo", "ocupacao"), "Emp_CBO_Top", "Empregos", "#,0",
                               tooltips=[("Perf_Mulheres", "Mulheres", "0.0%"), ("Remuneracao_Media_Ref", "Remuneração média de dezembro (R$)", "#,0.00")], foco=True, espaco=14))
     titulo(c, "t_raca", bx + 24, fb.L3_Y + 16, bw_ - 48, 112, "Titulo_Raca_HTML")
     titulo(c, "raca", bx + 24, fb.L3_Y + 140, bw_ - 48, fb.L3_H - 160, "Raca_HTML")

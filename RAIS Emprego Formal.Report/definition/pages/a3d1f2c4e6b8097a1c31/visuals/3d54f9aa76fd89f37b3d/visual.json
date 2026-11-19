@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "D_UF"
+                      "Entity": "D_regiao"
                     }
                   },
                   "Property": "estado"
                 }
               },
-              "queryRef": "D_UF.estado",
+              "queryRef": "D_regiao.estado",
               "nativeQueryRef": "estado",
               "active": true
             }
@@ -40,7 +40,7 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "D_UF"
+                    "Entity": "D_regiao"
                   }
                 },
                 "Property": "estado"

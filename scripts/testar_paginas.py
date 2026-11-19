@@ -68,7 +68,7 @@ def perfil():
     for n in ("Titulo_Pir_HTML", "Esc_Barras_HTML", "Titulo_Esc_HTML", "Titulo_CBO_HTML", "Raca_HTML", "Titulo_Raca_HTML"):
         q.append(f"-- {n}\nEVALUATE ROW(\"t\", CALCULATE([{n}], {A}, D_Cnae[setor_afl] = \"Sim\"))")
     q.append('-- piramide\nEVALUATE CALCULATETABLE(SUMMARIZECOLUMNS(D_FaixaIdade[faixa_idade], "m", [Pir_Mulheres], "h", [Pir_Homens], "mc", [Pir_Mulheres_Comp], "hc", [Pir_Homens_Comp]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim")')
-    q.append('-- cbo\nEVALUATE TOPN(10, CALCULATETABLE(SUMMARIZECOLUMNS(F_rais[cbo_2002], "v", [Emp_CBO_Top], "m", [Perf_Mulheres], "r", [Remuneracao_Media_Ref]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim"), [v], DESC)')
+    q.append('-- cbo\nEVALUATE TOPN(10, CALCULATETABLE(SUMMARIZECOLUMNS(D_Cbo[ocupacao], "v", [Emp_CBO_Top], "m", [Perf_Mulheres], "r", [Remuneracao_Media_Ref]), D_Calendario[Ano] = 2025, D_Cnae[setor_afl] = "Sim"), [v], DESC)')
     return q
 
 

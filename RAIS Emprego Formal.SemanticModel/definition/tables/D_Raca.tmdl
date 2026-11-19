@@ -40,7 +40,7 @@ table D_Raca
 		lineageTag: 150ed725-dcdb-46a4-b6d6-77f170592d08
 		sourceLineageTag: 4b207f19-97bf-4155-aaa8-1a0b63f1cd86
 		dataCategory: Uncategorized
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: ordem
 
 		annotation SummarizationSetBy = Automatic

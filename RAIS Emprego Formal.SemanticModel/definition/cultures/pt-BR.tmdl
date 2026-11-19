@@ -440,24 +440,6 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "table_medidas.rem_mediana_afl_pre": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_AFL_Pre"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "table_medidas.rem_mediana_afl_pos": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_AFL_Pos"
-			        }
-			      },
-			      "State": "Generated"
-			    },
 			    "table_medidas.rem_media_comp_pre": {
 			      "Definition": {
 			        "Binding": {
@@ -499,24 +481,6 @@ cultureInfo pt-BR
 			          }
 			        }
 			      ]
-			    },
-			    "table_medidas.rem_mediana_comp_pre": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_Comp_Pre"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "table_medidas.rem_mediana_comp_pos": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_Comp_Pos"
-			        }
-			      },
-			      "State": "Generated"
 			    },
 			    "table_medidas.rem_razao_raca_afl": {
 			      "Definition": {
@@ -820,24 +784,6 @@ cultureInfo pt-BR
 			        "Binding": {
 			          "ConceptualEntity": "_medidas",
 			          "ConceptualProperty": "Ind_UF_Geo"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "table_medidas.rem_mediana_sel_pre": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_Sel_Pre"
-			        }
-			      },
-			      "State": "Generated"
-			    },
-			    "table_medidas.rem_mediana_sel_pos": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_medidas",
-			          "ConceptualProperty": "Rem_Mediana_Sel_Pos"
 			        }
 			      },
 			      "State": "Generated"
@@ -1261,6 +1207,69 @@ cultureInfo pt-BR
 			      "Terms": [
 			        {
 			          "Participação no total de empregos do AFL": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_def_ord": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Def_Ord"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Ordem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_def_valor": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Def_Valor"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_medidas.ct_def_valor_afl": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_medidas",
+			          "ConceptualProperty": "Ct_Def_Valor_AFL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Valor": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

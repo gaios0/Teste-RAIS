@@ -33,23 +33,13 @@ table D_Cnae
 
 		annotation SummarizationSetBy = Automatic
 
-	column nm_divisao
+	column divisao_afl
 		dataType: string
 		lineageTag: 485f4e6b-ce1e-4e18-8f38-3fe426cb0cb5
-		sourceLineageTag: afe40878-3650-4ea4-8501-31d0b3743b89
+		sourceLineageTag: ca15ac82-7b80-4fe1-8a2c-c2959d4c185a
 		dataCategory: Uncategorized
 		summarizeBy: none
-		sourceColumn: nm_divisao
-
-		annotation SummarizationSetBy = Automatic
-
-	column nm_secao
-		dataType: string
-		lineageTag: b20e88fb-0c16-423c-90c8-e07c7e093752
-		sourceLineageTag: ff27f52c-fd87-4156-aa5e-fbf93b364bdc
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: nm_secao
+		sourceColumn: divisao_afl
 
 		annotation SummarizationSetBy = Automatic
 

@@ -20,13 +20,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "D_UF"
+                      "Entity": "D_regiao"
                     }
                   },
                   "Property": "uf"
                 }
               },
-              "queryRef": "D_UF.uf",
+              "queryRef": "D_regiao.uf",
               "nativeQueryRef": "uf",
               "active": true
             },
@@ -35,13 +35,13 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "F_rais"
+                      "Entity": "D_regiao"
                     }
                   },
                   "Property": "municipio"
                 }
               },
-              "queryRef": "F_rais.municipio",
+              "queryRef": "D_regiao.municipio",
               "nativeQueryRef": "municipio",
               "active": false
             }

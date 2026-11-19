@@ -1,0 +1,53 @@
+table D_regiao
+	lineageTag: 4afbddf9-e005-49dc-9fba-ff9f8afb8255
+	sourceLineageTag: 88963d9f-3066-4dc9-bb57-344ace5c75b6
+
+	column cod_municipio
+		dataType: string
+		isNullable: false
+		lineageTag: 040c1f22-87ee-4919-b380-97a5c374a144
+		sourceLineageTag: 5c0c8a85-2bc4-4d69-8a7c-1c99b318f680
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cod_municipio
+
+		annotation SummarizationSetBy = Automatic
+
+	column municipio
+		dataType: string
+		lineageTag: 2f705cd6-4fef-407d-8551-35d0e8b1d299
+		sourceLineageTag: 144a8c4c-20f2-4112-81a2-86a021431288
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: municipio
+
+		annotation SummarizationSetBy = Automatic
+
+	column estado
+		dataType: string
+		lineageTag: 2dc5bd97-a570-4ed5-a5a8-e90396647daa
+		sourceLineageTag: e05b1256-2288-4e2f-876d-15f00497ed6d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: uf
+
+		annotation SummarizationSetBy = Automatic
+
+	column uf
+		dataType: string
+		lineageTag: c891945c-ad0d-4fa2-8af2-4e59d6b47ce0
+		sourceLineageTag: d10f4e8b-996d-44bd-87ab-9a4f61978b5a
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: sigla_uf
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_regiao = entity
+		mode: directQuery
+		source
+			entityName: D_regiao
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
+

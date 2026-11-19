@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "KPI_Mediana_AFL_HTML"
+                  "Property": "KPI_RemMedia_AFL_HTML"
                 }
               },
-              "queryRef": "_medidas.KPI_Mediana_AFL_HTML",
-              "nativeQueryRef": "KPI_Mediana_AFL_HTML"
+              "queryRef": "_medidas.KPI_RemMedia_AFL_HTML",
+              "nativeQueryRef": "KPI_RemMedia_AFL_HTML"
             }
           ]
         }

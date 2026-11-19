@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
-  "name": "b4daf04b22eeb91b1709",
+  "name": "4c85d099ab5a45d5be42",
   "position": {
-    "x": 562.7,
-    "y": 333,
-    "z": 28000,
-    "height": 62,
-    "width": 84,
-    "tabOrder": 28000
+    "x": 56.12434148739711,
+    "y": 2012.9529690736347,
+    "z": 18100,
+    "height": 368.23043561243469,
+    "width": 1808.29890499638,
+    "tabOrder": 18100
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -20,15 +20,35 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "D_Info"
+                      "Entity": "D_Rank_Divisao"
                     }
                   },
-                  "Property": "Chave"
+                  "Property": "nm_divisao"
                 }
               },
-              "queryRef": "D_Info.Chave",
-              "nativeQueryRef": "Chave",
+              "queryRef": "D_Rank_Divisao.nm_divisao",
+              "nativeQueryRef": "nm_divisao",
               "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_medidas"
+                    }
+                  },
+                  "Property": "Ct_Def_Ord"
+                }
+              },
+              "queryRef": "_medidas.Ct_Def_Ord",
+              "nativeQueryRef": "Ordem",
+              "displayName": "Ordem",
+              "format": "0.0000"
             }
           ]
         },
@@ -42,58 +62,53 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "Info_Gatilho_Valor"
+                  "Property": "Ct_Def_Valor"
                 }
               },
-              "queryRef": "_medidas.Info_Gatilho_Valor",
-              "nativeQueryRef": "Info_Gatilho_Valor"
+              "queryRef": "_medidas.Ct_Def_Valor",
+              "nativeQueryRef": "Valor",
+              "displayName": "Valor"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_medidas"
+                  }
+                },
+                "Property": "Ct_Def_Ord"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FFFFFF'"
-                    }
-                  }
-                }
-              }
-            },
-            "fillTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "100D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "categoryAxis": [
         {
           "properties": {
-            "show": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -103,41 +118,21 @@
             "innerPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "10L"
                 }
               }
             },
-            "start": {
+            "maxMarginFactor": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "40L"
                 }
               }
             },
-            "end": {
+            "preferredCategoryWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "40D"
                 }
               }
             }
@@ -161,6 +156,102 @@
         {
           "properties": {
             "responsive": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_medidas"
+                        }
+                      },
+                      "Property": "Cor_Ind_Divisao"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1D1E21'"
+                    }
+                  }
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "labelPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "'OutsideEnd'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -230,7 +321,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -243,7 +334,7 @@
             "section": {
               "expr": {
                 "Literal": {
-                  "Value": "'a3d1f2c4e6b8097a1c53'"
+                  "Value": "'a3d1f2c4e6b8097a1c84'"
                 }
               }
             },
@@ -266,63 +357,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ecc8e68dda304d1ca3cf",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "D_Info"
-              }
-            },
-            "Property": "Chave"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "d",
-              "Entity": "D_Info",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "d"
-                          }
-                        },
-                        "Property": "Chave"
-                      }
-                    }
-                  ],
-                  "Values": [
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'Quanto ganha|AFL|K1'"
-                        }
-                      }
-                    ]
-                  ]
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

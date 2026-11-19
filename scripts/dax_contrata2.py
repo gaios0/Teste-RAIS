@@ -68,7 +68,7 @@ def _div(medida):
     return ("VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])\n"
             "RETURN IF(ISBLANK(Nome), BLANK(),\n"
             f"    IF(Nome = \"{AFL_ROTULO}\", CALCULATE([{medida}], {G_AFL}),\n"
-            f"        CALCULATE([{medida}], REMOVEFILTERS(D_GrupoSetor), KEEPFILTERS(D_Cnae[nm_divisao] = Nome), KEEPFILTERS(D_Cnae[setor_afl] = \"Não\"))))")
+            f"        CALCULATE([{medida}], REMOVEFILTERS(D_GrupoSetor), KEEPFILTERS(D_Cnae[divisao_afl] = Nome), KEEPFILTERS(D_Cnae[setor_afl] = \"Não\"))))")
 
 
 def medidas():

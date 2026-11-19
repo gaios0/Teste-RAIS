@@ -1,0 +1,233 @@
+table 'D_Calendario 2'
+	lineageTag: cff03322-9aa8-4956-b2dc-fd23de595a34
+	sourceLineageTag: 7029d689-5a2b-4ccc-ac74-ecb56d7e3bbb
+
+	column Data
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		lineageTag: 2d232e51-4ad7-4a22-8288-61ac31581afd
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 26f3dad0-c141-4151-9b84-d771adeb2dee
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column Base
+		dataType: string
+		lineageTag: d6d25a42-a062-4c5e-b1a8-60e8241b6194
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Base
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Num'
+		dataType: int64
+		formatString: 0
+		lineageTag: 37ec3de4-81d1-4785-910d-a6aee9c76990
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Mês Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Mês'
+		dataType: string
+		lineageTag: cc8477bf-c865-4a40-b871-4137350cdab3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Nome do Mês
+		sortByColumn: 'Mês Num'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mês Abrev'
+		dataType: string
+		lineageTag: 172429b2-2c57-47c0-86b9-cdae8ef19026
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Mês Abrev
+		sortByColumn: 'Mês Num'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a9cd4d5-393a-4569-8628-661ba681f371
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana'
+		dataType: int64
+		formatString: 0
+		lineageTag: 13a22fda-9037-432c-8c88-1206b8a75628
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Dia da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome do Dia'
+		dataType: string
+		lineageTag: 2dfcec5f-c69d-404b-98b3-3a85d612dabe
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Nome do Dia
+		sortByColumn: 'Dia da Semana'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia da Semana Letra'
+		dataType: string
+		lineageTag: bab7f8ef-a095-4000-9beb-fd087b2d0ad9
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Dia da Semana Letra
+		sortByColumn: 'Dia da Semana'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semestre
+		dataType: string
+		lineageTag: e7064f79-a988-4432-aed6-c2ac09d2b37f
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Semestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: string
+		lineageTag: fd037794-2a9a-43ab-a4e6-26320ca776b3
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ano Trimestre'
+		dataType: string
+		lineageTag: 6c7e1530-e82d-4d79-a404-423adaa29391
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Ano Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês/Ano
+		dataType: string
+		lineageTag: 362dabd2-7822-4985-a9c2-0989e9eccf1b
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Mês/Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_mes_num
+		dataType: string
+		lineageTag: 9ff2d3c8-d194-4aee-a15c-99480c5ad4d5
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ano_mes_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Ano'
+		dataType: int64
+		formatString: 0
+		lineageTag: efafb0df-aa74-4f09-8d7b-f527e3813c1d
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Semana do Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Mês'
+		dataType: int64
+		formatString: 0
+		lineageTag: c68549e0-2f92-46b2-8bb2-f12781dae1fb
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Semana do Mês
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Semana do Mes Letra'
+		dataType: string
+		lineageTag: f4e09c79-4fe2-451d-9542-5aefb2e1c9da
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Semana do Mes Letra
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Início da Semana'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5a10c150-18ee-4446-881f-92439f6c13cc
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Início da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fim da Semana'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4194b57b-b153-403f-8c55-231208c3473e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Fim da Semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dias Uteis'
+		dataType: string
+		lineageTag: 16712c69-32c1-49df-a2d2-5731d216e9f7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Dias Uteis
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data ate Hoje'
+		dataType: string
+		lineageTag: 15ede081-a782-4393-9e27-b0ae13956622
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Data ate Hoje
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dia Atual'
+		dataType: string
+		lineageTag: dc736b83-c0cf-4b7e-9520-4c92737515e4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: Dia Atual
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'D_Calendario 2' = entity
+		mode: directQuery
+		source
+			entityName: D_Calendario
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
+

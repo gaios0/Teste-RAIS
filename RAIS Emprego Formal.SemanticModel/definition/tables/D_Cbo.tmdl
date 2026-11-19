@@ -1,0 +1,83 @@
+table D_Cbo
+	lineageTag: b71dc3c9-afd8-4a7b-afde-44f29d115fc1
+	sourceLineageTag: d11383f4-bbf4-4dfc-a894-c527d01eed33
+
+	column cbo_2002
+		dataType: string
+		isNullable: false
+		lineageTag: 873bcd6e-3555-4920-8732-353bcafa6858
+		sourceLineageTag: 9fc0d6d1-cf4b-4309-8ee9-4cd58b2405bc
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cbo_2002
+
+		annotation SummarizationSetBy = Automatic
+
+	column ocupacao
+		dataType: string
+		lineageTag: c05d846f-ec8e-47bd-b705-45694cb7c0b3
+		sourceLineageTag: 0075ff81-b87a-4dc5-a410-3d082d9ca20e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: ocupacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_familia
+		dataType: string
+		lineageTag: 75a4b586-a5ab-4c94-ba0c-1a0f19506b13
+		sourceLineageTag: 05612089-2d2b-4a27-8620-53e7e647c31e
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cod_familia
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_subgrupo
+		dataType: string
+		lineageTag: 836f41ec-7838-4377-9e21-0c3b238d0829
+		sourceLineageTag: 96347c2d-0ca7-4873-a01d-241f029f3856
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cod_subgrupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_subgrupo_principal
+		dataType: string
+		lineageTag: 32ca28df-335e-4846-8d4a-7b83651407a2
+		sourceLineageTag: f1bcf5e8-4731-4f8a-aaa8-3625da4320d7
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cod_subgrupo_principal
+
+		annotation SummarizationSetBy = Automatic
+
+	column cod_grande_grupo
+		dataType: string
+		lineageTag: 952f3023-14bd-4c3d-b11c-f1535b4f9a23
+		sourceLineageTag: 1c0e8d48-1739-49bb-ac41-ee66de27f1c4
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: cod_grande_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column nm_grande_grupo
+		dataType: string
+		lineageTag: 980dfd5b-3806-4a9d-8589-b638ef78fbd7
+		sourceLineageTag: e71e9c2e-9837-4f16-8e2d-b19d09b7d94c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: nm_grande_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Cbo = entity
+		mode: directQuery
+		source
+			entityName: D_Cbo
+			expressionSource: 'DirectQuery para AS – Painel_RAIS'
+
+	annotation PBI_ResultType = Exception
+

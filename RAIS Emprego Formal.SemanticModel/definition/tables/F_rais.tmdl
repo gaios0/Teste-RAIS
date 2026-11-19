@@ -13,27 +13,6 @@ table F_rais
 
 		annotation SummarizationSetBy = User
 
-	column estado
-		dataType: string
-		isHidden
-		lineageTag: e9b07176-6fa4-4a3d-b861-b8d45f5f1869
-		sourceLineageTag: fc2194c5-5ae7-4dae-8fc5-b00de992dc0c
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: estado
-
-		annotation SummarizationSetBy = User
-
-	column municipio
-		dataType: string
-		lineageTag: 25da921c-b804-4392-8569-427240b46439
-		sourceLineageTag: aaef1d09-bf91-4878-bc4a-117843c99ff4
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: municipio
-
-		annotation SummarizationSetBy = User
-
 	column ambito
 		dataType: string
 		lineageTag: 1804ccb5-4943-4177-a3fa-e710a54b99a5
@@ -55,85 +34,9 @@ table F_rais
 
 		annotation SummarizationSetBy = User
 
-	column nm_subclasse
-		dataType: string
-		isHidden
-		lineageTag: d006ca12-f9f1-4433-9748-1ce7ad45488b
-		sourceLineageTag: b6087638-a5f4-4d18-acca-e178373829f3
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: nm_subclasse
-
-		annotation SummarizationSetBy = User
-
-	column nm_classe
-		dataType: string
-		isHidden
-		lineageTag: efc1a75b-85f9-40a8-97dd-e7267260ab11
-		sourceLineageTag: c99227e1-7ba8-4a1f-9b35-6d61a4e53b70
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: nm_classe
-
-		annotation SummarizationSetBy = User
-
-	column nm_divisao
-		dataType: string
-		isHidden
-		lineageTag: cdcab97d-e827-4dcb-bd36-bd13662f42e9
-		sourceLineageTag: c01d5ee5-7021-4bd3-bf28-ebec55c54988
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: nm_divisao
-
-		annotation SummarizationSetBy = User
-
-	column nm_secao
-		dataType: string
-		isHidden
-		lineageTag: da4935f7-0016-4595-8bf4-ec629378c180
-		sourceLineageTag: c42e84ca-12a8-4c64-be98-92479aadaccf
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: nm_secao
-
-		annotation SummarizationSetBy = User
-
-	column setor_afl
-		dataType: string
-		isHidden
-		lineageTag: 6417a1c0-ab7c-4d2a-92d7-6ae7973aef57
-		sourceLineageTag: 07f7190a-7a7c-490e-a219-139297299c74
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: setor_afl
-
-		annotation SummarizationSetBy = User
-
-	column setor_comparavel_afl
-		dataType: string
-		isHidden
-		lineageTag: c2f388c1-74b8-43a9-97ae-fab0c28c036b
-		sourceLineageTag: 974307a6-171b-43f6-8e34-bef0940af3b0
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: setor_comparavel_afl
-
-		annotation SummarizationSetBy = User
-
-	column setor_principal
-		dataType: string
-		isHidden
-		lineageTag: bf9c26bc-b791-4982-84d3-8a4eef763f08
-		sourceLineageTag: cf9406fc-d3e1-4eb0-a0d5-b5995bfb3fea
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: setor_principal
-
-		annotation SummarizationSetBy = User
-
 	column cbo_2002
 		dataType: string
+		isHidden
 		lineageTag: 7c3cd0be-2372-4461-b036-29ebcce2b521
 		sourceLineageTag: 9929f9b6-0d1e-47cf-8425-865ea5740c10
 		dataCategory: Uncategorized
@@ -357,6 +260,69 @@ table F_rais
 		sourceColumn: ano
 
 		annotation SummarizationSetBy = User
+
+	column id_municipio
+		dataType: string
+		isHidden
+		lineageTag: c6482026-a032-474b-91bb-1a0f866d73f2
+		sourceLineageTag: e6cf8d0f-78f5-4aaf-b1c9-1185d28aa30c
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: id_municipio
+
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 797325d6-b7a5-4835-b4da-efd4aff5d7f2
+		sourceLineageTag: d8adfae0-a2c2-4834-83f8-41666bcebdac
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: data
+
+		annotation SummarizationSetBy = Automatic
+
+	column empregador
+		dataType: string
+		lineageTag: eb6a3b85-9fa1-45e2-8966-e09fa61a80fd
+		sourceLineageTag: d355e908-17c1-492d-ac07-48d722a52efd
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: empregador
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_estabelecimento
+		dataType: string
+		lineageTag: 15eeab14-bd60-4b65-850f-f2813664c82b
+		sourceLineageTag: ce89a3cd-9852-4a91-8de3-ffd5a03df6cb
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: tipo_estabelecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_inscricao
+		dataType: string
+		lineageTag: 8d7f6526-14fe-41b5-aa03-58e6b85a0d24
+		sourceLineageTag: 835ec6c2-753b-4fd2-90d8-40c8011caeb9
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: tipo_inscricao
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_salario
+		dataType: string
+		lineageTag: 1496f046-f0d5-4d9d-8507-657b4b4b9288
+		sourceLineageTag: 8c4e3687-1bf4-4a9c-9d02-ffa24cba08ac
+		dataCategory: Uncategorized
+		summarizeBy: none
+		sourceColumn: origem_salario
+
+		annotation SummarizationSetBy = Automatic
 
 	partition F_rais = entity
 		mode: directQuery

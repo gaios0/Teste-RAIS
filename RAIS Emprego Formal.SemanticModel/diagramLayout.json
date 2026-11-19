@@ -195,23 +195,10 @@
             "x": 854.99348324399125,
             "y": 351.56123861005813
           },
-          "nodeIndex": "D_UF",
+          "nodeIndex": "D_regiao",
           "nodeLineageTag": "ff7288be-062a-4511-80ae-45c48be3a6c2",
           "size": {
             "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 527.14896901366888,
-            "y": 198.8518088337712
-          },
-          "nodeIndex": "F_Mediana",
-          "nodeLineageTag": "40307923-5bb9-425c-9d55-528636b0771e",
-          "size": {
-            "height": 248,
             "width": 234
           },
           "zIndex": 0

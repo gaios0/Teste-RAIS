@@ -93,8 +93,8 @@ def medidas():
                 linha(LARANJA, '"Mulheres na faixa · AFL"', pct("MulA"), None, "NOT(" + EH_AFL + ")"), linha(CINZA, '"Mulheres na faixa · Comparáveis"', pct("MulC"))],
                'IF(ISBLANK(Mul), "", IF(Mul > 0.5, "As mulheres são maioria nesta faixa.", "Os homens são maioria nesta faixa."))'))
     # ---- Quem trabalha: ocupação (CBO)
-    v = ("VAR O = SELECTEDVALUE(F_rais[cbo_2002])\nVAR E = [Empregos_Ref]\nVAR Peso = DIVIDE(E, CALCULATE([Empregos_Ref], REMOVEFILTERS(F_rais[cbo_2002])))\nVAR Mul = [Perf_Mulheres]\n"
-         "VAR R = [Remuneracao_Media_Ref]\nVAR RGeral = CALCULATE([Remuneracao_Media_Ref], REMOVEFILTERS(F_rais[cbo_2002]))\nVAR Razao = DIVIDE(R, RGeral)\n")
+    v = ("VAR O = SELECTEDVALUE(D_Cbo[ocupacao])\nVAR E = [Empregos_Ref]\nVAR Peso = DIVIDE(E, CALCULATE([Empregos_Ref], REMOVEFILTERS(D_Cbo)))\nVAR Mul = [Perf_Mulheres]\n"
+         "VAR R = [Remuneracao_Media_Ref]\nVAR RGeral = CALCULATE([Remuneracao_Media_Ref], REMOVEFILTERS(D_Cbo))\nVAR Razao = DIVIDE(R, RGeral)\n")
     add("Tip_CBO_HTML", "Tooltip da ocupação (CBO): empregos, peso no recorte, mulheres e remuneração média.",
         montar(v, "O", '"Empregos em 31/12/" & [Ano_Ref]',
                [linha(CINZA, '"Empregos"', num("E"), f'"Peso no recorte: " & {pct("Peso")}'), linha(ROXO, '"Mulheres"', pct("Mul")),

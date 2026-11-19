@@ -23,11 +23,11 @@
                       "Entity": "_medidas"
                     }
                   },
-                  "Property": "KPI_Mediana_Total_HTML"
+                  "Property": "KPI_RemMedia_Total_HTML"
                 }
               },
-              "queryRef": "_medidas.KPI_Mediana_Total_HTML",
-              "nativeQueryRef": "KPI_Mediana_Total_HTML"
+              "queryRef": "_medidas.KPI_RemMedia_Total_HTML",
+              "nativeQueryRef": "KPI_RemMedia_Total_HTML"
             }
           ]
         }

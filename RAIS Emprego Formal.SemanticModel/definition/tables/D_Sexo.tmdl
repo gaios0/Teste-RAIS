@@ -20,7 +20,7 @@ table D_Sexo
 		lineageTag: 7759599b-ff89-4407-b8dc-5e9f75881ec9
 		sourceLineageTag: 578474e4-cf1f-4421-8e31-8fb7d78e45f1
 		dataCategory: Uncategorized
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: ordem
 
 		annotation SummarizationSetBy = Automatic

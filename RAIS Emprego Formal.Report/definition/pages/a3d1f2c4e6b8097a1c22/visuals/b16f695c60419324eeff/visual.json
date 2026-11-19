@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "F_rais"
+                      "Entity": "D_Cbo"
                     }
                   },
-                  "Property": "cbo_2002"
+                  "Property": "ocupacao"
                 }
               },
-              "queryRef": "F_rais.cbo_2002",
-              "nativeQueryRef": "cbo_2002",
+              "queryRef": "D_Cbo.ocupacao",
+              "nativeQueryRef": "ocupacao",
               "active": true
             }
           ]

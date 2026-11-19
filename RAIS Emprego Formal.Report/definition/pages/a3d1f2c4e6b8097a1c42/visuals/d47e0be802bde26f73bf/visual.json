@@ -286,7 +286,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Salário médio'"
+                                "Value": "'Representatividade'"
                               }
                             }
                           ]
@@ -295,6 +295,19 @@
                     }
                   }
                 ]
+              }
+            }
+          }
+        }
+      ],
+      "selection": [
+        {
+          "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
               }
             }
           }

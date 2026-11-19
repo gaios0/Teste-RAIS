@@ -20,7 +20,7 @@ table D_GrupoSetor
 		lineageTag: 84648ef8-e95c-483b-bedd-3a65002e9779
 		sourceLineageTag: 55d4e276-2e6c-415d-a5cd-cc5f9e5bd77c
 		dataCategory: Uncategorized
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: ordem
 
 		annotation SummarizationSetBy = Automatic

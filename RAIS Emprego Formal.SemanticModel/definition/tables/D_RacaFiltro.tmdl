@@ -1,0 +1,42 @@
+/// Opções do filtro de raça. "Negros (pretos + pardos)" filtra Preta e Parda juntas; as demais filtram a própria raça.
+table D_RacaFiltro
+	lineageTag: 3b9f6c2e-7a41-4d8e-b0c5-91e2f4a6d701
+
+	column opcao
+		dataType: string
+		lineageTag: 3b9f6c2e-7a41-4d8e-b0c5-91e2f4a6d702
+		summarizeBy: none
+		sourceColumn: opcao
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column raca_cor
+		dataType: string
+		isHidden
+		lineageTag: 3b9f6c2e-7a41-4d8e-b0c5-91e2f4a6d703
+		summarizeBy: none
+		sourceColumn: raca_cor
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3b9f6c2e-7a41-4d8e-b0c5-91e2f4a6d704
+		summarizeBy: sum
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_RacaFiltro = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [opcao = text, raca_cor = text, ordem = Int64.Type], {{"Negros (pretos + pardos)", "Preta", 1}, {"Negros (pretos + pardos)", "Parda", 1}, {"Preta", "Preta", 2}, {"Parda", "Parda", 3}, {"Branca", "Branca", 4}, {"Amarela", "Amarela", 5}, {"Indígena", "Indígena", 6}, {"Não declarada", "Não Identificado", 7}, {"Não declarada", "Campo Não Preenchido", 7}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

@@ -109,10 +109,10 @@ def perfil(add):
         "VAR L2 = IF(ISBLANK(A) || TotA = 0, \"\", \"Superior (completo ou não): \" & " + pc("E3A") + " & \" no AFL e \" & " + pc("E3C") + " & \" nos Comparáveis\")\n" + titulo_html("L1", "L2", '"#312E81"'), f"HTML\\{P1}\\Títulos")
     # ocupações
     add("Emp_CBO_Top", "Empregos por ocupação (CBO); as 300 maiores (o gráfico mostra as primeiras e rola; o modo foco amplia).",
-        "VAR V = [Empregos_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(F_rais[cbo_2002]), [Empregos_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 300, V)", f"{P1}\\Ocupações", "#,0")
+        "VAR V = [Empregos_Ref]\nVAR R = IF(NOT ISBLANK(V), RANKX(ALLSELECTED(D_Cbo[ocupacao]), [Empregos_Ref], , DESC, DENSE))\nRETURN IF(NOT ISBLANK(V) && R <= 300, V)", f"{P1}\\Ocupações", "#,0")
     add("Titulo_CBO_HTML", "Título das ocupações: a mais comum, seus empregos e % de mulheres.",
-        "VAR T = FILTER(ADDCOLUMNS(VALUES(F_rais[cbo_2002]), \"@v\", [Empregos_Ref]), NOT ISBLANK([@v]))\nVAR Lider1 = TOPN(1, T, [@v], DESC, F_rais[cbo_2002], ASC)\nVAR Nome = CONCATENATEX(Lider1, F_rais[cbo_2002], \"\")\n"
-        "VAR V = MAXX(Lider1, [@v])\nVAR Mul = CALCULATE([Perf_Mulheres], KEEPFILTERS(TREATAS({Nome}, F_rais[cbo_2002])))\n"
+        "VAR T = FILTER(ADDCOLUMNS(VALUES(D_Cbo[ocupacao]), \"@v\", [Empregos_Ref]), NOT ISBLANK([@v]))\nVAR Lider1 = TOPN(1, T, [@v], DESC, D_Cbo[ocupacao], ASC)\nVAR Nome = CONCATENATEX(Lider1, D_Cbo[ocupacao], \"\")\n"
+        "VAR V = MAXX(Lider1, [@v])\nVAR Mul = CALCULATE([Perf_Mulheres], KEEPFILTERS(TREATAS({Nome}, D_Cbo[ocupacao])))\n"
         "VAR L1 = IF(COUNTROWS(T) = 0, \"Sem dados para os filtros escolhidos\", Nome & \" é a ocupação mais comum: \" & " + num("V") + " & \" empregos\")\n"
         "VAR L2 = IF(COUNTROWS(T) = 0, \"\", \"Mulheres: \" & " + pc("Mul") + " & \" · ocupações (CBO) com mais empregos em 31/12/\" & [Ano_Ref])\n" + titulo_html("L1", "L2", '"#1D1E21"'), f"HTML\\{P1}\\Títulos")
     # raça + primeiro emprego + intermitente (HTML)
@@ -120,10 +120,10 @@ def perfil(add):
     rac = [("Branca", "Branca"), ("Negra", "Negra"), ("Amarela", "Amarela"), ("Indígena", "Indígena")]
     vr = "VAR A = [Ano_Ref]\n"
     for suf, g in (("A", G_AFL), ("C", G_COMP)):
-        vr += f"VAR Decl{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), D_Raca[declarada] = \"Sim\")\nVAR TotR{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca))\n"
+        vr += f"VAR Decl{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro), D_Raca[declarada] = \"Sim\")\nVAR TotR{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro))\n"
         for i, (_, gr) in enumerate(rac):
-            vr += f"VAR R{i}{suf} = DIVIDE(CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), D_Raca[grupo_raca] = \"{gr}\", D_Raca[declarada] = \"Sim\"), Decl{suf})\n"
-        vr += f"VAR Pri{suf} = CALCULATE([Perf_Primeiro], {g}, REMOVEFILTERS(D_Raca))\nVAR Int{suf} = CALCULATE([Perf_Intermitente], {g}, REMOVEFILTERS(D_Raca))\nVAR IntN{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), F_rais[trabalho_intermitente] = \"Sim\")\n"
+            vr += f"VAR R{i}{suf} = DIVIDE(CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro), D_Raca[grupo_raca] = \"{gr}\", D_Raca[declarada] = \"Sim\"), Decl{suf})\n"
+        vr += f"VAR Pri{suf} = CALCULATE([Perf_Primeiro], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro))\nVAR Int{suf} = CALCULATE([Perf_Intermitente], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro))\nVAR IntN{suf} = CALCULATE([Empregos_Ref], {g}, REMOVEFILTERS(D_Raca), REMOVEFILTERS(D_RacaFiltro), F_rais[trabalho_intermitente] = \"Sim\")\n"
 
     def barra_r(rot, suf):
         segs = ""

@@ -1,33 +1,25 @@
 table D_Ano
 	lineageTag: 92dcca69-eb08-4847-95ff-0eda223c35eb
-	sourceLineageTag: 39b59d59-869a-49b2-bdb6-1a1689605543
 
 	column ano
 		dataType: int64
-		isNullable: false
-		lineageTag: 54d8e95a-dc8e-4d7b-9cd3-ef3d2091cdb4
-		sourceLineageTag: 2173390f-5e18-48de-9abe-8e985aeb82d8
-		dataCategory: Uncategorized
+		formatString: 0
+		lineageTag: b12eb8d7-0559-4e19-ad34-050421a9c6b7
 		summarizeBy: none
 		sourceColumn: ano
 
 		annotation SummarizationSetBy = Automatic
 
-	column base
-		dataType: string
-		lineageTag: bbf5de06-d2a4-4273-a031-0fcd1ae3b886
-		sourceLineageTag: 95dedeff-d5fb-4f8f-9a23-eba215789e48
-		dataCategory: Uncategorized
-		summarizeBy: none
-		sourceColumn: base
+	partition D_Ano = m
+		mode: import
+		source =
+				let
+				    // Tabela local: a D_Ano não existe mais no Painel_RAIS. Anos da F_rais remota: 2009 a 2025 (incluir o ano novo aqui quando a base crescer).
+				    Anos = List.Numbers(2009, 2025 - 2009 + 1),
+				    Tabela = Table.FromList(Anos, Splitter.SplitByNothing(), {"ano"}),
+				    Tipado = Table.TransformColumnTypes(Tabela, {{"ano", Int64.Type}})
+				in
+				    Tipado
 
-		annotation SummarizationSetBy = Automatic
-
-	partition D_Ano = entity
-		mode: directQuery
-		source
-			entityName: D_Ano
-			expressionSource: 'DirectQuery para AS – Painel_RAIS'
-
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

@@ -1,0 +1,31 @@
+table D_Ct_Def
+	lineageTag: cbaf5247-e5a8-4c4b-8d7e-0f897caca61a
+
+	column tipo
+		dataType: string
+		lineageTag: fd34c8aa-5302-4133-aa6d-c755d825fe84
+		summarizeBy: none
+		sourceColumn: tipo
+		sortByColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: string
+		isHidden
+		lineageTag: 3d88f18a-e2d0-493b-a7d3-400973226db1
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Ct_Def = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(type table [tipo = text, ordem = text], {{"Física", "1"}, {"Auditiva", "2"}, {"Visual", "3"}, {"Intelectual", "4"}, {"Múltipla", "5"}, {"Reabilitado", "6"}})
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+

@@ -20,7 +20,7 @@ table D_Escolaridade
 		lineageTag: f32bdc76-977a-4c69-9d3c-e1591bdf8149
 		sourceLineageTag: d556ee8a-f0a8-4f1a-80f1-25ed355e2d53
 		dataCategory: Uncategorized
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: ordem
 
 		annotation SummarizationSetBy = Automatic

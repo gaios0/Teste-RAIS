@@ -116,7 +116,7 @@ def medidas():
             "Total = todos os estados do filtro atual (ALLSELECTED); no nível município, o total do estado.\n"
             "\tmeasure Emp_UF_Pct_AFL =\n"
             "\t\t\tVAR V = [Empregos_Ref]\n"
-            "\t\t\tVAR D = IF(ISINSCOPE(F_rais[municipio]), CALCULATE([Empregos_Ref], REMOVEFILTERS(F_rais[municipio])), CALCULATE([Empregos_Ref], ALLSELECTED(D_UF)))\n"
+            "\t\t\tVAR D = IF(ISINSCOPE(D_regiao[municipio]), CALCULATE([Empregos_Ref], REMOVEFILTERS(D_regiao[municipio])), CALCULATE([Empregos_Ref], ALLSELECTED(D_regiao)))\n"
             "\t\t\tRETURN IF(NOT ISBLANK(V), DIVIDE(V, D))\n"
             "\t\tformatString: 0.0%\n"
             "\t\tdisplayFolder: Empregos\\UF\n"

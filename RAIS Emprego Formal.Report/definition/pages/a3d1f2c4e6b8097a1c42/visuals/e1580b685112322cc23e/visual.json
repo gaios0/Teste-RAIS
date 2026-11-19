@@ -286,7 +286,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Médio incompleto'"
+                                "Value": "'Até fundamental'"
                               }
                             }
                           ]
@@ -295,6 +295,19 @@
                     }
                   }
                 ]
+              }
+            }
+          }
+        }
+      ],
+      "selection": [
+        {
+          "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
               }
             }
           }

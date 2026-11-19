@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "D_Raca"
+                      "Entity": "D_RacaFiltro"
                     }
                   },
-                  "Property": "raca_cor"
+                  "Property": "opcao"
                 }
               },
-              "queryRef": "D_Raca.raca_cor",
-              "nativeQueryRef": "raca_cor",
+              "queryRef": "D_RacaFiltro.opcao",
+              "nativeQueryRef": "opcao",
               "active": true
             }
           ]
@@ -40,10 +40,10 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "D_Raca"
+                    "Entity": "D_RacaFiltro"
                   }
                 },
-                "Property": "raca_cor"
+                "Property": "opcao"
               }
             },
             "direction": "Ascending"
