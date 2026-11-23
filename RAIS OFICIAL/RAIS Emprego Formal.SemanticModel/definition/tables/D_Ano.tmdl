@@ -14,8 +14,8 @@ table D_Ano
 		mode: import
 		source =
 				let
-				    // Tabela local: a D_Ano não existe mais no Painel_RAIS. Anos da F_rais remota: 2009 a 2025 (incluir o ano novo aqui quando a base crescer).
-				    Anos = List.Numbers(2009, 2025 - 2009 + 1),
+				    // Tabela local: a D_Ano não existe mais no Painel_RAIS. Vai de 2009 ao ano corrente, igual à D_Calendario, e cresce sozinha.
+				    Anos = List.Numbers(2009, Date.Year(DateTime.LocalNow()) - 2009 + 1),
 				    Tabela = Table.FromList(Anos, Splitter.SplitByNothing(), {"ano"}),
 				    Tipado = Table.TransformColumnTypes(Tabela, {{"ano", Int64.Type}})
 				in

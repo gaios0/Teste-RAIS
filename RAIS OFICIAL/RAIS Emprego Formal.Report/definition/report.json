@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.4.0/schema.json",
   "themeCollection": {
     "baseTheme": {
       "name": "Fluent2-CY26SU10",
@@ -115,7 +115,7 @@
         {
           "name": "Pain_is_AFL___Est_dio_Abrasel_43178999335479706.json",
           "path": "Pain_is_AFL___Est_dio_Abrasel_43178999335479706.json",
-          "type": "CustomTheme"
+          "type": "Image"
         },
         {
           "name": "trabalha-afl-bg202611181341.png",

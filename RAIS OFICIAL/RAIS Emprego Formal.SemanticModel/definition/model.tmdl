@@ -9,7 +9,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao","D_Indicador","D_Info","D_Ct_Modo","D_Ct_Setor","D_Ct_MetMul","D_Ct_MetNeg","D_Ct_MetEsc","D_Ct_Nivel","D_Ct_MetDef","D_Ct_Def","D_Ano","D_RacaFiltro"]
+annotation PBI_QueryOrder = ["DirectQuery para AS – Painel_RAIS","_medidas","D_Calendario","D_Comparavel","D_AflAtividade","D_Rank_Divisao","D_Indicador","D_Info","D_Ct_Modo","D_Ct_Setor","D_Ct_MetMul","D_Ct_MetNeg","D_Ct_MetEsc","D_Ct_Nivel","D_Ct_MetDef","D_Ct_Def","D_Ano","D_RacaFiltro","Aux_Fonte"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -44,6 +44,7 @@ ref table LocalDateTable_b73cce7a-367d-4fb9-b8ba-5b7ee6e51020
 ref table LocalDateTable_c7db2535-dbae-48e9-be55-cc73b8f00fb4
 ref table LocalDateTable_c93c6237-209f-437b-aa25-f68eaaa961c5
 ref table D_Cbo
+ref table Aux_Fonte
 
 ref cultureInfo pt-BR
 
