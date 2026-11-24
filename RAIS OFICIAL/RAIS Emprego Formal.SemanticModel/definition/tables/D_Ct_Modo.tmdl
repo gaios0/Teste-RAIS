@@ -22,7 +22,7 @@ table D_Ct_Modo
 		mode: import
 		source =
 				let
-				    Fonte = #table(type table [modo = text, ordem = text], {{"10 melhores setores", "1"}, {"10 piores setores", "2"}})
+				    Fonte = #table(type table [modo = text, ordem = text], {{"10 melhores divisões", "1"}, {"10 piores divisões", "2"}})
 				in
 				    Fonte
 

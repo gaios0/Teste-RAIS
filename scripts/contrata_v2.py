@@ -39,7 +39,7 @@ NOTA = {"Todos os setores": ("Valores nominais, remuneração média de dezembro
 
 # ------------------------------------------------------------------ tabelas locais dos botões
 TABELAS = {
-    "D_Ct_Modo": ("modo", [("10 melhores setores", "1"), ("10 piores setores", "2")]),
+    "D_Ct_Modo": ("modo", [("10 melhores divisões", "1"), ("10 piores divisões", "2")]),
     "D_Ct_Setor": ("setor", [("Agropecuária", "1"), ("Comércio", "2"), ("Construção", "3"), ("Indústria", "4"), ("Serviços", "5")]),
     "D_Ct_MetMul": ("metrica", [("Representatividade", "1"), ("Salário médio", "2")]),
     "D_Ct_MetNeg": ("metrica", [("Representatividade", "1"), ("Salário médio", "2")]),
@@ -249,7 +249,7 @@ def svg_fundo(L, t=None):
                   f'<rect x="{fb.R(x) + .5}" y="{fb.FL_Y + .5}" width="{fb.R(w) - 1}" height="{fb.FL_H - 1}" rx="4" fill="{fb.K["card"]}" stroke="{fb.K["borda"]}"/>'])
     t = t or trilhos(L)
     if todos:
-        s.append([texto("Ranking dos setores", fb.M, t["modo"][1] + 32, 22, fb.K["tinta"], 600),
+        s.append([texto("Ranking das divisões", fb.M, t["modo"][1] + 32, 22, fb.K["tinta"], 600),
                   texto("AFL não entra neste cálculo.", t["modo"][0] + t["modo"][2] + 24, t["modo"][1] + 31, 20, fb.K["tinta2"], 400),
                   texto("Setor selecionado", fb.M, t["setor"][1] + 32, 22, fb.K["tinta"], 600)])
         s.append(fb.trilho_setores(*t["modo"][:3], n=2))
@@ -347,7 +347,7 @@ def montar_pagina(recorte):
     gravar("manchete", pb.html(n("manchete"), (fb.M, 196, fb.W - 2 * fb.M, 92, prox()), f"Manchete_Ct_{u}_HTML"))
     t = trilhos(L)
     if todos:
-        gravar("modo", pb.botoes_setor(n("modo"), (*t["modo"][:3], 48, prox()), "D_Ct_Modo", "modo", n=2, inicial="10 melhores setores", fonte=16))
+        gravar("modo", pb.botoes_setor(n("modo"), (*t["modo"][:3], 48, prox()), "D_Ct_Modo", "modo", n=2, inicial="10 melhores divisões", fonte=16))
         gravar("setor", pb.botoes_setor(n("setor"), (*t["setor"][:3], 48, prox()), "D_Ct_Setor", "setor", n=5, inicial="Serviços", fonte=16))
     # KPIs
     for i, m in enumerate((f"KPI_Ct_Mul_{u}_HTML", f"KPI_Ct_Neg_{u}_HTML", f"KPI_Ct_Esc_{u}_HTML")):

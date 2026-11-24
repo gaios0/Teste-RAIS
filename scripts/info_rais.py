@@ -17,7 +17,7 @@ T = {
     ("Empregos", "K1"): ("Empregos formais", "Vínculos de emprego ativos em 31 de dezembro do ano escolhido.",
                          [FONTE, "Conta vínculos, não pessoas: quem tem dois empregos formais aparece duas vezes.", "Os filtros da página (setor, divisão, UF, sexo, escolaridade, raça/cor) recortam o número."], VERDE),
     ("Empregos", "K2", ): ("Peso do AFL", "Quanto o AFL representa no emprego formal.",
-                           ["Mostra o AFL como parte dos Comparáveis (AFL ÷ AFL + Comparáveis) e como parte de todo o emprego formal do país.", COMP], LARANJA),
+                           ["Mostra a presença do AFL em dois mercados. Mercado todo: AFL ÷ todo o emprego formal. Mercado de comparáveis: AFL ÷ (AFL + Comparáveis).", COMP], LARANJA),
     ("Empregos", "K3"): ("Crescimento médio ao ano", "Ritmo anual médio do emprego desde o início do período em análise.",
                          ["É a taxa composta: a taxa constante ao ano que levaria do emprego do início do trecho ao do ano escolhido.", QUEBRA], CINZA),
     ("Empregos", "L2A"): ("Variação anual do emprego", "Cada coluna é a variação do emprego de 31/12 sobre 31/12 do ano anterior.",

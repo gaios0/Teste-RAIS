@@ -29,7 +29,7 @@ PERFIS = {"Mul": ('KEEPFILTERS(D_Sexo[sexo] = "Mulher")', None),
           "Neg": ('KEEPFILTERS(D_Raca[grupo_raca] = "Negra")', 'KEEPFILTERS(D_Raca[declarada] = "Sim")')}
 NIV_VAR = 'VAR Niv = COALESCE(SELECTEDVALUE(D_Ct_Nivel[nivel]), "Médio completo")\n'
 SAL_VAR = 'VAR Sal = COALESCE(SELECTEDVALUE({met}[metrica]), "Representatividade") = "Salário médio"\n'
-PIORES_VAR = 'VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"\n'
+PIORES_VAR = 'VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"\n'
 
 
 def _lista(vals):
