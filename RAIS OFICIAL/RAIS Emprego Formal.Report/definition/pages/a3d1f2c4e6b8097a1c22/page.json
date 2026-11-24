@@ -72,7 +72,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'trabalha-afl-bg202611181341.png'"
+                    "Value": "'trabalha-afl-bg20261124163207.png'"
                   }
                 }
               },
@@ -81,7 +81,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "trabalha-afl-bg202611181341.png"
+                    "ItemName": "trabalha-afl-bg20261124163207.png"
                   }
                 }
               },

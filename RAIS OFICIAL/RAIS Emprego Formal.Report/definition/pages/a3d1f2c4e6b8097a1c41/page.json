@@ -72,7 +72,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'contrata-todos-bg20261124144651.png'"
+                    "Value": "'contrata-todos-bg20261124172518.png'"
                   }
                 }
               },
@@ -81,7 +81,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "contrata-todos-bg20261124144651.png"
+                    "ItemName": "contrata-todos-bg20261124172518.png"
                   }
                 }
               },

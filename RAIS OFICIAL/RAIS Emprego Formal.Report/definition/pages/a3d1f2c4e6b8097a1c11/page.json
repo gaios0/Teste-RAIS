@@ -72,7 +72,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'empregos-todos-bg202611181407.png'"
+                    "Value": "'empregos-todos-bg20261124163207.png'"
                   }
                 }
               },
@@ -81,7 +81,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "empregos-todos-bg202611181407.png"
+                    "ItemName": "empregos-todos-bg20261124163207.png"
                   }
                 }
               },

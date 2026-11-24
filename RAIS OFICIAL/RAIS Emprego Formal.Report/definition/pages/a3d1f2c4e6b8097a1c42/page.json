@@ -72,7 +72,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'contrata-afl-bg20261119151532.png'"
+                    "Value": "'contrata-afl-bg20261124163207.png'"
                   }
                 }
               },
@@ -81,7 +81,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "contrata-afl-bg20261119151532.png"
+                    "ItemName": "contrata-afl-bg20261124163207.png"
                   }
                 }
               },
