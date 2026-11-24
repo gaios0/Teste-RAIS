@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'ganha-todos-bg202611181341.png'"
+                    "Value": "'ganha-todos-bg20261124163207.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "ganha-todos-bg202611181341.png"
+                    "ItemName": "ganha-todos-bg20261124163207.png"
                   }
                 }
               },
