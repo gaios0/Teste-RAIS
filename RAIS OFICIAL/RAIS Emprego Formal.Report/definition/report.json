@@ -73,8 +73,8 @@
           "type": "Image"
         },
         {
-          "name": "contrata-todos-bg20261119151532.png",
-          "path": "contrata-todos-bg20261119151532.png",
+          "name": "contrata-todos-bg20261124144651.png",
+          "path": "contrata-todos-bg20261124144651.png",
           "type": "Image"
         },
         {
@@ -137,5 +137,6 @@
     "allowChangeFilterTypes": true,
     "useEnhancedTooltips": true,
     "useDefaultAggregateDisplayName": true
-  }
+  },
+  "linguisticSchemaSyncVersion": 2
 }

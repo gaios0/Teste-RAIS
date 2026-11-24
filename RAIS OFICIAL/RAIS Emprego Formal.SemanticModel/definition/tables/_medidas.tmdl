@@ -207,9 +207,10 @@ table _medidas
 			VAR PesoTodos = DIVIDE(Afl, Todos)
 			RETURN
 			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:172px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
-			        & "<div style='font-size:20px;line-height:24px;font-weight:600;color:#434446;max-height:48px;overflow:hidden;'>" & "Representatividade de empregos do setor AFL em setores comparáveis" & "</div>"
+			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Presença do AFL nos empregos" & "</div>"
 			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
-			        & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='font-size:21px;color:#434446;'>" & IF(ISBLANK(PesoTodos), "—", FORMAT(PesoTodos, "0.0%", "pt-BR")) & " de todo o emprego formal</span>" & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;color:#434446;overflow:hidden;'>" & "no mercado de comparáveis" & "</div>"
+			        & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>" & IF(ISBLANK(PesoTodos), "—", FORMAT(PesoTodos, "0.0%", "pt-BR")) & " no mercado todo</span>" & "</div>"
 			        & "</div>"
 		displayFolder: HTML\Empregos\KPIs
 		lineageTag: e46739b3-39ed-46cd-bfb4-22df72c9855d
@@ -225,7 +226,7 @@ table _medidas
 			    "<div role='group' aria-label='KPI de peso do AFL' style='width:100%;height:172px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
 			        & "<div style='font-size:24px;line-height:28px;font-weight:600;color:#434446;white-space:nowrap;'>" & "Presença do AFL nos empregos" & "</div>"
 			        & "<div style='margin-top:2px;font-size:53px;line-height:58px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;'>" & IF(ISBLANK(Peso), "—", FORMAT(Peso, "0.0%", "pt-BR")) & "</div>"
-			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;color:" & "#434446" & ";overflow:hidden;'>" & "de todo o emprego formal" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>" & IF(ISBLANK(PesoComp), "—", FORMAT(PesoComp, "0.0%", "pt-BR")) & " do AFL + comparáveis <span style='font-weight:400;font-size:17px;color:#434446;'>· ref.</span></span>" & "</div>"
+			        & "<div style='margin-top:3px;font-size:22px;line-height:26px;white-space:nowrap;text-overflow:ellipsis;color:" & "#434446" & ";overflow:hidden;'>" & "no mercado todo (todo o emprego formal)" & "</div>" & "<div style='display:flex;gap:8px;margin-top:3px;white-space:nowrap;'>" & "<span style='display:inline-block;padding:1px 9px;border:1px solid #434446;border-radius:6px;background:#F2F4F7;color:#1D1E21;font-size:20px;line-height:26px;font-weight:600;'>" & IF(ISBLANK(PesoComp), "—", FORMAT(PesoComp, "0.0%", "pt-BR")) & " no mercado de comparáveis</span>" & "</div>"
 			        & "</div>"
 		displayFolder: HTML\Empregos\KPIs
 		lineageTag: cc972583-7e7e-4c50-a010-f955c4444564
@@ -2219,7 +2220,7 @@ table _medidas
 			VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])
 			VAR EhAFL = Nome = "AFL · conjunto de 6 CNAEs"
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetMul[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR Setores = VALUES(D_Ct_Setor[setor])
 			VAR NoSetor = CONTAINS(Setores, D_Ct_Setor[setor], SELECTEDVALUE(D_Rank_Divisao[setor_principal]))
 			VAR Meu = IF(NOT ISBLANK(Nome) && (EhAFL || NoSetor), IF(Sal, [Ct_Mul_Div_Sal], [Ct_Mul_Div_Rep]))
@@ -2236,7 +2237,7 @@ table _medidas
 	/// Chave de ordenação do ranking por divisão: o valor (ou o oposto nas 10 piores). O AFL fica na posição do seu valor, junto das demais divisões.
 	measure Ct_Mul_Ord =
 			VAR V = [Ct_Mul_Valor]
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			RETURN IF(ISBLANK(V), BLANK(), IF(Piores, -V, V))
 		formatString: 0.0000
 		isHidden
@@ -2257,7 +2258,7 @@ table _medidas
 			VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])
 			VAR EhAFL = Nome = "AFL · conjunto de 6 CNAEs"
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetNeg[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR Setores = VALUES(D_Ct_Setor[setor])
 			VAR NoSetor = CONTAINS(Setores, D_Ct_Setor[setor], SELECTEDVALUE(D_Rank_Divisao[setor_principal]))
 			VAR Meu = IF(NOT ISBLANK(Nome) && (EhAFL || NoSetor), IF(Sal, [Ct_Neg_Div_Sal], [Ct_Neg_Div_Rep]))
@@ -2274,7 +2275,7 @@ table _medidas
 	/// Chave de ordenação do ranking por divisão: o valor (ou o oposto nas 10 piores). O AFL fica na posição do seu valor, junto das demais divisões.
 	measure Ct_Neg_Ord =
 			VAR V = [Ct_Neg_Valor]
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			RETURN IF(ISBLANK(V), BLANK(), IF(Piores, -V, V))
 		formatString: 0.0000
 		isHidden
@@ -2295,7 +2296,7 @@ table _medidas
 			VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])
 			VAR EhAFL = Nome = "AFL · conjunto de 6 CNAEs"
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetEsc[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR Setores = VALUES(D_Ct_Setor[setor])
 			VAR NoSetor = CONTAINS(Setores, D_Ct_Setor[setor], SELECTEDVALUE(D_Rank_Divisao[setor_principal]))
 			VAR Meu = IF(NOT ISBLANK(Nome) && (EhAFL || NoSetor), IF(Sal, [Ct_Esc_Div_Sal], [Ct_Esc_Div_Rep]))
@@ -2312,7 +2313,7 @@ table _medidas
 	/// Chave de ordenação do ranking por divisão: o valor (ou o oposto nas 10 piores). O AFL fica na posição do seu valor, junto das demais divisões.
 	measure Ct_Esc_Ord =
 			VAR V = [Ct_Esc_Valor]
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			RETURN IF(ISBLANK(V), BLANK(), IF(Piores, -V, V))
 		formatString: 0.0000
 		isHidden
@@ -2335,7 +2336,7 @@ table _medidas
 			VAR SalNeg = COALESCE(SELECTEDVALUE(D_Ct_MetNeg[metrica]), "Representatividade") = "Salário médio"
 			VAR SalEsc = COALESCE(SELECTEDVALUE(D_Ct_MetEsc[metrica]), "Representatividade") = "Salário médio"
 			VAR NSal = IF(SalMul, 1, 0) + IF(SalNeg, 1, 0) + IF(SalEsc, 1, 0)
-			VAR Titulo = IF(NSal = 3, "Ranking dos setores: salário médio por perfil dos empregados", "Ranking dos setores: quem mais contrata por perfil dos empregados")
+			VAR Titulo = "Ranking das divisões: média salarial e representatividade por perfil dos empregados."
 			VAR Resumo = IF(NSal = 3, "valores em salário médio de dezembro (R$ nominais)", IF(NSal = 0, "valores em representatividade (% dos empregos)", "valores conforme o botão de cada gráfico"))
 			VAR Sub = IF(ISBLANK(A), "Não há dados para os filtros selecionados", "Empregos em 31/12/" & A & " · " & Resumo & " · setores e divisões respeitam os filtros aplicados · AFL em destaque")
 			RETURN "<div role='group' aria-label='Quem mais contrata, por perfil dos empregados' style='width:100%;height:92px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
@@ -2351,7 +2352,7 @@ table _medidas
 			VAR SalNeg = COALESCE(SELECTEDVALUE(D_Ct_MetNeg[metrica]), "Representatividade") = "Salário médio"
 			VAR SalEsc = COALESCE(SELECTEDVALUE(D_Ct_MetEsc[metrica]), "Representatividade") = "Salário médio"
 			VAR NSal = IF(SalMul, 1, 0) + IF(SalNeg, 1, 0) + IF(SalEsc, 1, 0)
-			VAR Titulo = IF(NSal = 3, "Ranking do AFL: salário médio por perfil dos empregados", "Ranking do AFL: quem mais contrata por perfil dos empregados")
+			VAR Titulo = "Ranking do AFL: média salarial e representatividade por perfil dos empregados."
 			VAR Resumo = IF(NSal = 3, "valores em salário médio de dezembro (R$ nominais)", IF(NSal = 0, "valores em representatividade (% dos empregos)", "valores conforme o botão de cada gráfico"))
 			VAR Sub = IF(ISBLANK(A), "Não há dados para os filtros selecionados", "Empregos em 31/12/" & A & " · " & Resumo & " · os seis CNAEs do AFL respeitam os filtros aplicados")
 			RETURN "<div role='group' aria-label='Quem mais contrata, por perfil dos empregados' style='width:100%;height:92px;box-sizing:border-box;margin:0;padding:0;overflow:hidden;background:transparent;font-family:Segoe UI,Arial,sans-serif;color:#1D1E21;'>"
@@ -2474,7 +2475,7 @@ table _medidas
 	/// Título do ranking (mulheres, Total); muda com o botão Representatividade / Salário médio.
 	measure Titulo_Ct_Mul_Total_HTML =
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetMul[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR L1 = IF(Sal, IF(Piores, "Divisões com menor salário médio entre as mulheres", "Divisões com maior salário médio entre as mulheres"), IF(Piores, "Divisões com menor representatividade de mulheres", "Divisões com maior representatividade de mulheres"))
 			VAR L2 = IF(Sal, "Salário médio: remuneração média de dezembro das mulheres na divisão, em R$ nominais. Detalhes no tooltip.", "Representatividade: participação de mulheres no total de empregos na divisão. Valores absolutos no tooltip.")
 			RETURN
@@ -2503,7 +2504,7 @@ table _medidas
 	/// Título do ranking (negros (pretos + pardos), Total); muda com o botão Representatividade / Salário médio.
 	measure Titulo_Ct_Neg_Total_HTML =
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetNeg[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR L1 = IF(Sal, IF(Piores, "Divisões com menor salário médio entre os negros", "Divisões com maior salário médio entre os negros"), IF(Piores, "Divisões com menor representatividade de negros", "Divisões com maior representatividade de negros"))
 			VAR L2 = IF(Sal, "Salário médio: remuneração média de dezembro dos negros na divisão, em R$ nominais. Detalhes no tooltip.", "Representatividade: participação de negros (pretos + pardos) entre quem declarou cor na divisão. Valores absolutos no tooltip.")
 			RETURN
@@ -2742,7 +2743,7 @@ table _medidas
 			VAR Nome = SELECTEDVALUE(D_Rank_Divisao[nm_divisao])
 			VAR EhAFL = Nome = "AFL · conjunto de 6 CNAEs"
 			VAR Sal = COALESCE(SELECTEDVALUE(D_Ct_MetDef[metrica]), "Representatividade") = "Salário médio"
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			VAR Setores = VALUES(D_Ct_Setor[setor])
 			VAR NoSetor = CONTAINS(Setores, D_Ct_Setor[setor], SELECTEDVALUE(D_Rank_Divisao[setor_principal]))
 			VAR Meu = IF(NOT ISBLANK(Nome) && (EhAFL || NoSetor), IF(Sal, [Ct_Def_Div_Sal], [Ct_Def_Div_Rep]))
@@ -2759,7 +2760,7 @@ table _medidas
 	/// Chave de ordenação do ranking por divisão: o valor (ou o oposto nas 10 piores). O AFL fica na posição do seu valor, junto das demais divisões.
 	measure Ct_Def_Ord =
 			VAR V = [Ct_Def_Valor]
-			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores setores") = "10 piores setores"
+			VAR Piores = COALESCE(SELECTEDVALUE(D_Ct_Modo[modo]), "10 melhores divisões") = "10 piores divisões"
 			RETURN IF(ISBLANK(V), BLANK(), IF(Piores, -V, V))
 		formatString: 0.0000
 		isHidden
