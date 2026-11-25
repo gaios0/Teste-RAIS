@@ -5,6 +5,64 @@
   "displayOption": "FitToWidth",
   "height": 1652,
   "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0548a6b3ce8d40eb8b1e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "D_Cnae"
+              }
+            },
+            "Property": "setor_afl"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "D_Cnae",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "setor_afl"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Sim'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
   "objects": {
     "background": [
       {
@@ -40,6 +98,7 @@
       }
     ]
   },
+  "visibility": "HiddenInViewMode",
   "visualInteractions": [
     {
       "source": "9c74fe99f1adc00943c5",
@@ -146,63 +205,5 @@
       "target": "e10b6dbcb0b7f80f60cc",
       "type": "NoFilter"
     }
-  ],
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "0548a6b3ce8d40eb8b1e",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "D_Cnae"
-              }
-            },
-            "Property": "setor_afl"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "d",
-              "Entity": "D_Cnae",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "d"
-                          }
-                        },
-                        "Property": "setor_afl"
-                      }
-                    }
-                  ],
-                  "Values": [
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'Sim'"
-                        }
-                      }
-                    ]
-                  ]
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
-  }
+  ]
 }

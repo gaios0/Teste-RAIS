@@ -5,41 +5,6 @@
   "displayOption": "FitToWidth",
   "height": 1652,
   "width": 1920,
-  "objects": {
-    "background": [
-      {
-        "properties": {
-          "image": {
-            "image": {
-              "name": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'trabalha-todos-bg20261124163207.png'"
-                  }
-                }
-              },
-              "url": {
-                "expr": {
-                  "ResourcePackageItem": {
-                    "PackageName": "RegisteredResources",
-                    "PackageType": 1,
-                    "ItemName": "trabalha-todos-bg20261124163207.png"
-                  }
-                }
-              },
-              "scaling": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'Fit'"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ]
-  },
   "filterConfig": {
     "filters": [
       {
@@ -97,5 +62,41 @@
         "howCreated": "User"
       }
     ]
-  }
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "image": {
+            "image": {
+              "name": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'trabalha-todos-bg20261124163207.png'"
+                  }
+                }
+              },
+              "url": {
+                "expr": {
+                  "ResourcePackageItem": {
+                    "PackageName": "RegisteredResources",
+                    "PackageType": 1,
+                    "ItemName": "trabalha-todos-bg20261124163207.png"
+                  }
+                }
+              },
+              "scaling": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Fit'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode"
 }
